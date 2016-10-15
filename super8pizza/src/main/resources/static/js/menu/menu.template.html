@@ -1,0 +1,14 @@
+<div class="row">
+    <div class="col-md-4">
+        <div class="panel panel-default" ng-repeat="menuOption in $scope.menu">
+            <div class="panel-heading">
+                <h3 class="panel-title">{{menuOption.name}}</h3>
+            </div>
+            <div class="panel-body">
+                <!--will  throw an image in here-->
+                <label>{{menuOption.price | currency}}</label>
+                <input type="number" min="0" ngModel="menuOption.quantity"/>
+            </div>
+        </div>
+    </div>
+</div>
