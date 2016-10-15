@@ -1,4 +1,7 @@
 /**
  * Created by adampermann on 10/14/16.
  */
-angular.module('Super8PizzaApp', ['menuList']);
+// our main app
+(function() {
+    angular.module('Super8PizzaApp', ['menuList']);
+})();
