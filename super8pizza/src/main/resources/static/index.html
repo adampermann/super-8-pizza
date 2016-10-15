@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Super 8 Pizza</title>
+        <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="bower_components/angular-bootstrap/ui-bootstrap-csp.css" rel="stylesheet">
+        <style type="text/css">
+            [ng\:cloak], [ng-cloak], .ng-cloak {
+                display: none !important;
+            }
+        </style>
+    </head>
+    <body ng-app="Super8PizzaApp">
+        <div class="container">
+            <h1>Welcome to Super 8 Pizza</h1>
+            <div ng-controller="HomeController as homeController">
+                <p>Session ID is {{homeController.greeting.id}}</p>
+                <p>{{homeController.greeting.content}} </p>
+            </div>
+        </div>
+
+        <script src="bower_components/angular/angular.min.js" type="text/javascript"></script>
+        <script src="bower_components/angular-bootstrap/ui-bootstrap.min.js" type="text/javascript"></script>
+        <script src="js/app.js" type="text/javascript"></script>
+    </body>
+</html>

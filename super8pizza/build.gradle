@@ -25,6 +25,7 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 dependencies {
+    compile("org.springframework.boot:spring-boot-starter-web")
     compile group: 'org.webjars', name: 'bootstrap', version: '3.3.7-1'
     compile group: 'org.webjars.bower', name: 'angular', version: '1.5.8'
     compile 'com.google.firebase:firebase-server-sdk:3.0.1'
