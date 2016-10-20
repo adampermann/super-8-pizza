@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "super8pizza-ab3c8",
+  "private_key_id": "35e9b2fcedf56daf719e5dd52918ac2b6a1df14e",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQDdRM8AGd9Mz9z5\nLikfDzSr7UkoV2YfB5ghlapAXqHNr7jYqUpCAevU/4CI19EChgJuNZD1vmncI/H6\nOxDbf9a0fp8iayivmkaNHVmtejsxG0qsmkaFkdijdVZpEi59MglC4EoHX1KEmFNC\nqt9rIamkJVu7YPrGBPAQkzENuh3p6hBiZ9c5o8Vce48ibMwKM1FZ/igzRB7cGvGH\n6TyQ8UgNjnv+8vhg+eqsK8gtAXf+L1O/2IIDqVyfxABBcHHc1CNHjJu0Bwgjm4wm\n4ZccjJmw+RKie/OFyZ/RrwN3wHeb6Dw3OTvuSywu8KMnmpSX0YWUCEMQhj9PCE7o\nPVjCex4PAgMBAAECggEABG38NuRNtBv1MIfcCuMjCs4VSNl3Eef1A7cbUW6TjqqV\n6MB63BdtwTXcPOEVLhfAtLQd0s2dEOsnTPshu0Mz6SkfxnCev+U2xFxyDycDSFhj\nhlEQWFwzGhKfSDs08wytYslasgsWe9EQ2aTSFDL4UnDtBTNL0esHY02PDddMAgLE\nBTLHSNlfeoBzoLlRVAbAY6hY9FTByH9MxFDCKksCKd755l+KfBUspgqoKjL3hG0y\nwVmPbsrn/rFau0hEtqbvrMP4FsDOVnY9peimpp+QUk6BJ3g0OFygHn/Mv+ynnF1Y\n9+jJwnyC6UEnBmRJ+dzq23Ci2DNCIdiaZfjEFITBAQKBgQD84kfS2YOQAGWWw5xP\n9inxWDzCCVeRWYCIhmtSfAhCM4DOEMKxm1KAnCeupk1FdLESiofkUC3pQ8N8Pv4G\n6ImykPSjTWL5VqmxCsOiGTL1nwBvAI5X4NOXj3gjoySWC4Vz45qo65sxN0EzIR06\n97rEUH+zbDYWfvTR5zwuC+n+IwKBgQDf/sxpIY75SV4j2Sqe8B5d+c6MRnfY+Qam\nvUqy2iUIBYnSWZ1gmgNeghpNpt+R3/zad5hEqBlYgsNcFJfhzI3jgM833qlO8YPJ\nISHAFN6Hm5DwhAEuRAP8uN1DyWh1qGTdJ5HCwwZXgEIdYfDKYE4HcB6/3nB8HAe7\nuJUPJTvBJQKBgQDG+4Zocp8DAEzvhJvKj3gRX8zvIUq2JCbvRlXMYaxd6wi/HJEW\nD5GrgTP4SQMkU93BKSAklrKJibiYWzinVvKCf2z/0jS+3WJI3J9zPUDL5IEC1v0q\nSM41w75UzFpNdmNb/QwFPt6uqzuyb6wAak2bi3vwQoWMzfj18W15Dgbg4QKBgQCq\nIiw8hgLEkddxPxfCVPubwYwCu9t3793/c7NzGYIbD6nZHbwNja2VcRhtdpxFfm3d\nugzryQpHUjr0i6e5F9eFv2alNvg+P+8rK4EpFjDXq29xX7JN49drczaMsEQpadgC\nqnVqCxucBo0xKBzueiuKNr0EWv3xJpExIkgFkvBKCQKBgQDPiRrIENJTIZzQ4btw\nXhGie5ZUZj+QdoXLv6lEBOfIkeOPmHmo8c9l8YNHqDrgmZ78pOfsaX0bhKhlGkie\nl1+0Yrt9OJydxixGxvta0M8027Z/hefjNaxb+SlORu6VayWl1Pcc008W2LpipHD8\nAooLqVxGC7cmKs4U00Seh7wO/Q==\n-----END PRIVATE KEY-----\n",
+  "client_email": "server@super8pizza-ab3c8.iam.gserviceaccount.com",
+  "client_id": "117561549489708124433",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/server%40super8pizza-ab3c8.iam.gserviceaccount.com"
+}
