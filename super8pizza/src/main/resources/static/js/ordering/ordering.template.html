@@ -1,0 +1,115 @@
+<div class="container">
+    <h1 class="text-center">Order Some Pizza!</h1>
+    <div class="row">
+        <!-- Where all our products are listed-->
+        <div class="col-md-8" role="main">
+            <div class="panel panel-primary sp-menu" role="main">
+                <div class="panel-heading">
+                    <h2 class="panel-title">Our Menu</h2>
+                </div>
+
+                <!-- For every menu option this markup is repeated-->
+                <div class="row" ng-repeat="menuOption in $ctrl.menu">
+                    <div class="col-md-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">{{menuOption.name}}</h4>
+                            </div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <img ng-src="{{menuOption.imageUrl}}" alt="menuOption.name" style="width: 300px; height: 150px"/>
+                                    </div>
+                                    <div class="col-md-6 sp-menu-fields">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label> Price </label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label>{{menuOption.price | currency}}</label>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <label>Quantity</label>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <input type="number" min="1" ng-model="menuOption.quantity" />
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <button class="btn btn-success" type="button" ng-click="$ctrl.addToCart(menuOption)">
+                                                Add to Cart
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- The affixed side container with cart summary and order details -->
+        <div class="col-md-4" id="sp-order-summary-affix" role="complementary" data-spy="affix" data-offset-top="70">
+
+            <div class="sp-cart-header row text-center">
+                <h2>Cart Summary</h2>
+            </div>
+            <div ng-repeat="cartItem in $ctrl.cart | orderBy: 'name'" class="row sp-cart-body">
+                <span>{{cartItem.name}} x {{cartItem.quantity}}: {{(cartItem.quantity * cartItem.price) | currency}}</span>
+            </div>
+            <div class="sp-cart-subtotal row">
+                <label>Subtotal: </label><span ng-bind="$ctrl.cartTotal"></span>
+                <button class="btn btn-warning" type="button" ng-show="$ctrl.cart.length > 0" ng-click="$ctrl.clearCart()">
+                    Clear Cart
+                </button>
+            </div>
+            <div class="row text-center sp-order-sum-header">
+                <h2>Order Options</h2>
+            </div>
+            <div class="row sp-order-deliv-method">
+                <form class="form-inline col-md-12">
+                    <div class="form-group">
+                        <label for="deliverySelect">Delivery Method:</label>
+                        <select id="deliverySelect" class="form-control" name="deliverySelect" ng-model="$ctrl.deliveryOption">
+                            <option ng-repeat="option in $ctrl.deliveryOptions | orderBy: 'type'" value="{{option.id}}">
+                                {{option.name}}
+                            </option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="row sp-order-deliv-addr" ng-show="$ctrl.deliveryOption == '1'">
+                <h3>Delivery Address</h3>
+                <form class="form-inline">
+                    <div class="form-group">
+                        <label for="orderStreet" class="sr-only">Street</label>
+                        <input type="text" class="form-control" id="orderStreet" placeholder="Street" ng-model="$ctrl.street">
+                    </div>
+                    <div class="form-group">
+                        <label for="orderCity" class="sr-only">City</label>
+                        <input type="text" class="form-control" id="orderCity" placeholder="City" ng-model="$ctrl.city">
+                    </div>
+                    <div class="form-group">
+                        <label for="orderState" class="sr-only">Street</label>
+                        <input type="text" class="form-control" id="orderState" placeholder="State" ng-model="$ctrl.state">
+                    </div>
+                    <div class="form-group">
+                        <label for="orderZip" class="sr-only">Zip</label>
+                        <input type="text" class="form-control" id="orderZip" placeholder="Zip" ng-model="$ctrl.zip">
+                    </div>
+                </form>
+            </div>
+            <div class="row sp-place-order text-center">
+                <button class="btn btn-success" type="button" ng-disabled="!$ctrl.isOrderValid()" ng-click="$ctrl.placeOrder()">
+                    Place Order
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
