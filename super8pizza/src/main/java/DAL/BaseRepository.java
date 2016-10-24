@@ -2,29 +2,28 @@ package DAL;
 
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
-import com.google.firebase.database.DatabaseException;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.InputStream;
+import java.io.*;
 import java.util.Map;
 import java.util.concurrent.Semaphore;
 
-public abstract class BaseRepository
+public abstract class BaseRepository <K, V>
 {
-
     private static final String FIREBASE_KEY_FILENAME = "super8pizza-35e9b2fcedf5.json";
-
+    private static final String DATABASE_URL = "https://super8pizza-ab3c8.firebaseio.com/";
     private static final Logger log = LoggerFactory.getLogger(BaseRepository.class);
-    public static final String DATABASE_URL = "https://super8pizza-ab3c8.firebaseio.com/";
 
     private static FirebaseDatabase database;
-    protected static DatabaseReference ref;
+    private static DatabaseReference ref;
+    private final String collectionName;
 
-    public BaseRepository() throws DatabaseException
+    public BaseRepository(String collectionName) throws DatabaseException
     {
+        this.collectionName = collectionName;
+
         InputStream resourceInputStream = BaseRepository.class.getClass().getResourceAsStream(FIREBASE_KEY_FILENAME);
 
         if (resourceInputStream == null)
@@ -47,23 +46,13 @@ public abstract class BaseRepository
 
         FirebaseApp.initializeApp(options);
         database = FirebaseDatabase.getInstance();
-        ref = database.getReference("data/");
+        DatabaseReference dbRef = database.getReference("data/");
+
+        ref = dbRef.child("/" + collectionName + "/");
     }
 
-
-    public abstract <K, V> Map<K, V> getValuesToWrite();
-    public abstract String getCollectionName();
-
-    /**
-     * Saves the supplied Map (key, valle) data to the repository.
-     * Repository classes extending from BaseRepository should implement
-     * the following hook methods:
-     * - getValuesToWrite()
-     * - getCollectionName()
-     */
-    public final void saveData() throws InterruptedException {
-        DatabaseReference saveRef = ref.child("/" + getCollectionName() + "/");
-
+    protected final void saveData(Map<K, V> data) throws InterruptedException
+    {
         //make sure thread lasts long enough to complete firebase call
         final Semaphore semaphore = new Semaphore(0);
 
@@ -73,14 +62,13 @@ public abstract class BaseRepository
 
             if (databaseError != null) {
                 log.error("Data could not be saved: {}", databaseError.getMessage());
-                throw new DatabaseException("Unable to save data to " + getCollectionName());
+                throw new DatabaseException("Unable to save data to " + collectionName);
             } else {
-                log.info("Data saved successfully to {}", saveRef.toString());
-
+                log.info("Data saved successfully to {}", ref.toString());
             }
         };
 
-        saveRef.setValue(getValuesToWrite(), callback);
+        ref.setValue(data, callback);
 
         try {
             semaphore.acquire();
@@ -90,4 +78,14 @@ public abstract class BaseRepository
         }
     }
 
+    protected void registerListener(ValueEventListener listener)
+    {
+        ref.addValueEventListener(listener);
+    }
+
+    protected void registerListener(String key, ValueEventListener listener)
+    {
+        DatabaseReference tempRef = ref.child("/" + key + "/");
+        tempRef.addValueEventListener(listener);
+    }
 }
