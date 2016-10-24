@@ -9,8 +9,6 @@ import org.junit.Test;
 public class InventoryTest implements InventoryRepository.InventorySubscriber
 {
     private static InventoryRepository repo = new InventoryRepository("test");
-    private static Inventory data;
-    private boolean gotUpdate = false;
 
     @org.junit.AfterClass
     public static void cleanup()
@@ -65,9 +63,5 @@ public class InventoryTest implements InventoryRepository.InventorySubscriber
     }
 
     @Override
-    public void dataChanged(Inventory newData)
-    {
-        gotUpdate = true;
-        data = newData;
-    }
+    public void dataChanged(Inventory newData) {}
 }
