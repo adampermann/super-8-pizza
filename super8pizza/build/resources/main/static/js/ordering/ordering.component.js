@@ -18,40 +18,43 @@
     OrderingController.$inject = ['$http', '$filter', '$location', 'orderingService'];
 
     function OrderingController($http, $filter, $location, orderingService) {
-        var self = this;
+        var vm = this;
 
         // cart is empty until they start adding stuff
-        self.cart = [];
-        self.menu = [];
-        self.cartTotal = $filter('currency')(0, '$', 2);
-        self.deliveryOption = 0;
-        self.deliveryOptions = [];
-        self.street = "";
-        self.city = "";
-        self.state = "";
-        self.zip = "";
+        vm.cart = [];
+        vm.menu = [];
+        vm.cartTotal = $filter('currency')(0, '$', 2);
+        vm.deliveryOption = 0;
+        vm.payOption = 0;
+        vm.payOptions = [];
+        vm.deliveryOptions = [];
+        vm.cardNumber = "";
+        vm.street = "";
+        vm.city = "";
+        vm.state = "";
+        vm.zip = "";
 
 
-        self.addToCart = function(menuOption) {
-            if (self.isOptionInCart(menuOption)) {
-                for (var i = 0; i < self.cart.length; ++i) {
-                    if (self.cart[i].name == menuOption.name) {
-                        self.cart[i].quantity += menuOption.quantity;
+        vm.addToCart = function(menuOption) {
+            if (vm.isOptionInCart(menuOption)) {
+                for (var i = 0; i < vm.cart.length; ++i) {
+                    if (vm.cart[i].name == menuOption.name) {
+                        vm.cart[i].quantity += menuOption.quantity;
                     }
                 }
             } else {
                 // option was not in the cart so add it
-                self.cart.push({"name": menuOption.name, "price": menuOption.price, "quantity": menuOption.quantity});
+                vm.cart.push({"name": menuOption.name, "price": menuOption.price, "quantity": menuOption.quantity});
             }
 
             // reset the menu option's quantity back to 1
             menuOption.quantity = 1;
-            self.calculateCartTotal()
+            vm.calculateCartTotal()
         };
 
-        self.isOptionInCart = function(menuOption) {
-            for (var i = 0; i < self.cart.length; ++i) {
-                if (self.cart[i].name == menuOption.name) {
+        vm.isOptionInCart = function(menuOption) {
+            for (var i = 0; i < vm.cart.length; ++i) {
+                if (vm.cart[i].name == menuOption.name) {
                     return true;
                 }
             }
@@ -60,35 +63,41 @@
         };
 
 
-        self.calculateCartTotal = function() {
+        vm.calculateCartTotal = function() {
             var total = 0;
-            for (var i =0; i < self.cart.length; ++i) {
-                total += (self.cart[i].price * self.cart[i].quantity);
+            for (var i =0; i < vm.cart.length; ++i) {
+                total += (vm.cart[i].price * vm.cart[i].quantity);
             }
 
-            self.cartTotal = $filter('currency')(total, '$', 2);
+            vm.cartTotal = $filter('currency')(total, '$', 2);
         };
 
-        self.clearCart = function() {
-            self.cart = [];
-            self.calculateCartTotal();
+        vm.clearCart = function() {
+            vm.cart = [];
+            vm.calculateCartTotal();
         };
 
-        self.isOrderValid = function () {
+        vm.isOrderValid = function () {
             // if delivery option is delivery then ensure all address fields are filled out
             // ensuere the cart is not empty
 
             var valid = true;
 
-            if (self.deliveryOption == 1) {
-                if (self.street == "" || self.city == "" || self.state == "" || self.zip == "") {
+            if (vm.deliveryOption == 1) {
+                if (vm.street == "" || vm.city == "" || vm.state == "" || vm.zip == "") {
                     valid = false;
                 }
-            } else if (self.deliveryOption == 0) {
+            } else if (vm.deliveryOption == 0) {
                 valid = false;
             }
 
-            if (self.cart.length == 0) {
+            if (vm.payOption == 2 && vm.cardNumber == "") {
+                valid = false;
+            } else if (vm.payOption == 0) {
+                valid = false;
+            }
+
+            if (vm.cart.length == 0) {
                 valid = false;
             }
 
@@ -99,17 +108,18 @@
 
         // takes whatever is in the cart and posts it to the server
         // to process the order
-        self.placeOrder = function() {
+        vm.placeOrder = function() {
 
             var order = {
-                "deliveryMethodId": self.deliveryOption,
+                "deliveryMethodId": vm.deliveryOption,
+                "payMethodId": vm.payOption,
                 "address": {
-                    "street": self.street,
-                    "city": self.city,
-                    "state": self.state,
-                    "zip": self.zip
+                    "street": vm.street,
+                    "city": vm.city,
+                    "state": vm.state,
+                    "zip": vm.zip
                 },
-                "contents": self.cart
+                "contents": vm.cart
             };
 
             orderingService.setOrder(order);
@@ -124,14 +134,15 @@
         activate();
         function activate() {
             $http.get('js/ordering/menu.json').then(function (response) {
-                self.menu = response.data;
+                vm.menu = response.data;
             });
 
-            $http.get('js/ordering/deliveryOpts.json').then(function (response) {
-                self.deliveryOptions = response.data
+            $http.get('js/ordering/orderOptions.json').then(function (response) {
+                vm.deliveryOptions = response.data.deliveryOpts;
+                vm.payOptions = response.data.payOpts;
             });
 
-            self.cart=[];
+            vm.cart=[];
         }
     };
 })();

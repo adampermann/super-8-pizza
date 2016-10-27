@@ -13,9 +13,30 @@
 
     module.controller('OrderListingController', OrderListingController);
 
-    OrderListingController.$inject = [];
+    OrderListingController.$inject = ['$http', '$filter'];
 
-    function OrderListingController() {
+    function OrderListingController($http, $filter) {
+        var vm = this;
+        vm.orders = [];
+        vm.filterBy = "";
+
+        vm.getContentsStringForOrder = function(order) {
+            var contents = '';
+
+            for (var i = 0; i < order.contents.length; ++i) {
+                contents += order.contents[i].name + 'x' + order.contents[i].quantity + '\n';
+            }
+
+            return contents;
+        };
+
+        activate();
+        function activate() {
+
+            $http.get('js/order_management/orders.json').then(function (response) {
+                vm.orders = response.data;
+            });
+        };
 
     };
 

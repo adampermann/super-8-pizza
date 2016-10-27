@@ -17,37 +17,38 @@
     OrderSummaryController.$inject = ['$http', '$location', '$filter', 'orderingService'];
 
     function OrderSummaryController($http, $location, $filter, orderingService) {
-        var self = this;
-        self.title = "Order Summary";
+        var vm = this;
+        vm.title = "Order Summary";
 
-        self.order = {};
-        self.orderItems = [];
-        self.address = {};
-        self.orderTotal = 0;
-        self.deliveryOptions = [];
+        vm.order = {};
+        vm.orderItems = [];
+        vm.address = {};
+        vm.orderTotal = 0;
+        vm.deliveryOptions = [];
+        vm.payOptions = [];
 
-        self.isDelivery = function() {
-            return self.order.deliveryMethodId == 1;
+        vm.isDelivery = function() {
+            return vm.order.deliveryMethodId == 1;
         };
 
-        self.getFormattedAddress = function() {
-            return self.address.street + ' ' + self.address.city + ' ' + self.address.state + ', ' + self.address.zip
+        vm.getFormattedAddress = function() {
+            return vm.address.street + ' ' + vm.address.city + ' ' + vm.address.state + ', ' + vm.address.zip
         };
 
-        self.calculateOrderTotal = function() {
+        vm.calculateOrderTotal = function() {
             var total = 0;
-            for (var i = 0; i < self.orderItems.length; ++i) {
-                total += (self.orderItems[i].price * self.orderItems[i].quantity);
+            for (var i = 0; i < vm.orderItems.length; ++i) {
+                total += (vm.orderItems[i].price * vm.orderItems[i].quantity);
             }
 
-            self.orderTotal = $filter('currency')(total, '$', 2);
+            vm.orderTotal = $filter('currency')(total, '$', 2);
         };
 
 
-        self.confirmOrder = function() {
+        vm.confirmOrder = function() {
             // either web request here or refactor those out to the ordering service
             // stubbed out the request for now.
-            // $http.post('/orders/placeOrder', self.cart).success(function(data) {
+            // $http.post('/orders/placeOrder', vm.cart).success(function(data) {
             //
             // }).error(function (error) {
             //
@@ -60,24 +61,33 @@
             $location.url('/');
         };
 
-        self.getDeliveryMethodName = function() {
-            for (var i = 0; i < self.deliveryOptions.length; ++i) {
-                if (self.deliveryOptions[i].id == self.order.deliveryMethodId) {
-                    return self.deliveryOptions[i].name;
+        vm.getDeliveryMethodName = function() {
+            for (var i = 0; i < vm.deliveryOptions.length; ++i) {
+                if (vm.deliveryOptions[i].id == vm.order.deliveryMethodId) {
+                    return vm.deliveryOptions[i].name;
+                }
+            }
+        };
+
+        vm.getPayMethodName = function() {
+            for (var i = 0; i < vm.payOptions.length; ++i) {
+                if (vm.payOptions[i].id == vm.order.payMethodId) {
+                    return vm.payOptions[i].name;
                 }
             }
         };
 
         activate();
         function activate() {
-            self.order = orderingService.getOrder();
-            self.orderItems = self.order.contents;
-            self.address = self.order.address;
+            vm.order = orderingService.getOrder();
+            vm.orderItems = vm.order.contents;
+            vm.address = vm.order.address;
 
-            self.calculateOrderTotal();
+            vm.calculateOrderTotal();
 
-            $http.get('js/ordering/deliveryOpts.json').then(function (response) {
-                self.deliveryOptions = response.data
+            $http.get('js/ordering/orderOptions.json').then(function (response) {
+                vm.deliveryOptions = response.data.deliveryOpts;
+                vm.payOptions = response.data.payOpts;
             });
         };
     };

@@ -1,44 +1,12 @@
 /*our site specific styles*/
-
-#sp-navbar-affix.affix {
-    top: 0;
-    width: 100%;
-}
-
-#sp-order-summary-affix.affix {
-    top: 20px;
-    position: fixed;
-    z-index: 1;
-}
-
-.sp-footer {
-    background-color: #3c3c3c;
-    /*padding-top: 50px;*/
-    /*padding-bottom: 50px;*/
-    margin-top: 100px;
-    color: #adadad;
-    height: 60px;
-}
-
-.sp-menu-img {
-    float:left;
-}
-
-.sp-cart-header, .sp-cart-body, .sp-cart-subtotal, .sp-order-sum-header, .sp-order-deliv-addr, .sp-order-deliv-method, .sp-place-order {
-    border: solid #337ab7;
-    border-width: 1px;
-    border-radius: 1px;
-    padding: 10px;
-}
-
-/* only want a border on the right and left*/
-.sp-cart-body {
-    border-width: 0px 1px 0px 1px;
-}
-
 body {
     padding-top: 70px;
-    padding-bottom: 65px;
+    padding-bottom: 70px;
+    background: url('../images/pizza background.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 }
 
 h1.panel-title {
@@ -60,20 +28,44 @@ h6.panel-title {
     font-size: 10px;
 }
 
-/*.bg {*/
-
-    /*background: url('../images/home pizza.jpg') no-repeat center center;*/
-    /*width: 100%;*/
-    /*height: 350px;*/
-    /*position: fixed;*/
-    /*top: 0;*/
-    /*left: 0;*/
-    /*z-index: -1;*/
-
+/*.jumbotron {*/
+    /*background: url("../images/pizza background 2.jpg")  no-repeat center center fixed;*/
+    /*background-size: cover;*/
 /*}*/
-/*body {*/
-    /*background-image: url('../images/home pizza.jpg');*/
-    /*margin: 0;*/
-    /*background-repeat: no-repeat;*/
-    /*background-size: 1260px 780px;*/
-/*}*/
+
+#sp-navbar-affix.affix {
+    top: 0;
+    width: 100%;
+}
+
+#sp-order-summary-affix {
+    background-color: #ffffff;
+}
+
+#sp-menu {
+    border-color: #070707;
+}
+
+.sp-footer {
+    background-color: #3c3c3c;
+    padding: 20px 0 20px 0;
+    color: #adadad;
+    height: 60px;
+}
+
+.sp-menu-img {
+    float:left;
+}
+
+.sp-cart-header, .sp-cart-body, .sp-cart-subtotal, .sp-order-sum-header,
+.sp-order-deliv-addr, .sp-order-deliv-method, .sp-place-order, .sp-pay-method {
+    border: solid #070707;
+    border-width: 1px;
+    border-radius: 1px;
+    padding: 10px;
+}
+
+/* only want a border on the right and left*/
+.sp-cart-body {
+    border-width: 0px 1px 0px 1px;
+}
