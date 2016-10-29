@@ -8,8 +8,8 @@ import java.util.List;
 
 public class Order
 {
-    private long orderId;
-    private long userId;
+    private String orderId;
+    private String userId;
     private Date timestamp;
     private OrderType orderType;
     private PaymentMethod paymentMethod;
@@ -17,19 +17,24 @@ public class Order
     private List<InventoryItem> orderItems = new ArrayList<>();
     private OrderStatus orderStatus;
 
-    public long getOrderId() {
+    public Order(String orderId, String userId, Date timestamp, OrderType)
+    {
+
+    }
+
+    public String getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(long orderId) {
+    public void setOrderId(String orderId) {
         this.orderId = orderId;
     }
 
-    public long getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(long userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 

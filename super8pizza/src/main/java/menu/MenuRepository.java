@@ -18,11 +18,16 @@ public class MenuRepository extends BaseRepository
 {
     private static final Logger log = LoggerFactory.getLogger(MenuRepository.class);
     private static List<MenuSubscriber> subscribers = new ArrayList<>();
-    private Map<String, MenuItem> menu = new HashMap<>();
+    private Map<String, MenuItem> menu = null;
     private static String collectionName = "menu";
 
     public MenuRepository() throws DatabaseException {
         super(collectionName);
+    }
+
+    protected MenuRepository(String test) {
+
+        super(test + "/" + collectionName);
     }
 
     private void registerListener() throws InterruptedException {
@@ -33,8 +38,16 @@ public class MenuRepository extends BaseRepository
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                //todo menu = dataSnapshot.getValue(Menu.class);
-                //todo log.info("got: {}", menu);
+                DataSnapshot got = dataSnapshot;
+                log.info("got: {}", got);
+
+                for (DataSnapshot child : got.getChildren())
+                {
+                    String key = child.getKey();
+                    MenuItem value = child.getValue(MenuItem.class);
+
+                    menu.put(key, value);
+                }
 
                 semaphore.release();
 
@@ -50,7 +63,7 @@ public class MenuRepository extends BaseRepository
             }
         };
 
-        super.registerListener("items", listener);
+        super.registerListener(listener);
 
         semaphore.acquire();
     }
@@ -61,6 +74,7 @@ public class MenuRepository extends BaseRepository
 
         if (menu == null)
         {
+            menu = new HashMap<>();
             registerListener();
         }
         return menu;

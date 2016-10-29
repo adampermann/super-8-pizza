@@ -28,7 +28,7 @@ public class MenuItem
 
     public MenuItem(){}
 
-    public MenuItem(String name, double price, int quantity) {
+    public MenuItem(String name, double price) {
         this.name = name;
         this.price = price;
     }

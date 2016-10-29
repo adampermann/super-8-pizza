@@ -82,10 +82,4 @@ public abstract class BaseRepository <K, V>
     {
         ref.addValueEventListener(listener);
     }
-
-    protected void registerListener(String key, ValueEventListener listener)
-    {
-        DatabaseReference tempRef = ref.child("/" + key + "/");
-        tempRef.addValueEventListener(listener);
-    }
 }

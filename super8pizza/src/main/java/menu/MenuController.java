@@ -1,6 +1,62 @@
 package menu;
 
-public class MenuController
-{
+import org.springframework.web.bind.annotation.*;
 
+import java.util.Iterator;
+import java.util.Map;
+import java.util.UUID;
+
+@RestController
+public class MenuController implements MenuRepository.MenuSubscriber
+{
+	private MenuRepository repo = null;
+	private Map<String, MenuItem> menu;
+
+	public MenuController()
+	{
+		repo = new MenuRepository();
+
+		getMenuFromRepo();
+	}
+
+	public MenuController(String name)
+	{
+		repo = new MenuRepository(name);
+	}
+
+	@RequestMapping(value="/addToMenu/{name}/{price}", method = RequestMethod.POST)
+	public void addItem(@PathVariable("name") String name, @RequestParam("price") double price)
+	{
+		UUID uuid = UUID.randomUUID();
+		menu.put(uuid.toString(), new MenuItem(name, price));
+		repo.saveMenu(menu);
+	}
+
+	@RequestMapping(value="/getMenu", method = RequestMethod.GET)
+	public Map<String, MenuItem> getMenu()
+	{
+		return menu;
+	}
+
+
+	private void getMenuFromRepo()
+	{
+		try {
+			menu = repo.getMenu(this);
+		} catch (InterruptedException e) {
+			//todo
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void dataChanged(Map<String, MenuItem> newData)
+	{
+		Iterator it = newData.entrySet().iterator();
+		while (it.hasNext()) {
+			Map.Entry pair = (Map.Entry)it.next();
+
+			menu.put((String)pair.getKey(), (MenuItem)pair.getValue());
+		}
+	}
 }
