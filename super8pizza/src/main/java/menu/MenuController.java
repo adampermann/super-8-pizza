@@ -19,6 +19,13 @@ public class MenuController implements MenuRepository.MenuSubscriber
 		getMenuFromRepo();
 	}
 
+	public MenuController(MenuRepository repo)
+	{
+		this.repo = repo;
+
+		getMenuFromRepo();
+	}
+
 	@RequestMapping(value="/addToMenu/{name}/{price}", method = RequestMethod.POST)
 	public void addItem(@PathVariable("name") String name, @RequestParam("price") double price)
 	{
@@ -52,10 +59,5 @@ public class MenuController implements MenuRepository.MenuSubscriber
 
 			menu.put((String)pair.getKey(), (MenuItem)pair.getValue());
 		}
-	}
-
-	void setRepository(MenuRepository repo)
-	{
-		this.repo = repo;
 	}
 }

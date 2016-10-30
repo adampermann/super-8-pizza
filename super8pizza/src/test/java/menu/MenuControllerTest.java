@@ -1,38 +1,61 @@
 package menu;
 
+import org.junit.*;
+
 import java.util.HashMap;
 import java.util.Map;
-
-import static org.mockito.Mockito.*;
-
-import org.junit.*;
-import org.mockito.Mockito;
+import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class MenuControllerTest
 {
-	private static MenuController menuController = new MenuController();
-	private static MenuRepository menuRepoMock = mock(MenuRepository.class);
+	private static MenuRepository repo;
+	private static MenuController menuController;
+	private static Map<String, MenuItem> menu = new HashMap<>();
 
 	@BeforeClass
-	private void testSetup()
+	public static void testSetup()
 	{
-		menuController.setRepository(menuRepoMock);
-		Mockito.doNothing().when(menuRepoMock.saveMenu(anyMap()));
+		repo = new MenuRepository("test");
+
+		UUID id = UUID.randomUUID();
+		menu.put(id.toString(), new MenuItem(id, "item1", ThreadLocalRandom.current().nextDouble(0, 21)));
+		id = UUID.randomUUID();
+		menu.put(id.toString(), new MenuItem(id, "item2", ThreadLocalRandom.current().nextDouble(0, 21)));
+		id = UUID.randomUUID();
+		menu.put(id.toString(), new MenuItem(id, "item3", ThreadLocalRandom.current().nextDouble(0, 21)));
+		id = UUID.randomUUID();
+		menu.put(id.toString(), new MenuItem(id, "item4", ThreadLocalRandom.current().nextDouble(0, 21)));
+		id = UUID.randomUUID();
+		menu.put(id.toString(), new MenuItem(id, "item5", ThreadLocalRandom.current().nextDouble(0, 21)));
+		repo.saveMenu(menu);
+
+		menuController = new MenuController(repo);
 	}
 
 	@Test
-	public void saveGetInventory_RandomData()
+	public void getInventory_RandomData()
 	{
-		//try {
-			//Map<String, MenuItem> expected = setupRandomData();
-			//Inventory result = repo.getInventory(this);
+		Map<String, MenuItem> result = menuController.getMenu();
+		assert(menu.equals(result));
+	}
 
-			//assertEquals(expected, result);
-			//assertNotSame(expected, result);
+	@Test
+	public void addItem_UpdatesMenu()
+	{
+		menuController.addItem("new item", ThreadLocalRandom.current().nextDouble(0, 21));
+		Map<String, MenuItem> result = menuController.getMenu();
+		assert(menu.equals(result));
+	}
 
-//		} catch (InterruptedException e) {
-//			e.printStackTrace();
-//			assert(false);
-//		}
+	@Test
+	public void addItem_UpdatesMenu_Cloud()
+	{
+		menuController.addItem("new item", ThreadLocalRandom.current().nextDouble(0, 21));
+		menuController = null;
+		menuController = new MenuController(repo);
+		Map<String, MenuItem> result = menuController.getMenu();
+
+		assert(menu.equals(result));
 	}
 }
