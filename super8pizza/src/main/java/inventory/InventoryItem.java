@@ -1,20 +1,27 @@
 package inventory;
 
-public class InventoryItem
+import java.util.Objects;
+import java.util.UUID;
+
+public class InventoryItem extends OrderableItem
 {
+    private int count;
+
     public InventoryItem() {}
-    public InventoryItem(String name, int count)
+    public InventoryItem(UUID id, String name, int count)
     {
-        this.name = name;
+        super(id, name, 0.0);
         this.count = count;
     }
-
-    public String getName() {
-        return name;
+    public InventoryItem(UUID id, String name, Double price)
+    {
+        super(id, name, price);
+        this.count = 0;
     }
-
-    public void setName(String name) {
-        this.name = name;
+    public InventoryItem(UUID id, String name, int count, Double price)
+    {
+        super(id, name, price);
+        this.count = count;
     }
 
     public int getCount() {
@@ -24,9 +31,6 @@ public class InventoryItem
     public void setCount(int count) {
         this.count = count;
     }
-
-    private String name;
-    private int count;
 
     @Override
     public boolean equals(Object rhs)
@@ -44,7 +48,7 @@ public class InventoryItem
             return false;
         }
 
-        if (this.name != ((InventoryItem) rhs).name || this.count != ((InventoryItem) rhs).count)
+        if (this.id != ((InventoryItem) rhs).id || this.name != ((InventoryItem) rhs).name || !Objects.equals(this.getPrice(), ((InventoryItem) rhs).getPrice()) || this.count != ((InventoryItem) rhs).count)
         {
             return false;
         }

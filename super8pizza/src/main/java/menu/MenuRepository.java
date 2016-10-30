@@ -38,10 +38,9 @@ public class MenuRepository extends BaseRepository
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                DataSnapshot got = dataSnapshot;
-                log.info("got: {}", got);
+                log.info("got: {}", dataSnapshot);
 
-                for (DataSnapshot child : got.getChildren())
+                for (DataSnapshot child : dataSnapshot.getChildren())
                 {
                     String key = child.getKey();
                     MenuItem value = child.getValue(MenuItem.class);

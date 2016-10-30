@@ -33,6 +33,7 @@
     <orderEntry type="library" name="Gradle: org.webjars:bootstrap:3.3.7-1" level="project" />
     <orderEntry type="library" name="Gradle: org.webjars.bower:angular:1.5.8" level="project" />
     <orderEntry type="library" name="Gradle: com.google.firebase:firebase-server-sdk:3.0.1" level="project" />
+    <orderEntry type="library" name="Gradle: org.mockito:mockito-all:1.10.19" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter:1.4.1.RELEASE" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-tomcat:1.4.1.RELEASE" level="project" />
     <orderEntry type="library" name="Gradle: org.hibernate:hibernate-validator:5.2.4.Final" level="project" />

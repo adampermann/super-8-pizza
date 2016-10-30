@@ -17,9 +17,15 @@ public class Order
     private List<InventoryItem> orderItems = new ArrayList<>();
     private OrderStatus orderStatus;
 
-    public Order(String orderId, String userId, Date timestamp, OrderType)
+    public Order(String orderId, String userId, Date timestamp, OrderType type, PaymentMethod payment, Address address, List<InventoryItem> items)
     {
-
+        this.orderId = orderId;
+        this.userId = userId;
+        this.timestamp = timestamp;
+        this.orderType = type;
+        this.paymentMethod = payment;
+        this.address = address;
+        this.orderItems = items;
     }
 
     public String getOrderId() {

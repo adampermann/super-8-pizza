@@ -19,16 +19,11 @@ public class MenuController implements MenuRepository.MenuSubscriber
 		getMenuFromRepo();
 	}
 
-	public MenuController(String name)
-	{
-		repo = new MenuRepository(name);
-	}
-
 	@RequestMapping(value="/addToMenu/{name}/{price}", method = RequestMethod.POST)
 	public void addItem(@PathVariable("name") String name, @RequestParam("price") double price)
 	{
-		UUID uuid = UUID.randomUUID();
-		menu.put(uuid.toString(), new MenuItem(name, price));
+		UUID id = UUID.randomUUID();
+		menu.put(id.toString(), new MenuItem(id, name, price));
 		repo.saveMenu(menu);
 	}
 
@@ -37,7 +32,6 @@ public class MenuController implements MenuRepository.MenuSubscriber
 	{
 		return menu;
 	}
-
 
 	private void getMenuFromRepo()
 	{
@@ -58,5 +52,10 @@ public class MenuController implements MenuRepository.MenuSubscriber
 
 			menu.put((String)pair.getKey(), (MenuItem)pair.getValue());
 		}
+	}
+
+	void setRepository(MenuRepository repo)
+	{
+		this.repo = repo;
 	}
 }
