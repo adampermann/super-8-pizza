@@ -1,0 +1,72 @@
+/*our site specific styles*/
+body {
+    padding-top: 70px;
+    padding-bottom: 70px;
+    background: url('../images/pizza background.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+h1.panel-title {
+    font-size: 36px;
+}
+h2.panel-title {
+    font-size: 30px;
+}
+h3.panel-title {
+    font-size: 24px;
+}
+h4.panel-title {
+    font-size: 18px
+}
+h5.panel-title {
+    font-size: 14px
+}
+h6.panel-title {
+    font-size: 10px;
+}
+
+/*might come back to the jumbotron and add a background image or color*/
+/*.jumbotron {*/
+    /*background: url("../images/pizza background 2.jpg")  no-repeat center center fixed;*/
+    /*background-size: cover;*/
+/*}*/
+
+#sp-navbar-affix.affix {
+    top: 0;
+    width: 100%;
+}
+
+#sp-order-summary-affix {
+    background-color: #ffffff;
+}
+
+#sp-menu {
+    border-color: #070707;
+}
+
+.sp-footer {
+    background-color: #3c3c3c;
+    padding: 20px 0 20px 0;
+    color: #adadad;
+    height: 60px;
+}
+
+.sp-menu-img {
+    float:left;
+}
+
+.sp-cart-header, .sp-cart-body, .sp-cart-subtotal, .sp-order-sum-header,
+.sp-order-deliv-addr, .sp-order-deliv-method, .sp-place-order, .sp-pay-method {
+    border: solid #070707;
+    border-width: 1px;
+    border-radius: 1px;
+    padding: 10px;
+}
+
+/* only want a border on the right and left*/
+.sp-cart-body {
+    border-width: 0px 1px 0px 1px;
+}

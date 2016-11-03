@@ -5,5 +5,5 @@
 /// each 'feature' should have its own module
 //// all related stuff should register with that module
 (function() {
-    angular.module('menuList', []);
+    angular.module('orderSummary', []);
 })();
