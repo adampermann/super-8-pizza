@@ -133,8 +133,11 @@
         // initialize our controller
         activate();
         function activate() {
-            $http.get('js/ordering/menu.json').then(function (response) {
+            $http.get('/getMenu').then(function (response) {
+                console.log('getting menu');
                 vm.menu = response.data;
+
+                console.log(vm.menu);
             });
 
             $http.get('js/ordering/orderOptions.json').then(function (response) {
