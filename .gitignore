@@ -1,0 +1,37 @@
+#gradle
+.super8pizza/gradle/
+
+# Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and Webstorm
+# Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
+
+# User-specific stuff:
+.super8pizza/idea/workspace.xml
+.super8pizza/idea/tasks.xml
+.super8pizza/build/
+
+# Sensitive or high-churn files:
+.super8pizza/idea/dataSources.ids
+.super8pizza/idea/dataSources.xml
+.super8pizza/idea/dataSources.local.xml
+.super8pizza/idea/sqlDataSources.xml
+.super8pizza/idea/dynamic.xml
+.super8pizza/idea/uiDesigner.xml
+
+# Gradle:
+.super8pizza/idea/gradle.xml
+.super8pizza/idea/libraries
+
+# Mongo Explorer plugin:
+.super8pizza/idea/mongoSettings.xml
+
+## File-based project format:
+*.iws
+
+## Plugin-specific files:
+
+# IntelliJ
+/out/
+/build/
+
+# mpeltonen/sbt-idea plugin
+.super8pizza/idea_modules/
