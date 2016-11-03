@@ -6,7 +6,6 @@ import com.superpizza.inventory.OrderableItem;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
 
 public class MenuItem extends OrderableItem
 {
@@ -14,7 +13,7 @@ public class MenuItem extends OrderableItem
 
     public MenuItem(){}
 
-    public MenuItem(UUID id,  String name, double price) {
+    public MenuItem(String id,  String name, double price) {
         super(id, name, price);
     }
 

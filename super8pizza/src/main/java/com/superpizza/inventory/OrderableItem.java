@@ -1,7 +1,5 @@
 package com.superpizza.inventory;
 
-import java.util.UUID;
-
 /**
  * Created by Kevin on 10/29/2016.
  */
@@ -12,9 +10,9 @@ public abstract class OrderableItem
 	protected String id;
 
 	public OrderableItem() {}
-	public OrderableItem(UUID id, String name, Double price)
+	public OrderableItem(String id, String name, Double price)
 	{
-		this.id = id.toString();
+		this.id = id;
 		this.name = name;
 		this.price = price;
 	}

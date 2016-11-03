@@ -30,7 +30,7 @@ public class MenuController implements MenuRepository.MenuSubscriber
 	public void addItem(@PathVariable("name") String name, @RequestParam("price") double price)
 	{
 		UUID id = UUID.randomUUID();
-		menu.put(id.toString(), new MenuItem(id, name, price));
+		menu.put(id.toString(), new MenuItem(id.toString(), name, price));
 		repo.saveMenu(menu);
 	}
 
