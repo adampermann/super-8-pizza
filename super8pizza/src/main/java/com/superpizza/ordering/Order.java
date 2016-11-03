@@ -1,23 +1,26 @@
 package com.superpizza.ordering;
 
 import com.superpizza.inventory.InventoryItem;
+import com.superpizza.inventory.OrderableItem;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+import java.util.Map;
 
 public class Order
 {
     private String orderId;
+    private long orderNumber;
     private String userId;
     private Date timestamp;
     private OrderType orderType;
     private PaymentMethod paymentMethod;
     private Address address;
-    private List<InventoryItem> orderItems = new ArrayList<>();
+    private Map<String, Integer> orderItems;
     private OrderStatus orderStatus;
 
-    public Order(String orderId, String userId, Date timestamp, OrderType type, PaymentMethod payment, Address address, List<InventoryItem> items)
+    public Order(){}
+
+    public Order(String orderId, String userId, Date timestamp, OrderType type, PaymentMethod payment, Address address, Map<String, Integer> items)
     {
         this.orderId = orderId;
         this.userId = userId;
@@ -76,24 +79,27 @@ public class Order
         this.address = address;
     }
 
-    public List<InventoryItem> getOrderItems() {
+    public Map<String, Integer> getOrderItems() {
         return orderItems;
     }
 
-    public void setOrderItems(List<InventoryItem> orderItems) {
+    public void setOrderItems(Map<String, Integer> orderItems) {
         this.orderItems = orderItems;
     }
 
-    public OrderStatus getOrderStatud() {
+    public OrderStatus getOrderStatus() {
         return orderStatus;
     }
 
-    public void setOrderStatud(OrderStatus orderStatud) {
-        this.orderStatus = orderStatud;
+    public void setOrderStatus(OrderStatus orderStatus) {
+        this.orderStatus = orderStatus;
     }
 
+    public long getOrderNumber() { return orderNumber; }
 
-    public enum OrderType { Delivery, Pickup}
+    public void setOrderNumber(long orderNumber) { this.orderNumber = orderNumber; }
+
+    public enum OrderType { Delivery, Pickup }
     public enum PaymentMethod { Cash, Card }
     public enum OrderStatus { Placed, Making, Ready, Complete }
 }

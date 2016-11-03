@@ -13,8 +13,8 @@ public class MenuItem extends OrderableItem
 
     public MenuItem(){}
 
-    public MenuItem(String id,  String name, double price) {
-        super(id, name, price);
+    public MenuItem(String id,  String name, double price, String imageURL) {
+        super(id, name, price, imageURL);
     }
 
     public List<InventoryItem> getIncludedItems()

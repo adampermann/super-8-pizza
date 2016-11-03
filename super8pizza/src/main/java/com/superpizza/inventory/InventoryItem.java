@@ -9,17 +9,22 @@ public class InventoryItem extends OrderableItem
     public InventoryItem() {}
     public InventoryItem(String id, String name, int count)
     {
-        super(id, name, 0.0);
+        super(id, name, 0.0, "");
         this.count = count;
     }
     public InventoryItem(String id, String name, Double price)
     {
-        super(id, name, price);
+        super(id, name, price, "");
         this.count = 0;
     }
-    public InventoryItem(String id, String name, int count, Double price)
+    public InventoryItem(String id, String name, Double price, String imageURL)
     {
-        super(id, name, price);
+        super(id, name, price, imageURL);
+        this.count = 0;
+    }
+    public InventoryItem(String id, String name, int count, Double price, String imageURL)
+    {
+        super(id, name, price, imageURL);
         this.count = count;
     }
 

@@ -1,20 +1,19 @@
 package com.superpizza.inventory;
 
-/**
- * Created by Kevin on 10/29/2016.
- */
 public abstract class OrderableItem
 {
 	protected String name;
 	private Double price;
 	protected String id;
+	protected String imageURL;
 
 	public OrderableItem() {}
-	public OrderableItem(String id, String name, Double price)
+	public OrderableItem(String id, String name, Double price, String imageURL)
 	{
 		this.id = id;
 		this.name = name;
 		this.price = price;
+		this.imageURL = imageURL;
 	}
 
 	public String getName()
@@ -45,5 +44,13 @@ public abstract class OrderableItem
 	public void setId(String id)
 	{
 		this.id = id;
+	}
+
+	public String getImageURL() {
+		return imageURL;
+	}
+
+	public void setImageURL(String imageURL) {
+		this.imageURL = imageURL;
 	}
 }
