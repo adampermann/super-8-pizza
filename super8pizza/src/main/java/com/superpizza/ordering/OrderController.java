@@ -26,33 +26,33 @@ public class OrderController implements OrderRepository.OrderSubscriber
     }
 
     @RequestMapping("/getDeliveryOptions")
-    public List<Map.Entry<String,Integer>> getDeliveryOptionMapping()
+    public List<OrderOption> getDeliveryOptionMapping()
     {
-        List<Map.Entry<String,Integer>> optionsList = new ArrayList<>();
-        optionsList.add(new AbstractMap.SimpleEntry<>(Order.OrderType.Delivery.toString(), Order.OrderType.Delivery.ordinal()));
-        optionsList.add(new AbstractMap.SimpleEntry<>(Order.OrderType.Pickup.toString(), Order.OrderType.Pickup.ordinal()));
+        List<OrderOption> optionsList = new ArrayList<>();
+        optionsList.add(new OrderOption(Order.OrderType.Delivery.ordinal(), Order.OrderType.Delivery.toString()));
+        optionsList.add(new OrderOption(Order.OrderType.Pickup.ordinal(), Order.OrderType.Pickup.toString()));
 
         return optionsList;
     }
 
     @RequestMapping("/getPaymentOptions")
-    public List<Map.Entry<String,Integer>> getPaymentOptionMapping()
+    public List<OrderOption> getPaymentOptionMapping()
     {
-        List<Map.Entry<String,Integer>> optionsList = new ArrayList<>();
-        optionsList.add(new AbstractMap.SimpleEntry<>(Order.PaymentMethod.Card.toString(), Order.PaymentMethod.Card.ordinal()));
-        optionsList.add(new AbstractMap.SimpleEntry<>(Order.PaymentMethod.Cash.toString(), Order.PaymentMethod.Cash.ordinal()));
+        List<OrderOption> optionsList = new ArrayList<>();
+        optionsList.add(new OrderOption(Order.PaymentMethod.Card.ordinal(), Order.PaymentMethod.Card.toString()));
+        optionsList.add(new OrderOption(Order.PaymentMethod.Cash.ordinal(), Order.PaymentMethod.Cash.toString()));
 
         return optionsList;
     }
 
     @RequestMapping("/getOrderStatusOptions")
-    public List<Map.Entry<String,Integer>> getOrderStatusMappings()
+    public List<OrderOption> getOrderStatusMappings()
     {
-        List<Map.Entry<String,Integer>> optionsList = new ArrayList<>();
-        optionsList.add(new AbstractMap.SimpleEntry<>(Order.OrderStatus.Placed.toString(), Order.OrderStatus.Placed.ordinal()));
-        optionsList.add(new AbstractMap.SimpleEntry<>(Order.OrderStatus.Making.toString(), Order.OrderStatus.Making.ordinal()));
-        optionsList.add(new AbstractMap.SimpleEntry<>(Order.OrderStatus.Ready.toString(), Order.OrderStatus.Ready.ordinal()));
-        optionsList.add(new AbstractMap.SimpleEntry<>(Order.OrderStatus.Complete.toString(), Order.OrderStatus.Complete.ordinal()));
+        List<OrderOption> optionsList = new ArrayList<>();
+        optionsList.add(new OrderOption(Order.OrderStatus.Placed.ordinal(), Order.OrderStatus.Placed.toString()));
+        optionsList.add(new OrderOption(Order.OrderStatus.Making.ordinal(), Order.OrderStatus.Making.toString()));
+        optionsList.add(new OrderOption(Order.OrderStatus.Ready.ordinal(), Order.OrderStatus.Ready.toString()));
+        optionsList.add(new OrderOption(Order.OrderStatus.Complete.ordinal(), Order.OrderStatus.Complete.toString()));
 
         return optionsList;
     }
