@@ -26,36 +26,35 @@ public class OrderController implements OrderRepository.OrderSubscriber
     }
 
     @RequestMapping("/getDeliveryOptions")
-    public Map<String, Integer> getDeliveryOptionMapping()
+    public List<Map.Entry<String,Integer>> getDeliveryOptionMapping()
     {
-        Map<String, Integer> options = new HashMap<>();
-        options.put(Order.OrderType.Delivery.toString(), Order.OrderType.Delivery.ordinal());
-        options.put(Order.OrderType.Pickup.toString(), Order.OrderType.Pickup.ordinal());
+        List<Map.Entry<String,Integer>> optionsList = new ArrayList<>();
+        optionsList.add(new AbstractMap.SimpleEntry<>(Order.OrderType.Delivery.toString(), Order.OrderType.Delivery.ordinal()));
+        optionsList.add(new AbstractMap.SimpleEntry<>(Order.OrderType.Pickup.toString(), Order.OrderType.Pickup.ordinal()));
 
-        return options;
+        return optionsList;
     }
 
     @RequestMapping("/getPaymentOptions")
-    public Map<String, Integer> getPaymentOptionMapping()
+    public List<Map.Entry<String,Integer>> getPaymentOptionMapping()
     {
-        Map<String, Integer> options = new HashMap<>();
-        options.put(Order.PaymentMethod.Card.toString(), Order.PaymentMethod.Card.ordinal());
-        options.put(Order.PaymentMethod.Cash.toString(), Order.PaymentMethod.Cash.ordinal());
+        List<Map.Entry<String,Integer>> optionsList = new ArrayList<>();
+        optionsList.add(new AbstractMap.SimpleEntry<>(Order.PaymentMethod.Card.toString(), Order.PaymentMethod.Card.ordinal()));
+        optionsList.add(new AbstractMap.SimpleEntry<>(Order.PaymentMethod.Cash.toString(), Order.PaymentMethod.Cash.ordinal()));
 
-        return options;
+        return optionsList;
     }
 
     @RequestMapping("/getOrderStatusOptions")
-    public Map<String, Integer> getOrderStatusMappings()
+    public List<Map.Entry<String,Integer>> getOrderStatusMappings()
     {
-        Map<String, Integer> options = new HashMap<>();
-        options.put(Order.OrderStatus.Placed.toString(), Order.OrderStatus.Placed.ordinal());
-        options.put(Order.OrderStatus.Making.toString(), Order.OrderStatus.Making.ordinal());
-        options.put(Order.OrderStatus.Ready.toString(), Order.OrderStatus.Ready.ordinal());
-        options.put(Order.OrderStatus.Complete.toString(), Order.OrderStatus.Complete.ordinal());
+        List<Map.Entry<String,Integer>> optionsList = new ArrayList<>();
+        optionsList.add(new AbstractMap.SimpleEntry<>(Order.OrderStatus.Placed.toString(), Order.OrderStatus.Placed.ordinal()));
+        optionsList.add(new AbstractMap.SimpleEntry<>(Order.OrderStatus.Making.toString(), Order.OrderStatus.Making.ordinal()));
+        optionsList.add(new AbstractMap.SimpleEntry<>(Order.OrderStatus.Ready.toString(), Order.OrderStatus.Ready.ordinal()));
+        optionsList.add(new AbstractMap.SimpleEntry<>(Order.OrderStatus.Complete.toString(), Order.OrderStatus.Complete.ordinal()));
 
-        return options;
-
+        return optionsList;
     }
 
     @RequestMapping("/getOrders")
@@ -67,8 +66,8 @@ public class OrderController implements OrderRepository.OrderSubscriber
         while (it.hasNext())
         {
             Map.Entry pair = (Map.Entry)it.next();
-
-            if ( ((Order)pair).getOrderStatus() == Order.OrderStatus.Complete )
+            Order order = (Order) pair.getValue();
+            if (order.getOrderStatus() == Order.OrderStatus.Complete )
             {
                 continue;
             }

@@ -41,13 +41,13 @@ public class OrderRepository extends BaseRepository
                 log.info("got: {}", dataSnapshot);
 
                 //todo
-//                for (DataSnapshot child : dataSnapshot.getChildren())
-//                {
-//                    String key = child.getKey();
-//                    Order value = child.getValue(Order.class);
-//
-//                    orders.put(key, value);
-//                }
+                for (DataSnapshot child : dataSnapshot.getChildren())
+                {
+                    String key = child.getKey();
+                    Order value = child.getValue(Order.class);
+
+                    orders.put(key, value);
+                }
 
                 semaphore.release();
 

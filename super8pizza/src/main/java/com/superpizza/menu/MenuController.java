@@ -44,7 +44,7 @@ public class MenuController implements MenuRepository.MenuSubscriber
 		for (Map.Entry<String, MenuItem> entry : menu.entrySet())
 		{
 			MenuItem cur = entry.getValue();
-			viewModel.add(new MenuItemViewModel(cur.getId(), cur.getName(), cur.getPrice(), cur.getImageURL(), 1));
+			viewModel.add(new MenuItemViewModel(cur.getId(), cur.getName(), cur.getPrice(), cur.getImageURL()));
 		}
 
 		return viewModel;
