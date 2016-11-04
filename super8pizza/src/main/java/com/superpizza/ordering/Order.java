@@ -99,7 +99,25 @@ public class Order
 
     public void setOrderNumber(long orderNumber) { this.orderNumber = orderNumber; }
 
-    public enum OrderType { Delivery, Pickup }
-    public enum PaymentMethod { Cash, Card }
-    public enum OrderStatus { Placed, Making, Ready, Complete }
+    public enum OrderType {
+        Delivery(1), Pickup(2);
+
+        private final int id;
+        OrderType(int id) { this.id = id; }
+        public int getValue() { return id; }
+    }
+    public enum PaymentMethod {
+        Cash(1), Card(2);
+
+        private final int id;
+        PaymentMethod(int id) { this.id = id; }
+        public int getValue() { return id; }
+    }
+    public enum OrderStatus {
+        Placed(1), Making(2), Ready(3), Complete(4);
+
+        private final int id;
+        OrderStatus(int id) { this.id = id; }
+        public int getValue() { return id; }
+    }
 }

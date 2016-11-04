@@ -4,7 +4,7 @@
 (function () {
     'use-strict';
 
-    var module = angular.module('orderSummary');
+    var module = angular.module('orderSummary', []);
 
     module.component('orderSummary', {
         templateUrl: 'js/ordering/order.summary.template.html',
@@ -80,8 +80,10 @@
         activate();
         function activate() {
             vm.order = orderingService.getOrder();
-            vm.orderItems = vm.order.contents;
+            vm.orderItems = vm.order.orderItems;
             vm.address = vm.order.address;
+
+            console.log(vm.orderItems);
 
             vm.calculateOrderTotal();
 

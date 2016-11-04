@@ -1,4 +1,4 @@
 (function() {
-    angular.module('orderListing', []);
+    // angular.module('orderListing', []);
 
 })();

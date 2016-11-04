@@ -4,7 +4,7 @@
 (function () {
     'use-strict';
 
-    var module = angular.module('ordering');
+    var module = angular.module('ordering', []);
 
     module.component('ordering', {
         templateUrl: 'js/ordering/ordering.template.html',
@@ -44,7 +44,12 @@
                 }
             } else {
                 // option was not in the cart so add it
-                vm.cart.push({"name": menuOption.name, "price": menuOption.price, "quantity": menuOption.quantity});
+                vm.cart.push({
+                    "id": menuOption.id,
+                    "name": menuOption.name,
+                    "price": menuOption.price,
+                    "quantity": menuOption.quantity
+                });
             }
 
             // reset the menu option's quantity back to 1
@@ -101,7 +106,8 @@
                 valid = false;
             }
 
-            console.log(valid);
+            console.log('order is ' + valid);
+            console.log('card number is ' + vm.cardNumber);
             return valid;
         };
 
@@ -110,24 +116,66 @@
         // to process the order
         vm.placeOrder = function() {
 
+            // private String orderId;
+            // private long orderNumber;
+            // private String userId;
+            // private Date timestamp;
+            // private OrderType orderType;
+            // private PaymentMethod paymentMethod;
+            // private Address address;
+            // private Map<String, Integer> orderItems;
+            // private OrderStatus orderStatus;
+
+            var orderItems = {};
+
+            for (var i = 0; i < vm.cart.length; i++) {
+                console.log(vm.cart[i].id);
+                orderItems[vm.cart[i].id] = vm.cart[i].quantity;
+                console.log(orderItems[vm.cart[i].id]);
+            }
+
+            //console.log('order items are: ');
+
             var order = {
-                "deliveryMethodId": vm.deliveryOption,
-                "payMethodId": vm.payOption,
+                "orderId": "",
+                "orderNumber": 0,
+                "userId": "guest user",
+                "timestamp": Date.now(),
+                "orderType": vm.deliveryOption,
+                "paymentMethod": vm.payOption,
                 "address": {
                     "street": vm.street,
                     "city": vm.city,
                     "state": vm.state,
                     "zip": vm.zip
                 },
-                "contents": vm.cart
+                "orderItems": orderItems
             };
 
+            console.log(order);
+            //
+            // public class OrderSuccessModel {
+            //
+            //     public boolean success;
+            //
+            //     public string message;
+            //
+            //     public string orderId/number /whatever
+            // }
+
+            // $http.post('/placeOrder').then(function (response) {
+            //     if (response.data.success) {
+            //         // we are good and we can pass the order id to the summary page
+            //     } else {
+            //         // the order didn't place display an error
+            //         // or something on the top of the page
+            //     }
+            // });
+
+            // maybe take this out and pass a route param of the order id
             orderingService.setOrder(order);
 
             $location.url('/order/summary');
-
-            // now it should redirect to the order summary page
-
         };
 
         // initialize our controller
@@ -136,15 +184,30 @@
             $http.get('/getMenu').then(function (response) {
                 console.log('getting menu');
                 vm.menu = response.data;
-
                 console.log(vm.menu);
             });
 
             $http.get('js/ordering/orderOptions.json').then(function (response) {
-                vm.deliveryOptions = response.data.deliveryOpts;
                 vm.payOptions = response.data.payOpts;
+                vm.deliveryOptions = response.data.deliveryOpts;
+                console.log('pay opts: ' + vm.payOptions);
             });
 
+
+            // $http.get('/getDeliveryOptions').then(function (response) {
+            //     vm.deliveryOptions = response.data;
+            //
+            //     console.log('deliv opts: ' + vm.deliveryOptions);
+            // });
+
+
+            // $http.get('/getPaymentOptions').then(function (response) {
+            //     vm.paymentOptions = response.data;
+            //
+            //     console.log('pay opts: ' + vm.paymentOptions);
+            // });
+
+            // initialize the cart
             vm.cart=[];
         }
     };

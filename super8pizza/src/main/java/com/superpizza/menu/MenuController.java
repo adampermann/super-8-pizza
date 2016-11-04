@@ -3,6 +3,8 @@ package com.superpizza.menu;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Iterator;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -35,10 +37,25 @@ public class MenuController implements MenuRepository.MenuSubscriber
 	}
 
 	@RequestMapping("/getMenu")
-	public Map<String, MenuItem> getMenu()
+	public List<MenuItemViewModel> getMenu()
 	{
-		return menu;
+		List<MenuItemViewModel> viewModel = new ArrayList<>();
+
+		for (Map.Entry<String, MenuItem> entry : menu.entrySet())
+		{
+			MenuItem cur = entry.getValue();
+			viewModel.add(new MenuItemViewModel(cur.getId(), cur.getName(), cur.getPrice(), cur.getImageURL(), 1));
+		}
+
+		return viewModel;
 	}
+
+//  what it was before the view model
+//	@RequestMapping("/getMenu")
+//	public Map<String, MenuItem> getMenu()
+//	{
+//		return menu;
+//	}
 
 	private void getMenuFromRepo()
 	{

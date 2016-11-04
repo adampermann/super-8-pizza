@@ -1,0 +1,10 @@
+{
+  "deliveryOpts": [
+    { "id": 1, "name": "Delivery" },
+    { "id": 2, "name": "Pick Up" }
+  ],
+  "payOpts": [
+    { "id": 1, "name": "Cash" },
+    { "id": 2, "name": "Credit" }
+  ]
+}

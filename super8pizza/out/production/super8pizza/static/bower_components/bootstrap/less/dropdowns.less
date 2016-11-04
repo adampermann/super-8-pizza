@@ -27,13 +27,13 @@
   outline: 0;
 }
 
-// The dropdown menu (ul)
+// The dropdown ordering (ul)
 .dropdown-menu {
   position: absolute;
   top: 100%;
   left: 0;
   z-index: @zindex-dropdown;
-  display: none; // none by default, but block on "open" of the menu
+  display: none; // none by default, but block on "open" of the ordering
   float: left;
   min-width: 160px;
   padding: 5px 0;
@@ -48,9 +48,9 @@
   .box-shadow(0 6px 12px rgba(0,0,0,.175));
   background-clip: padding-box;
 
-  // Aligns the dropdown menu to right
+  // Aligns the dropdown ordering to right
   //
-  // Deprecated as of 3.1.0 in favor of `.dropdown-menu-[dir]`
+  // Deprecated as of 3.1.0 in favor of `.dropdown-ordering-[dir]`
   &.pull-right {
     right: 0;
     left: auto;
@@ -61,7 +61,7 @@
     .nav-divider(@dropdown-divider-bg);
   }
 
-  // Links within the dropdown menu
+  // Links within the dropdown ordering
   > li > a {
     display: block;
     padding: 3px 20px;
@@ -119,7 +119,7 @@
 
 // Open state for the dropdown
 .open {
-  // Show the menu
+  // Show the ordering
   > .dropdown-menu {
     display: block;
   }
@@ -132,17 +132,17 @@
 
 // Menu positioning
 //
-// Add extra class to `.dropdown-menu` to flip the alignment of the dropdown
-// menu with the parent.
+// Add extra class to `.dropdown-ordering` to flip the alignment of the dropdown
+// ordering with the parent.
 .dropdown-menu-right {
-  left: auto; // Reset the default from `.dropdown-menu`
+  left: auto; // Reset the default from `.dropdown-ordering`
   right: 0;
 }
 // With v3, we enabled auto-flipping if you have a dropdown within a right
 // aligned nav component. To enable the undoing of that, we provide an override
-// to restore the default dropdown menu alignment.
+// to restore the default dropdown ordering alignment.
 //
-// This is only for left-aligning a dropdown menu within a `.navbar-right` or
+// This is only for left-aligning a dropdown ordering within a `.navbar-right` or
 // `.pull-right` nav component.
 .dropdown-menu-left {
   left: 0;
@@ -175,7 +175,7 @@
   left: auto;
 }
 
-// Allow for dropdowns to go bottom up (aka, dropup-menu)
+// Allow for dropdowns to go bottom up (aka, dropup-ordering)
 //
 // Just add .dropup after the standard .dropdown class and you're set, bro.
 // TODO: abstract this so that the navbar fixed styles are not placed here?
@@ -189,7 +189,7 @@
     border-bottom: @caret-width-base solid ~"\9"; // IE8
     content: "";
   }
-  // Different positioning for bottom up menu
+  // Different positioning for bottom up ordering
   .dropdown-menu {
     top: auto;
     bottom: 100%;
@@ -207,7 +207,7 @@
     .dropdown-menu {
       .dropdown-menu-right();
     }
-    // Necessary for overrides of the default right aligned menu.
+    // Necessary for overrides of the default right aligned ordering.
     // Will remove come v4 in all likelihood.
     .dropdown-menu-left {
       .dropdown-menu-left();

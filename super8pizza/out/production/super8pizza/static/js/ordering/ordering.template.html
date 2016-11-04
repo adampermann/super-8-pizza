@@ -1,0 +1,135 @@
+<div class="row">
+    <!-- Where all our products are listed-->
+    <div id="sp-menu" class="col-md-8" role="main">
+        <div class="panel panel-primary sp-menu" role="main">
+            <div class="panel-heading">
+                <h2 class="panel-title text-center">Our Menu</h2>
+            </div>
+
+            <!-- For every menu option this markup is repeated-->
+            <div class="row" ng-repeat="menuOption in $ctrl.menu">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">{{menuOption.name}}</h4>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <img ng-src="{{menuOption.imageURL}}" alt="image" style="width: 300px; height: 150px"/>
+                                </div>
+                                <div class="col-md-6 sp-menu-fields">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label>Price</label>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label>{{menuOption.price | currency}}</label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label>Quantity</label>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <input type="number" min="1" ng-model="menuOption.quantity" style="width: 50px" />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <button class="btn btn-primary" type="button" ng-click="$ctrl.addToCart(menuOption)">
+                                            Add to Cart
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br/>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- The affixed side container with cart summary and order details -->
+    <div class="col-md-4" id="sp-order-summary-affix" role="complementary">
+
+        <div class="sp-cart-header row text-center">
+            <h2>Cart Summary</h2>
+        </div>
+        <div class="row sp-cart-body">
+            <!--<span>{{cartItem.name}} x {{cartItem.quantity}}: {{(cartItem.quantity * cartItem.price) | currency}}</span>-->
+            <ul>
+                <li ng-repeat="cartItem in $ctrl.cart | orderBy: 'name'">
+                    {{cartItem.name}} x {{cartItem.quantity}} = {{(cartItem.quantity * cartItem.price) | currency}}
+                </li>
+            </ul>
+        </div>
+        <div class="sp-cart-subtotal row">
+            <label>Subtotal =  </label><span ng-bind="$ctrl.cartTotal"></span>
+            <button class="btn btn-warning" type="button" ng-show="$ctrl.cart.length > 0" ng-click="$ctrl.clearCart()">
+                Clear Cart
+            </button>
+        </div>
+        <div class="row text-center sp-order-sum-header">
+            <h2>Order Options</h2>
+        </div>
+        <div class="row sp-order-deliv-method">
+            <form class="form-inline col-md-12">
+                <div class="form-group">
+                    <label for="deliverySelect">Order Method:</label>
+                    <select id="deliverySelect" class="form-control" name="deliverySelect" ng-model="$ctrl.deliveryOption">
+                        <option ng-repeat="option in $ctrl.deliveryOptions | orderBy: 'name'" value="{{option.id}}">
+                            {{option.name}}
+                        </option>
+                    </select>
+                </div>
+            </form>
+        </div>
+        <div class="row sp-order-deliv-addr" ng-show="$ctrl.deliveryOption == '1'">
+            <h3 class="text-center">Delivery Address</h3>
+            <form class="form-inline">
+                <div class="form-group">
+                    <label for="orderStreet" class="sr-only">Street</label>
+                    <input type="text" class="form-control" id="orderStreet" placeholder="Street" ng-model="$ctrl.street">
+                </div>
+                <div class="form-group">
+                    <label for="orderCity" class="sr-only">City</label>
+                    <input type="text" class="form-control" id="orderCity" placeholder="City" ng-model="$ctrl.city">
+                </div>
+                <div class="form-group">
+                    <label for="orderState" class="sr-only">Street</label>
+                    <input type="text" class="form-control" id="orderState" placeholder="State" ng-model="$ctrl.state">
+                </div>
+                <div class="form-group">
+                    <label for="orderZip" class="sr-only">Zip</label>
+                    <input type="text" class="form-control" id="orderZip" placeholder="Zip" ng-model="$ctrl.zip">
+                </div>
+            </form>
+        </div>
+        <div class="row sp-pay-method">
+            <h3 class="text-center">Payment</h3>
+            <form class="form-inline">
+                <div class="form-group col-md-12">
+                    <label for="paymentSelect">Payment Method:</label>
+                    <select id="paymentSelect" class="form-control" name="paymentSelect" ng-model="$ctrl.payOption">
+                        <option ng-repeat="option in $ctrl.payOptions | orderBy: 'name'" value="{{option.id}}">
+                            {{option.name}}
+                        </option>
+                    </select>
+                </div>
+                <div class="form-group col-md-12" ng-show="$ctrl.payOption == 2">
+                    <label for="orderPay">Card Number:</label>
+                    <input type="text" pattern="[0-9]{13,16}" class="form-control" id="orderPay" placeholder="1234-5678-9012-3456">
+                </div>
+            </form>
+        </div>
+
+        <div class="row sp-place-order text-center">
+            <button class="btn btn-success" type="button" ng-disabled="!$ctrl.isOrderValid()" ng-click="$ctrl.placeOrder()">
+                Place Order
+            </button>
+        </div>
+    </div>
+</div>

@@ -12,7 +12,16 @@
 
     function OrderingService($http) {
         var self = this;
-        var _order = { "deliveryMethod": 0, "address": {}, "contents": [] };
+        var _order = {
+            "orderId": "",
+            "orderNumber": 0,
+            "userId": "guest user",
+            "timestamp": Date.now(),
+            "orderType": 0,
+            "paymentMethod": 0,
+            "address": {},
+            "orderItems": []
+        };
 
         self.setOrder = function(order) {
             _order = order;
@@ -23,7 +32,16 @@
         };
 
         self.clearOrder = function() {
-            _order =  { "deliveryMethod": 0, "address": {}, "contents": [] };
+            _order =  {
+                "orderId": "",
+                "orderNumber": 0,
+                "userId": "guest user",
+                "timestamp": Date.now(),
+                "orderType": 0,
+                "paymentMethod": 0,
+                "address": {},
+                "orderItems": []
+            };
         };
 
     };
