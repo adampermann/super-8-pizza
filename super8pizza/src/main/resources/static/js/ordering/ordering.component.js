@@ -26,7 +26,7 @@
         vm.cartTotal = $filter('currency')(0, '$', 2);
         vm.deliveryOption = 0;
         vm.payOption = 0;
-        vm.payOptions = [];
+        vm.paymentOptions = [];
         vm.deliveryOptions = [];
         vm.cardNumber = "";
         vm.street = "";
@@ -106,15 +106,30 @@
                 valid = false;
             }
 
-            console.log('order is ' + valid);
-            console.log('card number is ' + vm.cardNumber);
             return valid;
         };
 
+        vm.getDeliveryMethodName = function() {
+            for (var i = 0; i < vm.deliveryOptions.length; ++i) {
+                if (vm.deliveryOptions[i].id == vm.deliveryOption) {
+                    return vm.deliveryOptions[i].name;
+                }
+            }
+        };
+
+        vm.getPayMethodName = function() {
+            for (var i = 0; i < vm.paymentOptions.length; ++i) {
+                if (vm.paymentOptions[i].id == vm.payOption) {
+                    return vm.paymentOptions[i].name;
+                }
+            }
+        };
 
         // takes whatever is in the cart and posts it to the server
         // to process the order
         vm.placeOrder = function() {
+
+            // what the server NEEDs to send down
 
             // private String orderId;
             // private long orderNumber;
@@ -122,38 +137,39 @@
             // private Date timestamp;
             // private OrderType orderType;
             // private PaymentMethod paymentMethod;
+            // private String cardNumber
             // private Address address;
-            // private Map<String, Integer> orderItems;
+            // private String cardNumber;
+            // private List<menuItem> orderItems;
             // private OrderStatus orderStatus;
 
-            var orderItems = {};
-
-            for (var i = 0; i < vm.cart.length; i++) {
-                console.log(vm.cart[i].id);
-                orderItems[vm.cart[i].id] = vm.cart[i].quantity;
-                console.log(orderItems[vm.cart[i].id]);
-            }
-
-            //console.log('order items are: ');
-
+            // this order creation will be replaced by the response from
+            // the place order API call once that is done
             var order = {
                 "orderId": "",
-                "orderNumber": 0,
+                "orderNumber": 5,
                 "userId": "guest user",
                 "timestamp": Date.now(),
-                "orderType": vm.deliveryOption,
-                "paymentMethod": vm.payOption,
+                "orderType": {
+                    "id": vm.deliveryOption,
+                    "name": vm.getDeliveryMethodName()
+                },
+                "paymentMethod": {
+                   "id": vm.payOption,
+                    "name": vm.getPayMethodName()
+                },
+                "cardNumber": vm.cardNumber,
                 "address": {
                     "street": vm.street,
                     "city": vm.city,
                     "state": vm.state,
                     "zip": vm.zip
                 },
-                "orderItems": orderItems
+                "orderItems": vm.cart
             };
 
             console.log(order);
-            //
+
             // public class OrderSuccessModel {
             //
             //     public boolean success;
@@ -182,30 +198,17 @@
         activate();
         function activate() {
             $http.get('/getMenu').then(function (response) {
-                console.log('getting menu');
                 vm.menu = response.data;
-                console.log(vm.menu);
             });
 
-            $http.get('js/ordering/orderOptions.json').then(function (response) {
-                vm.payOptions = response.data.payOpts;
-                vm.deliveryOptions = response.data.deliveryOpts;
-                console.log('pay opts: ' + vm.payOptions);
+            $http.get('/getDeliveryOptions').then(function (response) {
+                vm.deliveryOptions = response.data;
             });
 
 
-            // $http.get('/getDeliveryOptions').then(function (response) {
-            //     vm.deliveryOptions = response.data;
-            //
-            //     console.log('deliv opts: ' + vm.deliveryOptions);
-            // });
-
-
-            // $http.get('/getPaymentOptions').then(function (response) {
-            //     vm.paymentOptions = response.data;
-            //
-            //     console.log('pay opts: ' + vm.paymentOptions);
-            // });
+            $http.get('/getPaymentOptions').then(function (response) {
+                vm.paymentOptions = response.data;
+            });
 
             // initialize the cart
             vm.cart=[];

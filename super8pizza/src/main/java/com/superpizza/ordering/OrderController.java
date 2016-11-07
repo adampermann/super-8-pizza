@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
-
+@RestController
 public class OrderController implements OrderRepository.OrderSubscriber
 {
     private OrderRepository repo = null;
@@ -29,8 +29,8 @@ public class OrderController implements OrderRepository.OrderSubscriber
     public List<OrderOption> getDeliveryOptionMapping()
     {
         List<OrderOption> optionsList = new ArrayList<>();
-        optionsList.add(new OrderOption(Order.OrderType.Delivery.ordinal(), Order.OrderType.Delivery.toString()));
-        optionsList.add(new OrderOption(Order.OrderType.Pickup.ordinal(), Order.OrderType.Pickup.toString()));
+        optionsList.add(new OrderOption(Order.OrderType.Delivery.getValue(), Order.OrderType.Delivery.toString()));
+        optionsList.add(new OrderOption(Order.OrderType.Pickup.getValue(), Order.OrderType.Pickup.toString()));
 
         return optionsList;
     }
@@ -39,8 +39,8 @@ public class OrderController implements OrderRepository.OrderSubscriber
     public List<OrderOption> getPaymentOptionMapping()
     {
         List<OrderOption> optionsList = new ArrayList<>();
-        optionsList.add(new OrderOption(Order.PaymentMethod.Card.ordinal(), Order.PaymentMethod.Card.toString()));
-        optionsList.add(new OrderOption(Order.PaymentMethod.Cash.ordinal(), Order.PaymentMethod.Cash.toString()));
+        optionsList.add(new OrderOption(Order.PaymentMethod.Card.getValue(), Order.PaymentMethod.Card.toString()));
+        optionsList.add(new OrderOption(Order.PaymentMethod.Cash.getValue(), Order.PaymentMethod.Cash.toString()));
 
         return optionsList;
     }
@@ -49,10 +49,10 @@ public class OrderController implements OrderRepository.OrderSubscriber
     public List<OrderOption> getOrderStatusMappings()
     {
         List<OrderOption> optionsList = new ArrayList<>();
-        optionsList.add(new OrderOption(Order.OrderStatus.Placed.ordinal(), Order.OrderStatus.Placed.toString()));
-        optionsList.add(new OrderOption(Order.OrderStatus.Making.ordinal(), Order.OrderStatus.Making.toString()));
-        optionsList.add(new OrderOption(Order.OrderStatus.Ready.ordinal(), Order.OrderStatus.Ready.toString()));
-        optionsList.add(new OrderOption(Order.OrderStatus.Complete.ordinal(), Order.OrderStatus.Complete.toString()));
+        optionsList.add(new OrderOption(Order.OrderStatus.Placed.getValue(), Order.OrderStatus.Placed.toString()));
+        optionsList.add(new OrderOption(Order.OrderStatus.Making.getValue(), Order.OrderStatus.Making.toString()));
+        optionsList.add(new OrderOption(Order.OrderStatus.Ready.getValue(), Order.OrderStatus.Ready.toString()));
+        optionsList.add(new OrderOption(Order.OrderStatus.Complete.getValue(), Order.OrderStatus.Complete.toString()));
 
         return optionsList;
     }

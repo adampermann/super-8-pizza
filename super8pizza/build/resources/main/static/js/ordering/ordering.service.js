@@ -15,10 +15,11 @@
         var _order = {
             "orderId": "",
             "orderNumber": 0,
-            "userId": "guest user",
+            "userId": "guest",
             "timestamp": Date.now(),
-            "orderType": 0,
-            "paymentMethod": 0,
+            "orderType": {},
+            "paymentMethod": {},
+            "cardNumber": "",
             "address": {},
             "orderItems": []
         };
@@ -35,10 +36,11 @@
             _order =  {
                 "orderId": "",
                 "orderNumber": 0,
-                "userId": "guest user",
+                "userId": "guest",
                 "timestamp": Date.now(),
-                "orderType": 0,
-                "paymentMethod": 0,
+                "orderType": {},
+                "paymentMethod": {},
+                "cardNumber": "",
                 "address": {},
                 "orderItems": []
             };

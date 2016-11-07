@@ -1,54 +1,139 @@
 [
-  { "id": 1,
-    "contents": [
-      { "id": 1, "name": "Super 8 Special Pizza", "quantity": 1 },
-      { "id": 3, "name": "Pepperoni Pizza", "quantity": 2 }
+  { "orderId": "1",
+    "orderNumber": 11,
+    "userId": "guest",
+    "timestamp": "",
+    "orderType": {
+      "id": "1",
+      "name": "Delivery"
+    },
+    "paymentMethod": {
+      "id": "1",
+      "name": "Cash"
+    },
+    "address": {
+      "street": "123 Main",
+      "city": "Milwaukee",
+      "state": "WI",
+      "zip": 53211
+    },
+    "orderItems": [
+      { "id": 1, "name": "Super 8 Special Pizza", "price": 13, "quantity": 1 },
+      { "id": 3, "name": "Pepperoni Pizza", "price": 13,"quantity": 2 }
     ],
-    "status": {
-      "id": 0,
+    "orderStatus": {
+      "id": 1,
       "name": "Placed"
     }
   },
-  { "id": 2,
-    "contents": [
-      { "id": 1, "name": "Super 8 Special Pizza", "quantity": 1 },
-      { "id": 2, "name": "Cheese Pizza", "quantity": 1 }
+  { "orderId": "2",
+    "orderNumber": 12,
+    "userId": "guest",
+    "timestamp": "",
+    "orderType": {
+      "id": "2",
+      "name": "Pickup"
+    },
+    "paymentMethod": {
+      "id": "2",
+      "name": "Card"
+    },
+    "cardNumber": "1234567891011234",
+    "address": {
+      "street": "123 Main",
+      "city": "Milwaukee",
+      "state": "WI",
+      "zip": 53211
+    },
+    "orderItems": [
+      { "id": 5, "name": "Anchovies Pizza", "price": 13, "quantity": 20 },
+      { "id": 3, "name": "Pepperoni Pizza", "price": 13,"quantity": 1 }
     ],
-    "status": {
-      "id": 1,
+    "orderStatus": {
+      "id": 2,
       "name": "Making"
     }
   },
-  { "id": 3,
-    "contents": [
-      { "id": 4, "name": "Anchovies Pizza", "quantity": 5 }
+  { "orderId": "3",
+    "orderNumber": 20,
+    "userId": "guest",
+    "timestamp": "",
+    "orderType": {
+      "id": "2",
+      "name": "Pickup"
+    },
+    "paymentMethod": {
+      "id": "2",
+      "name": "Card"
+    },
+    "cardNumber": "1234567891011234",
+    "address": {
+      "street": "123 Main",
+      "city": "Milwaukee",
+      "state": "WI",
+      "zip": 53211
+    },
+    "orderItems": [
+      { "id": 2, "name": "Cheese Pizza", "price": 13, "quantity": 2 },
+      { "id": 3, "name": "Pepperoni Pizza", "price": 13,"quantity": 1 }
     ],
-    "status": {
-      "id": 2,
+    "orderStatus": {
+      "id": 3,
       "name": "Ready"
     }
   },
-  { "id": 4,
-    "contents": [
-      { "id": 1, "name": "Super 8 Special Pizza", "quantity": 1 },
-      { "id": 3, "name": "Pepperoni Pizza", "quantity": 2 },
-      { "id": 7, "name": "Supreme Pizza", "quantity": 1 },
-      { "id": 6, "name": "Sausage Pizza", "quantity": 2 }
-
+  { "orderId": "4",
+    "orderNumber": 21,
+    "userId": "guest",
+    "timestamp": "",
+    "orderType": {
+      "id": "1",
+      "name": "Delivery"
+    },
+    "paymentMethod": {
+      "id": "2",
+      "name": "Card"
+    },
+    "cardNumber": "1234567891011234",
+    "address": {
+      "street": "123 Main",
+      "city": "Milwaukee",
+      "state": "WI",
+      "zip": 53211
+    },
+    "orderItems": [
+      { "id": 3, "name": "Pepperoni Pizza", "price": 13,"quantity": 1 }
     ],
-    "status": {
-      "id": 3,
-      "name": "Complete"
+    "orderStatus": {
+      "id": 1,
+      "name": "Placed"
     }
   },
-  { "id": 5,
-    "contents": [
-      { "id": 1, "name": "Super 8 Special Pizza", "quantity": 49 },
-      { "id": 2, "name": "Pepperoni Pizza", "quantity": 1 }
+  { "orderId": "5",
+    "orderNumber": 25,
+    "userId": "guest",
+    "timestamp": "",
+    "orderType": {
+      "id": "1",
+      "name": "Delivery"
+    },
+    "paymentMethod": {
+      "id": "2",
+      "name": "Card"
+    },
+    "cardNumber": "1234567891011234",
+    "address": {
+      "street": "123 Main",
+      "city": "Milwaukee",
+      "state": "WI",
+      "zip": 53211
+    },
+    "orderItems": [
+      { "id": 3, "name": "Pepperoni Pizza", "price": 13,"quantity": 55 }
     ],
-    "status": {
-      "id": 0,
-      "name": "Placed"
+    "orderStatus": {
+      "id": 2,
+      "name": "Making"
     }
   }
 ]

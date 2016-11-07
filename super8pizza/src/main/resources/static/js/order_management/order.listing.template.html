@@ -26,11 +26,11 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="order in ($ctrl.pendingOrders = ($ctrl.orders | filter: $ctrl.filterBy | filter: $ctrl.isPending) | orderBy: 'status.id')">
-                    <td>{{order.id}}</td>
+                <tr ng-repeat="order in $ctrl.orders | filter: $ctrl.filterBy | orderBy: '-orderStatus.id'">
+                    <td>{{order.orderId}}{{order.orderStatus.name}}</td>
                     <td>
                         <ul>
-                            <li ng-repeat="item in order.contents | orderBy: 'name'">
+                            <li ng-repeat="item in order.orderItems | orderBy: 'name'">
                                 {{item.name}} x {{item.quantity}}
                             </li>
                         </ul>
@@ -38,7 +38,7 @@
                     <td>
                         <select id="statusSelect" class="form-control" name="statusSelect"
                                 ng-options="status.name for status in $ctrl.statuses track by status.id"
-                                ng-model="order.status">
+                                ng-model="order.orderStatus">
                         </select>
                     </td>
                     <td>
@@ -52,34 +52,34 @@
 
 </div>
 
-<div class="panel panel-primary" ng-show="$ctrl.completedOrders.length > 0">
-    <div class="panel-heading">
-        <h2>Completed Orders</h2>
-    </div>
+<!--<div class="panel panel-primary" ng-show="$ctrl.completedOrders.length > 0">-->
+    <!--<div class="panel-heading">-->
+        <!--<h2>Completed Orders</h2>-->
+    <!--</div>-->
 
-    <div class="panel-body">
-        <div class="table-responsive table-bordered table-striped">
-            <table class="table">
-                <thead>
-                <tr>
-                    <th> Number </th>
-                    <th> Contents </th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr ng-repeat="order in ($ctrl.completedOrders = ($ctrl.orders | filter: $ctrl.isCompleted ))">
-                    <td>{{order.id}}</td>
-                    <td>
-                        <ul>
-                            <li ng-repeat="item in order.contents | orderBy: 'name'">
-                                {{item.name}} x {{item.quantity}}
-                            </li>
-                        </ul>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
+    <!--<div class="panel-body">-->
+        <!--<div class="table-responsive table-bordered table-striped">-->
+            <!--<table class="table">-->
+                <!--<thead>-->
+                <!--<tr>-->
+                    <!--<th> Number </th>-->
+                    <!--<th> Contents </th>-->
+                <!--</tr>-->
+                <!--</thead>-->
+                <!--<tbody>-->
+                <!--<tr ng-repeat="order in ($ctrl.completedOrders = ($ctrl.orders | filter: $ctrl.isCompleted ))">-->
+                    <!--<td>{{order.id}}</td>-->
+                    <!--<td>-->
+                        <!--<ul>-->
+                            <!--<li ng-repeat="item in order.contents | orderBy: 'name'">-->
+                                <!--{{item.name}} x {{item.quantity}}-->
+                            <!--</li>-->
+                        <!--</ul>-->
+                    <!--</td>-->
+                <!--</tr>-->
+                <!--</tbody>-->
+            <!--</table>-->
+        <!--</div>-->
+    <!--</div>-->
 
-</div>
+<!--</div>-->

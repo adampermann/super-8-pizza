@@ -114,7 +114,7 @@
                 <div class="form-group col-md-12">
                     <label for="paymentSelect">Payment Method:</label>
                     <select id="paymentSelect" class="form-control" name="paymentSelect" ng-model="$ctrl.payOption">
-                        <option ng-repeat="option in $ctrl.payOptions | orderBy: 'name'" value="{{option.id}}">
+                        <option ng-repeat="option in $ctrl.paymentOptions | orderBy: 'name'" value="{{option.id}}">
                             {{option.name}}
                         </option>
                     </select>
