@@ -22,7 +22,10 @@
 
             <div class="panel-footer">
                 <div class="row">
-                    <label>Delivery Method: {{$ctrl.getDeliveryMethodName()}}</label>
+                    <label>Subtotal: {{$ctrl.orderTotal}} </label>
+                </div>
+                <div class="row">
+                    <label>Order Type: {{$ctrl.getDeliveryMethodName()}}</label>
                 </div>
                 <div class="row">
                     <label ng-show="$ctrl.isDelivery()"> Address: </label>
@@ -30,9 +33,6 @@
                 </div>
                 <div class="row">
                     <label>Payment Method: {{$ctrl.getPayMethodName()}}</label>
-                </div>
-                <div class="row">
-                    <label>Subtotal: {{$ctrl.orderTotal}} </label>
                 </div>
                 <br />
                 <div class="row">
