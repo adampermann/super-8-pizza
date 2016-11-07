@@ -21,13 +21,13 @@
                 <tr>
                     <th> Number </th>
                     <th> Contents </th>
-                    <th> Status </th>
-                    <th> Set Order Status </th>
+                    <th> Current Status </th>
+                    <th> Set Status </th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="order in $ctrl.orders | filter: $ctrl.filterBy | orderBy: '-orderStatus.id'">
-                    <td>{{order.orderId}}{{order.orderStatus.name}}</td>
+                <tr ng-repeat="order in ($ctrl.pendingOrders = ($ctrl.orders | filter: $ctrl.filterBy | filter: $ctrl.isPending | orderBy: '-orderStatus.id'))">
+                    <td>{{order.orderId}}</td>
                     <td>
                         <ul>
                             <li ng-repeat="item in order.orderItems | orderBy: 'name'">
@@ -36,12 +36,13 @@
                         </ul>
                     </td>
                     <td>
-                        <select id="statusSelect" class="form-control" name="statusSelect"
-                                ng-options="status.name for status in $ctrl.statuses track by status.id"
-                                ng-model="order.orderStatus">
-                        </select>
+                        {{order.orderStatus.name}}
                     </td>
                     <td>
+                        <select id="statusSelect" class="form-control" name="statusSelect"
+                                ng-options="status.name for status in $ctrl.statuses track by status.id"
+                                ng-model="order.setOrderStatus" style="padding: 5px">
+                        </select>
                         <button type="button" class="btn btn-info" ng-click="$ctrl.setStatus(order)">Set Status</button>
                     </td>
                 </tr>
@@ -52,34 +53,34 @@
 
 </div>
 
-<!--<div class="panel panel-primary" ng-show="$ctrl.completedOrders.length > 0">-->
-    <!--<div class="panel-heading">-->
-        <!--<h2>Completed Orders</h2>-->
-    <!--</div>-->
+<div class="panel panel-primary" ng-show="$ctrl.completedOrders.length > 0">
+    <div class="panel-heading">
+        <h2>Completed Orders</h2>
+    </div>
 
-    <!--<div class="panel-body">-->
-        <!--<div class="table-responsive table-bordered table-striped">-->
-            <!--<table class="table">-->
-                <!--<thead>-->
-                <!--<tr>-->
-                    <!--<th> Number </th>-->
-                    <!--<th> Contents </th>-->
-                <!--</tr>-->
-                <!--</thead>-->
-                <!--<tbody>-->
-                <!--<tr ng-repeat="order in ($ctrl.completedOrders = ($ctrl.orders | filter: $ctrl.isCompleted ))">-->
-                    <!--<td>{{order.id}}</td>-->
-                    <!--<td>-->
-                        <!--<ul>-->
-                            <!--<li ng-repeat="item in order.contents | orderBy: 'name'">-->
-                                <!--{{item.name}} x {{item.quantity}}-->
-                            <!--</li>-->
-                        <!--</ul>-->
-                    <!--</td>-->
-                <!--</tr>-->
-                <!--</tbody>-->
-            <!--</table>-->
-        <!--</div>-->
-    <!--</div>-->
+    <div class="panel-body">
+        <div class="table-responsive table-bordered table-striped">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th> Number </th>
+                    <th> Contents </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="order in ($ctrl.completedOrders = ($ctrl.orders | filter: $ctrl.isCompleted ))">
+                    <td>{{order.orderId}}</td>
+                    <td>
+                        <ul>
+                            <li ng-repeat="item in order.orderItems | orderBy: 'name'">
+                                {{item.name}} x {{item.quantity}}
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 
-<!--</div>-->
+</div>

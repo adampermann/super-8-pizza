@@ -24,15 +24,16 @@
         vm.filterBy = "";
 
         vm.isCompleted = function(order) {
-            return order.orderStatus.id == 3;
+            return order.orderStatus.id == 4;
         };
 
         vm.isPending = function(order) {
-            return order.orderStatus.id != 3;
+            return order.orderStatus.id != 4;
         };
 
         vm.setStatus = function(order) {
             console.log('setting order status' + order.orderStatus.name);
+            order.orderStatus = order.setOrderStatus;
 
             // should be an ajax call to update the status server side
             // $http.post('/setOrderStatus', order).then(function (response) {
