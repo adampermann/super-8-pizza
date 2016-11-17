@@ -10,6 +10,7 @@ public class OrderController implements OrderRepository.OrderSubscriber
 {
     private OrderRepository repo = null;
     private Map<String, Order> orders;
+    private long orderNumber = 0;
 
     public OrderController()
     {
@@ -57,7 +58,7 @@ public class OrderController implements OrderRepository.OrderSubscriber
         return optionsList;
     }
 
-    @RequestMapping("/getOrders")
+    @RequestMapping("/getOpenOrders")
     public List<Order> getOpenOrders()
     {
         List<Order> openOrders = new ArrayList<>();
@@ -67,7 +68,7 @@ public class OrderController implements OrderRepository.OrderSubscriber
         {
             Map.Entry pair = (Map.Entry)it.next();
             Order order = (Order) pair.getValue();
-            if (order.getOrderStatus() == Order.OrderStatus.Complete )
+            if (order.orderStatus.equals(Order.OrderStatus.Complete))
             {
                 continue;
             }
@@ -78,35 +79,62 @@ public class OrderController implements OrderRepository.OrderSubscriber
         return openOrders;
     }
 
+    @RequestMapping("/getCompleteOrders")
+    public List<Order> getCompleteOrders()
+    {
+        List<Order> completeOrders = new ArrayList<>();
+
+        Iterator it = orders.entrySet().iterator();
+        while (it.hasNext())
+        {
+            Map.Entry pair = (Map.Entry)it.next();
+            Order order = (Order) pair.getValue();
+            if (order.equals(Order.OrderStatus.Complete))
+            {
+                completeOrders.add((Order)pair.getValue());
+            }
+        }
+
+        return completeOrders;
+    }
+
     @RequestMapping("/placeOrder")
     public ResponseEntity<?> placeOrder(@RequestBody Order order)
     {
-        //return order number
-        //todo
-        if (true)
+        String orderId = UUID.randomUUID().toString();
+        order.orderId = orderId;
+        orderNumber++;
+        order.orderNumber = "" + orderNumber;
+
+        try
         {
-            return new ResponseEntity<>(order.getOrderNumber(), HttpStatus.OK);
+            orders.put(orderId, order);
+            repo.saveOrders(orders);
+            return new ResponseEntity<>(order, HttpStatus.OK);
         }
-        //todo
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        catch (Exception e)
+        {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @RequestMapping("/setOrderStatus")
     public ResponseEntity<?> setOrderStatus(@RequestBody Order updatedOrder)
     {
-        //todo
-        if (true)
+        if(!orders.containsKey(updatedOrder))
         {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        try
+        {
+            orders.put(updatedOrder.orderId, updatedOrder);
             return new ResponseEntity<>(HttpStatus.OK);
         }
-        //todo
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
-
-//    @RequestMapping(value = "/", method = RequestMethod.POST)
-//    public ResponseEntity<Car> update(@RequestBody Car car) {
-//    ...
-//    }
 
     private void getOrdersFromRepo()
     {

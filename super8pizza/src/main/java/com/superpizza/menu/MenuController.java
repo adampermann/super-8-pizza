@@ -28,34 +28,28 @@ public class MenuController implements MenuRepository.MenuSubscriber
 		getMenuFromRepo();
 	}
 
-	@RequestMapping(value="/addToMenu/{name}/{price}", method = RequestMethod.POST)
-	public void addItem(@PathVariable("name") String name, @RequestParam("price") double price)
-	{
-		UUID id = UUID.randomUUID();
-		//menu.put(id.toString(), new MenuItem(id.toString(), name, price));
-		repo.saveMenu(menu);
-	}
+	//todo take an object
+//	@RequestMapping(value="/addToMenu/{name}/{price}", method = RequestMethod.POST)
+//	public void addItem(@PathVariable("name") String name, @RequestParam("price") double price)
+//	{
+//		UUID id = UUID.randomUUID();
+//		//menu.put(id.toString(), new MenuItem(id.toString(), name, price));
+//		repo.saveMenu(menu);
+//	}
 
 	@RequestMapping("/getMenu")
-	public List<MenuItemViewModel> getMenu()
+	public List<MenuItem> getMenu()
 	{
-		List<MenuItemViewModel> viewModel = new ArrayList<>();
+		List<MenuItem> viewModel = new ArrayList<>();
 
 		for (Map.Entry<String, MenuItem> entry : menu.entrySet())
 		{
 			MenuItem cur = entry.getValue();
-			viewModel.add(new MenuItemViewModel(cur.getId(), cur.getName(), cur.getPrice(), cur.getImageURL()));
+			viewModel.add(new MenuItem(cur.id, cur.name, cur.price, cur.imageURL));
 		}
 
 		return viewModel;
 	}
-
-//  what it was before the view model
-//	@RequestMapping("/getMenu")
-//	public Map<String, MenuItem> getMenu()
-//	{
-//		return menu;
-//	}
 
 	private void getMenuFromRepo()
 	{

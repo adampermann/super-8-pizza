@@ -5,6 +5,7 @@ import java.util.Objects;
 public class InventoryItem extends OrderableItem
 {
     private int count;
+    private String type; //todo crust, cheese, topping, sauce
 
     public InventoryItem() {}
     public InventoryItem(String id, String name, int count)
@@ -52,7 +53,7 @@ public class InventoryItem extends OrderableItem
             return false;
         }
 
-        if (this.id != ((InventoryItem) rhs).id || this.name != ((InventoryItem) rhs).name || !Objects.equals(this.getPrice(), ((InventoryItem) rhs).getPrice()) || this.count != ((InventoryItem) rhs).count)
+        if (this.id != ((InventoryItem) rhs).id || this.name != ((InventoryItem) rhs).name || !Objects.equals(this.price, ((InventoryItem) rhs).price) || this.count != ((InventoryItem) rhs).count)
         {
             return false;
         }

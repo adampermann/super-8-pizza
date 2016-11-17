@@ -9,9 +9,8 @@ import java.util.Objects;
 
 public class MenuItem extends OrderableItem
 {
-    private List<InventoryItem> includedItems = new ArrayList<>();
-
-    public MenuItem(){}
+    public List<InventoryItem> includedItems = new ArrayList<>();
+    public boolean enabled; //todo   //on order, if stock drops below threshhold may need to disable. If backend inventory change happens, may enable/disable
 
     public MenuItem(String id,  String name, double price, String imageURL) {
         super(id, name, price, imageURL);
@@ -43,7 +42,7 @@ public class MenuItem extends OrderableItem
             return false;
         }
 
-        if (!this.id.equals(((MenuItem) rhs).id) || !this.name.equals(((MenuItem) rhs).name) || !Objects.equals(this.getPrice(), ((MenuItem) rhs).getPrice()) || this.includedItems.size() != ((MenuItem) rhs).includedItems.size())
+        if (!this.id.equals(((MenuItem) rhs).id) || !this.name.equals(((MenuItem) rhs).name) || !Objects.equals(this.price, ((MenuItem) rhs).price) || this.includedItems.size() != ((MenuItem) rhs).includedItems.size())
         {
             return false;
         }
