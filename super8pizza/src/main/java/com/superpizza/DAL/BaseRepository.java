@@ -17,13 +17,23 @@ public abstract class BaseRepository <K, V>
     private static final Logger log = LoggerFactory.getLogger(BaseRepository.class);
 
     private static FirebaseDatabase database;
-    private static DatabaseReference ref;
-    private final String collectionName;
+    private DatabaseReference ref;
+    private String collectionName;
 
     public BaseRepository(String collectionName) throws DatabaseException
     {
-        this.collectionName = collectionName;
+        if(database == null)
+        {
+            SetupAppConnecion();
+        }
 
+        DatabaseReference dbRef = database.getReference("data/");
+        this.collectionName = collectionName;
+        ref = dbRef.child("/" + collectionName + "/");
+    }
+
+    private void SetupAppConnecion()
+    {
         InputStream resourceInputStream = BaseRepository.class.getClass().getResourceAsStream(FIREBASE_KEY_FILENAME);
 
         if (resourceInputStream == null)
@@ -46,9 +56,6 @@ public abstract class BaseRepository <K, V>
 
         FirebaseApp.initializeApp(options);
         database = FirebaseDatabase.getInstance();
-        DatabaseReference dbRef = database.getReference("data/");
-
-        ref = dbRef.child("/" + collectionName + "/");
     }
 
     protected final void saveData(Map<K, V> data) throws InterruptedException

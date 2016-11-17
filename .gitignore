@@ -35,3 +35,5 @@
 
 # mpeltonen/sbt-idea plugin
 .super8pizza/idea_modules/
+./super8pizza/out/
+super8pizza/out/

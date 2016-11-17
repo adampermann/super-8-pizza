@@ -1,0 +1,8 @@
+{
+  "statuses": [
+    { "id": 0, "name": "Placed" },
+    { "id": 1, "name": "Making" },
+    { "id": 2, "name": "Ready" },
+    { "id": 3, "name": "Complete" }
+  ]
+}

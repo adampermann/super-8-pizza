@@ -5,11 +5,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
-
+@RestController
 public class OrderController implements OrderRepository.OrderSubscriber
 {
     private OrderRepository repo = null;
     private Map<String, Order> orders;
+    private long orderNumber = 0;
 
     public OrderController()
     {
@@ -26,39 +27,38 @@ public class OrderController implements OrderRepository.OrderSubscriber
     }
 
     @RequestMapping("/getDeliveryOptions")
-    public Map<String, Integer> getDeliveryOptionMapping()
+    public List<OrderOption> getDeliveryOptionMapping()
     {
-        Map<String, Integer> options = new HashMap<>();
-        options.put(Order.OrderType.Delivery.toString(), Order.OrderType.Delivery.ordinal());
-        options.put(Order.OrderType.Pickup.toString(), Order.OrderType.Pickup.ordinal());
+        List<OrderOption> optionsList = new ArrayList<>();
+        optionsList.add(new OrderOption(Order.OrderType.Delivery.getValue(), Order.OrderType.Delivery.toString()));
+        optionsList.add(new OrderOption(Order.OrderType.Pickup.getValue(), Order.OrderType.Pickup.toString()));
 
-        return options;
+        return optionsList;
     }
 
     @RequestMapping("/getPaymentOptions")
-    public Map<String, Integer> getPaymentOptionMapping()
+    public List<OrderOption> getPaymentOptionMapping()
     {
-        Map<String, Integer> options = new HashMap<>();
-        options.put(Order.PaymentMethod.Card.toString(), Order.PaymentMethod.Card.ordinal());
-        options.put(Order.PaymentMethod.Cash.toString(), Order.PaymentMethod.Cash.ordinal());
+        List<OrderOption> optionsList = new ArrayList<>();
+        optionsList.add(new OrderOption(Order.PaymentMethod.Card.getValue(), Order.PaymentMethod.Card.toString()));
+        optionsList.add(new OrderOption(Order.PaymentMethod.Cash.getValue(), Order.PaymentMethod.Cash.toString()));
 
-        return options;
+        return optionsList;
     }
 
     @RequestMapping("/getOrderStatusOptions")
-    public Map<String, Integer> getOrderStatusMappings()
+    public List<OrderOption> getOrderStatusMappings()
     {
-        Map<String, Integer> options = new HashMap<>();
-        options.put(Order.OrderStatus.Placed.toString(), Order.OrderStatus.Placed.ordinal());
-        options.put(Order.OrderStatus.Making.toString(), Order.OrderStatus.Making.ordinal());
-        options.put(Order.OrderStatus.Ready.toString(), Order.OrderStatus.Ready.ordinal());
-        options.put(Order.OrderStatus.Complete.toString(), Order.OrderStatus.Complete.ordinal());
+        List<OrderOption> optionsList = new ArrayList<>();
+        optionsList.add(new OrderOption(Order.OrderStatus.Placed.getValue(), Order.OrderStatus.Placed.toString()));
+        optionsList.add(new OrderOption(Order.OrderStatus.Making.getValue(), Order.OrderStatus.Making.toString()));
+        optionsList.add(new OrderOption(Order.OrderStatus.Ready.getValue(), Order.OrderStatus.Ready.toString()));
+        optionsList.add(new OrderOption(Order.OrderStatus.Complete.getValue(), Order.OrderStatus.Complete.toString()));
 
-        return options;
-
+        return optionsList;
     }
 
-    @RequestMapping("/getOrders")
+    @RequestMapping("/getOpenOrders")
     public List<Order> getOpenOrders()
     {
         List<Order> openOrders = new ArrayList<>();
@@ -67,8 +67,8 @@ public class OrderController implements OrderRepository.OrderSubscriber
         while (it.hasNext())
         {
             Map.Entry pair = (Map.Entry)it.next();
-
-            if ( ((Order)pair).getOrderStatus() == Order.OrderStatus.Complete )
+            Order order = (Order) pair.getValue();
+            if (order.orderStatus.equals(Order.OrderStatus.Complete))
             {
                 continue;
             }
@@ -79,35 +79,62 @@ public class OrderController implements OrderRepository.OrderSubscriber
         return openOrders;
     }
 
+    @RequestMapping("/getCompleteOrders")
+    public List<Order> getCompleteOrders()
+    {
+        List<Order> completeOrders = new ArrayList<>();
+
+        Iterator it = orders.entrySet().iterator();
+        while (it.hasNext())
+        {
+            Map.Entry pair = (Map.Entry)it.next();
+            Order order = (Order) pair.getValue();
+            if (order.equals(Order.OrderStatus.Complete))
+            {
+                completeOrders.add((Order)pair.getValue());
+            }
+        }
+
+        return completeOrders;
+    }
+
     @RequestMapping("/placeOrder")
     public ResponseEntity<?> placeOrder(@RequestBody Order order)
     {
-        //return order number
-        //todo
-        if (true)
+        String orderId = UUID.randomUUID().toString();
+        order.orderId = orderId;
+        orderNumber++;
+        order.orderNumber = "" + orderNumber;
+
+        try
         {
-            return new ResponseEntity<>(order.getOrderNumber(), HttpStatus.OK);
+            orders.put(orderId, order);
+            repo.saveOrders(orders);
+            return new ResponseEntity<>(order, HttpStatus.OK);
         }
-        //todo
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        catch (Exception e)
+        {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @RequestMapping("/setOrderStatus")
     public ResponseEntity<?> setOrderStatus(@RequestBody Order updatedOrder)
     {
-        //todo
-        if (true)
+        if(!orders.containsKey(updatedOrder))
         {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        try
+        {
+            orders.put(updatedOrder.orderId, updatedOrder);
             return new ResponseEntity<>(HttpStatus.OK);
         }
-        //todo
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
-
-//    @RequestMapping(value = "/", method = RequestMethod.POST)
-//    public ResponseEntity<Car> update(@RequestBody Car car) {
-//    ...
-//    }
 
     private void getOrdersFromRepo()
     {

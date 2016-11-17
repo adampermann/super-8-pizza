@@ -6,12 +6,10 @@ import com.superpizza.menu.MenuItem;
 import com.superpizza.menu.MenuRepository;
 import com.superpizza.ordering.Address;
 import com.superpizza.ordering.Order;
+import com.superpizza.ordering.OrderOption;
 import com.superpizza.ordering.OrderRepository;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class DataSetup_NOT_FOR_PRODUCTION
@@ -46,11 +44,11 @@ public class DataSetup_NOT_FOR_PRODUCTION
         Map<String, Order> orderMap = new HashMap<>();
         UUID userId = UUID.randomUUID();
         UUID orderId = UUID.randomUUID();
+
         Address address = new Address("street1", "MKE", "WI", 112233);
-        Map<String, Integer> items = getRandomItems();
-        Order order = new Order(userId.toString(), orderId.toString(), new Date(), Order.OrderType.Delivery, Order.PaymentMethod.Card, address, items);
-        order.setOrderStatus(Order.OrderStatus.Placed);
-        order.setOrderNumber(orderNumber);
+        List<OrderableItem> items = getRandomItems();
+
+        Order order = new Order(orderId.toString(), userId.toString(), new Date(), new OrderOption(Order.OrderType.Delivery.getValue(), Order.OrderType.Delivery.toString()), new OrderOption(Order.PaymentMethod.Card.getValue(), Order.PaymentMethod.Card.toString()), address, items, "" + orderNumber, "cardnumber", new OrderOption(Order.OrderStatus.Placed.getValue(), Order.OrderStatus.Placed.toString()));
         orderMap.put(orderId.toString(), order);
 
         orderNumber += 1;
@@ -58,9 +56,9 @@ public class DataSetup_NOT_FOR_PRODUCTION
         userId = UUID.randomUUID();
         address = new Address("street2", "MKE", "WI", 114537);
         items = getRandomItems();
-        order = new Order(userId.toString(), orderId.toString(), new Date(), Order.OrderType.Pickup, Order.PaymentMethod.Cash, address, items);
-        order.setOrderStatus(Order.OrderStatus.Making);
-        order.setOrderNumber(orderNumber);
+
+        order = new Order(orderId.toString(), userId.toString(), new Date(), new OrderOption(Order.OrderType.Pickup.getValue(), Order.OrderType.Pickup.toString()), new OrderOption(Order.PaymentMethod.Cash.getValue(), Order.PaymentMethod.Cash.toString()), address, items, "" + orderNumber, "cardnumber", new OrderOption(Order.OrderStatus.Making.getValue(), Order.OrderStatus.Making.toString()));
+
         orderMap.put(orderId.toString(), order);
 
         orderNumber += 1;
@@ -68,9 +66,8 @@ public class DataSetup_NOT_FOR_PRODUCTION
         userId = UUID.randomUUID();
         address = new Address("street3", "MKE", "WI", 984537);
         items = getRandomItems();
-        order = new Order(userId.toString(), orderId.toString(), new Date(), Order.OrderType.Pickup, Order.PaymentMethod.Card, address, items);
-        order.setOrderStatus(Order.OrderStatus.Making);
-        order.setOrderNumber(orderNumber);
+        order = new Order(orderId.toString(), userId.toString(), new Date(), new OrderOption(Order.OrderType.Pickup.getValue(), Order.OrderType.Pickup.toString()), new OrderOption(Order.PaymentMethod.Card.getValue(), Order.PaymentMethod.Card.toString()), address, items, "" + orderNumber, "cardnumber", new OrderOption(Order.OrderStatus.Making.getValue(), Order.OrderStatus.Making.toString()));
+
         orderMap.put(orderId.toString(), order);
 
         orderNumber += 1;
@@ -78,19 +75,17 @@ public class DataSetup_NOT_FOR_PRODUCTION
         userId = UUID.randomUUID();
         address = new Address("street1", "MKE", "WI", 126587);
         items = getRandomItems();
-        order = new Order(userId.toString(), orderId.toString(), new Date(), Order.OrderType.Delivery, Order.PaymentMethod.Cash, address, items);
-        order.setOrderStatus(Order.OrderStatus.Complete);
-        order.setOrderNumber(orderNumber);
-        orderMap.put(orderId.toString(), order);
+        order = new Order(orderId.toString(), userId.toString(), new Date(), new OrderOption(Order.OrderType.Delivery.getValue(), Order.OrderType.Delivery.toString()), new OrderOption(Order.PaymentMethod.Cash.getValue(), Order.PaymentMethod.Cash.toString()), address, items, "" + orderNumber, "cardnumber", new OrderOption(Order.OrderStatus.Complete.getValue(), Order.OrderStatus.Complete.toString()));
 
+        orderMap.put(orderId.toString(), order);
 
         OrderRepository repo = new OrderRepository();
         repo.saveOrders(orderMap);
     }
 
-    private static Map<String,Integer> getRandomItems()
+    private static List<OrderableItem> getRandomItems()
     {
-        Map<String, Integer> items = new HashMap<>();
+        List<OrderableItem> items = new ArrayList<>();
         UUID id = UUID.randomUUID();
 
         int numMenuItems = ThreadLocalRandom.current().nextInt(1, 4);
@@ -98,13 +93,21 @@ public class DataSetup_NOT_FOR_PRODUCTION
 
         for (int i = 0; i < numMenuItems; i++)
         {
-            items.put(id.toString(), ThreadLocalRandom.current().nextInt(1, 4));
+            MenuItem item = new MenuItem(id.toString(), "item + id", 0.0, "imageURL");
+            item.quantity = ThreadLocalRandom.current().nextInt(1, 4);
+
+            items.add(new MenuItem(id.toString(), "menu item " + i, ThreadLocalRandom.current().nextDouble(10, 30), "imageURL"));
             id = UUID.randomUUID();
         }
 
         for (int i = 0; i < numInventoryItems; i++)
         {
-            items.put(id.toString(), ThreadLocalRandom.current().nextInt(1, 4));
+            int count = ThreadLocalRandom.current().nextInt(10, 100);
+            InventoryItem item = new InventoryItem(id.toString(), "item " + i, count, ThreadLocalRandom.current().nextDouble(1, 3),  "imageURL");
+            item.quantity = ThreadLocalRandom.current().nextInt(1, 4);
+
+
+            items.add(item);
             id = UUID.randomUUID();
         }
 

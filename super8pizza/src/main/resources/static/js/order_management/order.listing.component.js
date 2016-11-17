@@ -4,7 +4,7 @@
 (function() {
     'use-strict';
 
-    var module = angular.module('orderListing');
+    var module = angular.module('orderListing', []);
 
     module.component('orderListing', {
         templateUrl: 'js/order_management/order.listing.template.html',
@@ -18,24 +18,55 @@
     function OrderListingController($http, $filter) {
         var vm = this;
         vm.orders = [];
+        vm.pendingOrders = [];
+        vm.completedOrders = [];
+        vm.statuses = [];
         vm.filterBy = "";
 
-        vm.getContentsStringForOrder = function(order) {
-            var contents = '';
+        vm.isCompleted = function(order) {
+            return order.orderStatus.id == 4;
+        };
 
-            for (var i = 0; i < order.contents.length; ++i) {
-                contents += order.contents[i].name + 'x' + order.contents[i].quantity + '\n';
-            }
+        vm.isPending = function(order) {
+            return order.orderStatus.id != 4;
+        };
 
-            return contents;
+        vm.setStatus = function(order) {
+            console.log('setting order status' + order.orderStatus.name);
+            order.orderStatus = order.setOrderStatus;
+
+            // should be an ajax call to update the status server side
+            // $http.post('/setOrderStatus', order).then(function (response) {
+            //    if (response.data.success) {
+            //
+            //    } else {
+            //        // show error couldn't set order status
+            //    }
+            // });
         };
 
         activate();
         function activate() {
 
+
+            // $http.get('/getOpenOrders').then(function (response) {
+            //     vm.orders = response.data;
+            //     console.log('orders are');
+            //     console.log(vm.orders);
+            // });
+
+            $http.get('/getOrderStatusOptions').then(function (response) {
+                vm.statuses = response.data;
+
+                console.log('statuses are');
+                console.log(vm.statuses);
+            });
+
             $http.get('js/order_management/orders.json').then(function (response) {
                 vm.orders = response.data;
+                console.log(vm.orders);
             });
+
         };
 
     };

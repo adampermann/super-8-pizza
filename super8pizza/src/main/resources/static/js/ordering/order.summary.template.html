@@ -2,12 +2,13 @@
     <div class="col-md-12" role="main">
         <div class="panel panel-success text-center">
             <div class="panel-heading">
-                <h1 class="panel-title">{{$ctrl.title}}</h1>
+                <h1 class="panel-title">Thanks for your order, {{$ctrl.order.userId}}!</h1>
+                <h3 class="panel-title">Your order number is {{$ctrl.order.orderNumber}}</h3>
             </div>
             <ul class="list-group">
-                <li class="list-group-item" ng-repeat="item in $ctrl.orderItems | orderBy: 'name'">
+                <li class="list-group-item" ng-repeat="item in $ctrl.order.orderItems | orderBy: 'name'">
                     <h3 class="list-group-item-heading">
-                        {{item.quantity}} {{ item.name }}
+                        {{item.quantity}} {{ item.name }}{{item.quantity > 1 ? "s" : ""}}
                     </h3>
                     <span class="list-group-item-text">
                         {{item.price | currency : "$" : 2}} Each
@@ -21,17 +22,17 @@
 
             <div class="panel-footer">
                 <div class="row">
-                    <label>Delivery Method: </label><span> {{$ctrl.getDeliveryMethodName()}}</span>
+                    <label>Subtotal: {{$ctrl.orderTotal}} </label>
+                </div>
+                <div class="row">
+                    <label>Order Type: {{$ctrl.getDeliveryMethodName()}}</label>
                 </div>
                 <div class="row">
                     <label ng-show="$ctrl.isDelivery()"> Address: </label>
                     <p ng-show="$ctrl.isDelivery()">{{$ctrl.getFormattedAddress()}}</p>
                 </div>
                 <div class="row">
-                    <label>Payment Method: </label><span> {{$ctrl.getPayMethodName()}}</span>
-                </div>
-                <div class="row">
-                    <label>Subtotal: </label><span ng-bind="$ctrl.orderTotal"></span>
+                    <label>Payment Method: {{$ctrl.getPayMethodName()}}</label>
                 </div>
                 <br />
                 <div class="row">

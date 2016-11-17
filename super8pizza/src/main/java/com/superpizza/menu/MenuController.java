@@ -3,6 +3,8 @@ package com.superpizza.menu;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Iterator;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -26,18 +28,27 @@ public class MenuController implements MenuRepository.MenuSubscriber
 		getMenuFromRepo();
 	}
 
-	@RequestMapping(value="/addToMenu/{name}/{price}", method = RequestMethod.POST)
-	public void addItem(@PathVariable("name") String name, @RequestParam("price") double price)
-	{
-		UUID id = UUID.randomUUID();
-		//menu.put(id.toString(), new MenuItem(id.toString(), name, price));
-		repo.saveMenu(menu);
-	}
+	//todo take an object
+//	@RequestMapping(value="/addToMenu/{name}/{price}", method = RequestMethod.POST)
+//	public void addItem(@PathVariable("name") String name, @RequestParam("price") double price)
+//	{
+//		UUID id = UUID.randomUUID();
+//		//menu.put(id.toString(), new MenuItem(id.toString(), name, price));
+//		repo.saveMenu(menu);
+//	}
 
 	@RequestMapping("/getMenu")
-	public Map<String, MenuItem> getMenu()
+	public List<MenuItem> getMenu()
 	{
-		return menu;
+		List<MenuItem> viewModel = new ArrayList<>();
+
+		for (Map.Entry<String, MenuItem> entry : menu.entrySet())
+		{
+			MenuItem cur = entry.getValue();
+			viewModel.add(new MenuItem(cur.id, cur.name, cur.price, cur.imageURL));
+		}
+
+		return viewModel;
 	}
 
 	private void getMenuFromRepo()

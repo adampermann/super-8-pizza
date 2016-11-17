@@ -2,7 +2,7 @@
 body {
     padding-top: 70px;
     padding-bottom: 70px;
-    background: url('../images/pizza background.jpg') no-repeat center center fixed;
+    background: url('../images/website background.png') no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -63,6 +63,10 @@ h6.panel-title {
     border: solid #070707;
     border-width: 1px;
     border-radius: 1px;
+    padding: 10px;
+}
+
+.sp-pay-number {
     padding: 10px;
 }
 
