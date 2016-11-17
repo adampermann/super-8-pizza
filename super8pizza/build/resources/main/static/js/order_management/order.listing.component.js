@@ -49,7 +49,7 @@
         function activate() {
 
 
-            // $http.get('/getOrders').then(function (response) {
+            // $http.get('/getOpenOrders').then(function (response) {
             //     vm.orders = response.data;
             //     console.log('orders are');
             //     console.log(vm.orders);

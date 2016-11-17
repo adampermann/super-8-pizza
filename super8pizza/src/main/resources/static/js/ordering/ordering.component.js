@@ -135,13 +135,12 @@
             // private long orderNumber;
             // private String userId;
             // private Date timestamp;
-            // private OrderType orderType;
+            // private OrderOption orderType;
             // private PaymentMethod paymentMethod;
-            // private String cardNumber
-            // private Address address;
             // private String cardNumber;
+            // private Address address;
             // private List<menuItem> orderItems;
-            // private OrderStatus orderStatus;
+            // private OrderOption orderStatus;
 
             // this order creation will be replaced by the response from
             // the place order API call once that is done

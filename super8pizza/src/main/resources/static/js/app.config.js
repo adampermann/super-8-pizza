@@ -22,6 +22,9 @@ app.config(['$locationProvider', '$routeProvider',
             when('/order/listing', {
                 template: '<order-listing></order-listing>'
             }).
+            when('/inventory/listing', {
+                template: '<inventory-listing></inventory-listing>'
+            }).
             otherwise('/');
     }
 ]);

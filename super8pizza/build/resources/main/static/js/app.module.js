@@ -7,6 +7,7 @@
         'ngRoute',
         'ordering',
         'orderSummary',
-        'orderListing'
+        'orderListing',
+        'inventoryListing'
     ]);
 })();
