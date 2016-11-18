@@ -40,7 +40,6 @@ public class OrderRepository extends BaseRepository
 
                 log.info("got: {}", dataSnapshot);
 
-                //todo
                 for (DataSnapshot child : dataSnapshot.getChildren())
                 {
                     String key = child.getKey();

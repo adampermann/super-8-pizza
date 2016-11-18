@@ -1,7 +1,9 @@
 package com.superpizza.DAL;
 
 import com.superpizza.inventory.InventoryItem;
-import com.superpizza.inventory.OrderableItem;
+import com.superpizza.inventory.InventoryOption;
+import com.superpizza.inventory.InventoryRepository;
+import com.superpizza.ordering.OrderableItem;
 import com.superpizza.menu.MenuItem;
 import com.superpizza.menu.MenuRepository;
 import com.superpizza.ordering.Address;
@@ -46,7 +48,7 @@ public class DataSetup_NOT_FOR_PRODUCTION
         UUID orderId = UUID.randomUUID();
 
         Address address = new Address("street1", "MKE", "WI", 112233);
-        List<OrderableItem> items = getRandomItems();
+        List<OrderableItem> items = getRandomOrderItems();
 
         Order order = new Order(orderId.toString(), userId.toString(), new Date(), new OrderOption(Order.OrderType.Delivery.getValue(), Order.OrderType.Delivery.toString()), new OrderOption(Order.PaymentMethod.Card.getValue(), Order.PaymentMethod.Card.toString()), address, items, "" + orderNumber, "cardnumber", new OrderOption(Order.OrderStatus.Placed.getValue(), Order.OrderStatus.Placed.toString()));
         orderMap.put(orderId.toString(), order);
@@ -55,7 +57,7 @@ public class DataSetup_NOT_FOR_PRODUCTION
         orderId = UUID.randomUUID();
         userId = UUID.randomUUID();
         address = new Address("street2", "MKE", "WI", 114537);
-        items = getRandomItems();
+        items = getRandomOrderItems();
 
         order = new Order(orderId.toString(), userId.toString(), new Date(), new OrderOption(Order.OrderType.Pickup.getValue(), Order.OrderType.Pickup.toString()), new OrderOption(Order.PaymentMethod.Cash.getValue(), Order.PaymentMethod.Cash.toString()), address, items, "" + orderNumber, "cardnumber", new OrderOption(Order.OrderStatus.Making.getValue(), Order.OrderStatus.Making.toString()));
 
@@ -65,7 +67,7 @@ public class DataSetup_NOT_FOR_PRODUCTION
         orderId = UUID.randomUUID();
         userId = UUID.randomUUID();
         address = new Address("street3", "MKE", "WI", 984537);
-        items = getRandomItems();
+        items = getRandomOrderItems();
         order = new Order(orderId.toString(), userId.toString(), new Date(), new OrderOption(Order.OrderType.Pickup.getValue(), Order.OrderType.Pickup.toString()), new OrderOption(Order.PaymentMethod.Card.getValue(), Order.PaymentMethod.Card.toString()), address, items, "" + orderNumber, "cardnumber", new OrderOption(Order.OrderStatus.Making.getValue(), Order.OrderStatus.Making.toString()));
 
         orderMap.put(orderId.toString(), order);
@@ -74,7 +76,7 @@ public class DataSetup_NOT_FOR_PRODUCTION
         orderId = UUID.randomUUID();
         userId = UUID.randomUUID();
         address = new Address("street1", "MKE", "WI", 126587);
-        items = getRandomItems();
+        items = getRandomOrderItems();
         order = new Order(orderId.toString(), userId.toString(), new Date(), new OrderOption(Order.OrderType.Delivery.getValue(), Order.OrderType.Delivery.toString()), new OrderOption(Order.PaymentMethod.Cash.getValue(), Order.PaymentMethod.Cash.toString()), address, items, "" + orderNumber, "cardnumber", new OrderOption(Order.OrderStatus.Complete.getValue(), Order.OrderStatus.Complete.toString()));
 
         orderMap.put(orderId.toString(), order);
@@ -83,7 +85,43 @@ public class DataSetup_NOT_FOR_PRODUCTION
         repo.saveOrders(orderMap);
     }
 
-    private static List<OrderableItem> getRandomItems()
+    public static void setupItems()
+    {
+        Map<String, InventoryItem> itemMap = new HashMap<>();
+
+        List<InventoryItem> items = getRandomInventoryItems(20);
+
+        for (InventoryItem item : items)
+        {
+            itemMap.put(item.id, item);
+        }
+
+        InventoryRepository repo = new InventoryRepository();
+        repo.saveInventory(itemMap);
+    }
+
+    private static List<InventoryItem> getRandomInventoryItems(int numItems)
+    {
+        List<InventoryItem> items = new ArrayList<>();
+        UUID id = UUID.randomUUID();
+
+        for (int i = 0; i < numItems; i++)
+        {
+            int count = ThreadLocalRandom.current().nextInt(10, 100);
+            int ordinal = ThreadLocalRandom.current().nextInt(0, 4);
+            InventoryItem.ItemType type = InventoryItem.ItemType.values()[ordinal];
+            InventoryItem item = new InventoryItem(id.toString(), "item " + i, count, ThreadLocalRandom.current().nextDouble(1, 3), new InventoryOption(ordinal, type.toString()));
+            item.quantity = ThreadLocalRandom.current().nextInt(1, 4);
+
+
+            items.add(item);
+            id = UUID.randomUUID();
+        }
+
+        return items;
+    }
+
+    private static List<OrderableItem> getRandomOrderItems()
     {
         List<OrderableItem> items = new ArrayList<>();
         UUID id = UUID.randomUUID();
@@ -100,16 +138,7 @@ public class DataSetup_NOT_FOR_PRODUCTION
             id = UUID.randomUUID();
         }
 
-        for (int i = 0; i < numInventoryItems; i++)
-        {
-            int count = ThreadLocalRandom.current().nextInt(10, 100);
-            InventoryItem item = new InventoryItem(id.toString(), "item " + i, count, ThreadLocalRandom.current().nextDouble(1, 3),  "imageURL");
-            item.quantity = ThreadLocalRandom.current().nextInt(1, 4);
-
-
-            items.add(item);
-            id = UUID.randomUUID();
-        }
+        items.addAll(getRandomInventoryItems(numInventoryItems));
 
         return items;
     }

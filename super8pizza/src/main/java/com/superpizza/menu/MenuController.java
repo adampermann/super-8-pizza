@@ -28,9 +28,8 @@ public class MenuController implements MenuRepository.MenuSubscriber
 		getMenuFromRepo();
 	}
 
-	//todo take an object
 //	@RequestMapping(value="/addToMenu/{name}/{price}", method = RequestMethod.POST)
-//	public void addItem(@PathVariable("name") String name, @RequestParam("price") double price)
+//	public void addMenuItem(@PathVariable("name") String name, @RequestParam("price") double price)
 //	{
 //		UUID id = UUID.randomUUID();
 //		//menu.put(id.toString(), new MenuItem(id.toString(), name, price));
@@ -44,8 +43,7 @@ public class MenuController implements MenuRepository.MenuSubscriber
 
 		for (Map.Entry<String, MenuItem> entry : menu.entrySet())
 		{
-			MenuItem cur = entry.getValue();
-			viewModel.add(new MenuItem(cur.id, cur.name, cur.price, cur.imageURL));
+			viewModel.add(entry.getValue());
 		}
 
 		return viewModel;
@@ -64,11 +62,9 @@ public class MenuController implements MenuRepository.MenuSubscriber
 	@Override
 	public void dataChanged(Map<String, MenuItem> newData)
 	{
-		Iterator it = newData.entrySet().iterator();
-		while (it.hasNext())
+		for (Map.Entry<String, MenuItem> entry : newData.entrySet())
 		{
-			Map.Entry pair = (Map.Entry)it.next();
-			menu.put((String)pair.getKey(), (MenuItem)pair.getValue());
+			menu.put(entry.getKey(), entry.getValue());
 		}
 	}
 }

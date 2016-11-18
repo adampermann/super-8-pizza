@@ -1,6 +1,5 @@
 package com.superpizza.ordering;
 
-import com.superpizza.inventory.OrderableItem;
 import java.util.Date;
 import java.util.List;
 
