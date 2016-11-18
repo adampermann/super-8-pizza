@@ -1,7 +1,7 @@
 package com.superpizza.menu;
 
 import com.superpizza.inventory.InventoryItem;
-import com.superpizza.inventory.OrderableItem;
+import com.superpizza.ordering.OrderableItem;
 
 import java.util.ArrayList;
 import java.util.List;

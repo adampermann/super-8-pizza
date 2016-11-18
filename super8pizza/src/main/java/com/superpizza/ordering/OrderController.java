@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
+import static java.awt.SystemColor.menu;
+
 @RestController
 public class OrderController implements OrderRepository.OrderSubscriber
 {
@@ -63,17 +65,13 @@ public class OrderController implements OrderRepository.OrderSubscriber
     {
         List<Order> openOrders = new ArrayList<>();
 
-        Iterator it = orders.entrySet().iterator();
-        while (it.hasNext())
+        for (Map.Entry<String, Order> entry : orders.entrySet())
         {
-            Map.Entry pair = (Map.Entry)it.next();
-            Order order = (Order) pair.getValue();
-            if (order.orderStatus.equals(Order.OrderStatus.Complete))
+            if (entry.getValue().equals(Order.OrderStatus.Complete))
             {
                 continue;
             }
-
-            openOrders.add((Order)pair.getValue());
+            openOrders.add(entry.getValue());
         }
 
         return openOrders;
@@ -84,14 +82,11 @@ public class OrderController implements OrderRepository.OrderSubscriber
     {
         List<Order> completeOrders = new ArrayList<>();
 
-        Iterator it = orders.entrySet().iterator();
-        while (it.hasNext())
+        for (Map.Entry<String, Order> entry : orders.entrySet())
         {
-            Map.Entry pair = (Map.Entry)it.next();
-            Order order = (Order) pair.getValue();
-            if (order.equals(Order.OrderStatus.Complete))
+            if (entry.getValue().equals(Order.OrderStatus.Complete))
             {
-                completeOrders.add((Order)pair.getValue());
+                completeOrders.add(entry.getValue());
             }
         }
 
@@ -128,7 +123,11 @@ public class OrderController implements OrderRepository.OrderSubscriber
 
         try
         {
-            orders.put(updatedOrder.orderId, updatedOrder);
+            Order current = orders.get(updatedOrder.orderId);
+            current.orderStatus = updatedOrder.orderStatus;
+            orders.put(updatedOrder.orderId, current);
+            repo.saveOrders(orders);
+
             return new ResponseEntity<>(HttpStatus.OK);
         }
         catch (Exception e) {
@@ -149,11 +148,9 @@ public class OrderController implements OrderRepository.OrderSubscriber
     @Override
     public void dataChanged(Map<String, Order> newData)
     {
-        Iterator it = newData.entrySet().iterator();
-        while (it.hasNext())
+        for (Map.Entry<String, Order> entry : newData.entrySet())
         {
-            Map.Entry pair = (Map.Entry)it.next();
-            orders.put((String)pair.getKey(), (Order)pair.getValue());
+            orders.put(entry.getKey(), entry.getValue());
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.superpizza.inventory;
+package com.superpizza.ordering;
 
 public abstract class OrderableItem
 {

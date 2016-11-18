@@ -1,40 +1,20 @@
 package com.superpizza.inventory;
 
+import com.superpizza.ordering.OrderableItem;
+
 import java.util.Objects;
 
 public class InventoryItem extends OrderableItem
 {
-    private int count;
-    private String type; //todo crust, cheese, topping, sauce
+    public int count;
+    public InventoryOption type;
 
     public InventoryItem() {}
-    public InventoryItem(String id, String name, int count)
-    {
-        super(id, name, 0.0, "");
-        this.count = count;
-    }
-    public InventoryItem(String id, String name, Double price)
+    public InventoryItem(String id, String name, int count, Double price, InventoryOption type)
     {
         super(id, name, price, "");
-        this.count = 0;
-    }
-    public InventoryItem(String id, String name, Double price, String imageURL)
-    {
-        super(id, name, price, imageURL);
-        this.count = 0;
-    }
-    public InventoryItem(String id, String name, int count, Double price, String imageURL)
-    {
-        super(id, name, price, imageURL);
         this.count = count;
-    }
-
-    public int getCount() {
-        return count;
-    }
-
-    public void setCount(int count) {
-        this.count = count;
+        this.type = type;
     }
 
     @Override
@@ -59,5 +39,13 @@ public class InventoryItem extends OrderableItem
         }
 
         return true;
+    }
+
+    public enum ItemType {
+        Crust(1), Cheese(2), Topping(3), Sauce(4);
+
+        private final int id;
+        ItemType(int id) { this.id = id; }
+        public int getValue() { return id; }
     }
 }
