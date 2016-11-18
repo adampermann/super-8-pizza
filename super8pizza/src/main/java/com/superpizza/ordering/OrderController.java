@@ -128,7 +128,10 @@ public class OrderController implements OrderRepository.OrderSubscriber
 
         try
         {
-            orders.put(updatedOrder.orderId, updatedOrder);
+            Order current = orders.get(updatedOrder.orderId);
+            current.orderStatus = updatedOrder.orderStatus;
+            orders.put(updatedOrder.orderId, current);
+
             return new ResponseEntity<>(HttpStatus.OK);
         }
         catch (Exception e) {
