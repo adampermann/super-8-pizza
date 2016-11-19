@@ -1,19 +1,29 @@
 package com.superpizza.menu;
 
 import com.superpizza.inventory.InventoryItem;
-import com.superpizza.ordering.OrderableItem;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class MenuItem extends OrderableItem
+public class MenuItem
 {
-    public List<InventoryItem> includedItems = new ArrayList<>();
+    public String name;
+    public Double price;
+    public String id;
+    public String imageURL;
+    public Integer quantity = 1;
+    public boolean enabled = true;
+
+    private List<InventoryItem> includedItems = new ArrayList<>();
 
     public MenuItem(){}
-    public MenuItem(String id,  String name, double price, String imageURL) {
-        super(id, name, price, imageURL);
+    public MenuItem(String id, String name, double price, String imageURL)
+    {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.imageURL = imageURL;
     }
 
     public List<InventoryItem> getIncludedItems()
@@ -23,6 +33,13 @@ public class MenuItem extends OrderableItem
 
     public void setIncludedItems(List<InventoryItem> includedItems)
     {
+        for (InventoryItem item : includedItems)
+        {
+            if (!item.enabled)
+            {
+                enabled = false;
+            }
+        }
         this.includedItems = includedItems;
     }
 

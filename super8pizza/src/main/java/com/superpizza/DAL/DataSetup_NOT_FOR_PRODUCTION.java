@@ -3,7 +3,6 @@ package com.superpizza.DAL;
 import com.superpizza.inventory.InventoryItem;
 import com.superpizza.inventory.InventoryOption;
 import com.superpizza.inventory.InventoryRepository;
-import com.superpizza.ordering.OrderableItem;
 import com.superpizza.menu.MenuItem;
 import com.superpizza.menu.MenuRepository;
 import com.superpizza.ordering.Address;
@@ -20,19 +19,33 @@ public class DataSetup_NOT_FOR_PRODUCTION
     {
         Map<String, MenuItem> menuMap = new HashMap<>();
         UUID id = UUID.randomUUID();
-        menuMap.put(id.toString(), new MenuItem(id.toString(), "Super 8 Special Pizza", 15.00, "images/super 8 special.jpg"));
+        MenuItem  item = new MenuItem(id.toString(), "Super 8 Special Pizza", 15.00, "images/super 8 special.jpg");
+        item.setIncludedItems(getRandomInventoryItems(5));
+        menuMap.put(id.toString(), item);
         id = UUID.randomUUID();
-        menuMap.put(id.toString(), new MenuItem(id.toString(), "Cheese Pizza", 12.00, "images/cheese.jpg"));
+        item = new MenuItem(id.toString(), "Cheese Pizza", 12.00, "images/cheese.jpg");
+        item.setIncludedItems(getRandomInventoryItems(5));
+        menuMap.put(id.toString(), item);
         id = UUID.randomUUID();
-        menuMap.put(id.toString(), new MenuItem(id.toString(), "Pepperoni Pizza", 13.00, "images/pepperoni.jpg"));
+        item = new MenuItem(id.toString(), "Pepperoni Pizza", 13.00, "images/pepperoni.jpg");
+        item.setIncludedItems(getRandomInventoryItems(5));
+        menuMap.put(id.toString(), item);
         id = UUID.randomUUID();
-        menuMap.put(id.toString(), new MenuItem(id.toString(), "Anchovies Pizza", 13.00, "images/anchovies.jpg"));
+        item = new MenuItem(id.toString(), "Anchovies Pizza", 13.00, "images/anchovies.jpg");
+        item.setIncludedItems(getRandomInventoryItems(5));
+        menuMap.put(id.toString(), item);
         id = UUID.randomUUID();
-        menuMap.put(id.toString(), new MenuItem(id.toString(), "Mushrooms Pizza", 13.00, "images/mushrooms.jpg"));
+        item = new MenuItem(id.toString(), "Mushrooms Pizza", 13.00, "images/mushrooms.jpg");
+        item.setIncludedItems(getRandomInventoryItems(5));
+        menuMap.put(id.toString(), item);
         id = UUID.randomUUID();
-        menuMap.put(id.toString(), new MenuItem(id.toString(), "Sausage Pizza", 13.00, "images/sausage.jpg"));
+        item = new MenuItem(id.toString(), "Sausage Pizza", 13.00, "images/sausage.jpg");
+        item.setIncludedItems(getRandomInventoryItems(5));
+        menuMap.put(id.toString(), item);
         id = UUID.randomUUID();
-        menuMap.put(id.toString(), new MenuItem(id.toString(), "Supreme Pizza", 14.00 , "images/supreme.jpg"));
+        item = new MenuItem(id.toString(), "Supreme Pizza", 14.00 , "images/supreme.jpg");
+        item.setIncludedItems(getRandomInventoryItems(5));
+        menuMap.put(id.toString(), item);
 
 
         MenuRepository repo = new MenuRepository();
@@ -48,7 +61,7 @@ public class DataSetup_NOT_FOR_PRODUCTION
         UUID orderId = UUID.randomUUID();
 
         Address address = new Address("street1", "MKE", "WI", 112233);
-        List<OrderableItem> items = getRandomOrderItems();
+        List<MenuItem> items = getRandomOrderItems();
 
         Order order = new Order(orderId.toString(), userId.toString(), new Date(), new OrderOption(Order.OrderType.Delivery.getValue(), Order.OrderType.Delivery.toString()), new OrderOption(Order.PaymentMethod.Card.getValue(), Order.PaymentMethod.Card.toString()), address, items, "" + orderNumber, "cardnumber", new OrderOption(Order.OrderStatus.Placed.getValue(), Order.OrderStatus.Placed.toString()));
         orderMap.put(orderId.toString(), order);
@@ -85,7 +98,7 @@ public class DataSetup_NOT_FOR_PRODUCTION
         repo.saveOrders(orderMap);
     }
 
-    public static void setupItems()
+    public static void setupInventory()
     {
         Map<String, InventoryItem> itemMap = new HashMap<>();
 
@@ -120,9 +133,9 @@ public class DataSetup_NOT_FOR_PRODUCTION
         return items;
     }
 
-    private static List<OrderableItem> getRandomOrderItems()
+    private static List<MenuItem> getRandomOrderItems()
     {
-        List<OrderableItem> items = new ArrayList<>();
+        List<MenuItem> items = new ArrayList<>();
         UUID id = UUID.randomUUID();
 
         int numMenuItems = ThreadLocalRandom.current().nextInt(1, 4);
@@ -136,8 +149,6 @@ public class DataSetup_NOT_FOR_PRODUCTION
             items.add(new MenuItem(id.toString(), "menu item " + i, ThreadLocalRandom.current().nextDouble(10, 30), "imageURL"));
             id = UUID.randomUUID();
         }
-
-        items.addAll(getRandomInventoryItems(numInventoryItems));
 
         return items;
     }

@@ -64,7 +64,14 @@ public class MenuController implements MenuRepository.MenuSubscriber
 	{
 		for (Map.Entry<String, MenuItem> entry : newData.entrySet())
 		{
-			menu.put(entry.getKey(), entry.getValue());
+			try {
+				menu.put(entry.getKey(), entry.getValue());
+			} catch (NullPointerException e)
+			{
+				String wth = e.getMessage();
+				boolean ajojf = 1 + 4 == 1;
+			}
+
 		}
 	}
 }

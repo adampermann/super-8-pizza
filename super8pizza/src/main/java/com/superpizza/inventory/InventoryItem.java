@@ -1,20 +1,40 @@
 package com.superpizza.inventory;
 
-import com.superpizza.ordering.OrderableItem;
-
 import java.util.Objects;
 
-public class InventoryItem extends OrderableItem
+public class InventoryItem
 {
-    public int count;
     public InventoryOption type;
+    public String name;
+    public Double price;
+    public String id;
+    public boolean enabled = true;
+    private static int disableItemThreshold = 10;
+    private int numberInStock;
+    public int quantity = 1;
 
     public InventoryItem() {}
-    public InventoryItem(String id, String name, int count, Double price, InventoryOption type)
+    public InventoryItem(String id, String name, int numberInStock, Double price, InventoryOption type)
     {
-        super(id, name, price, "");
-        this.count = count;
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.setNumberInStock(numberInStock);
         this.type = type;
+    }
+
+    public int getNumberInStock()
+    {
+        return numberInStock;
+    }
+
+    public void setNumberInStock(int numberInStock)
+    {
+        this.numberInStock = numberInStock;
+        if (numberInStock < disableItemThreshold)
+        {
+            enabled = false;
+        }
     }
 
     @Override
@@ -33,7 +53,7 @@ public class InventoryItem extends OrderableItem
             return false;
         }
 
-        if (this.id != ((InventoryItem) rhs).id || this.name != ((InventoryItem) rhs).name || !Objects.equals(this.price, ((InventoryItem) rhs).price) || this.count != ((InventoryItem) rhs).count)
+        if (this.id != ((InventoryItem) rhs).id || this.name != ((InventoryItem) rhs).name || !Objects.equals(this.price, ((InventoryItem) rhs).price) || this.numberInStock != ((InventoryItem) rhs).numberInStock)
         {
             return false;
         }

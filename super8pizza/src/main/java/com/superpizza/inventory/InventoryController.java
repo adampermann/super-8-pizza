@@ -34,7 +34,7 @@ public class InventoryController implements InventoryRepository.InventorySubscri
 		}
 
 		InventoryItem current = inventory.get(id);
-		current.count = newCount;
+		current.setNumberInStock(newCount);
 
 		inventory.put(id, current);
 		repo.saveInventory(inventory);

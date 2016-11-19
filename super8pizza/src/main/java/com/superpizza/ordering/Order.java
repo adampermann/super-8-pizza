@@ -1,5 +1,7 @@
 package com.superpizza.ordering;
 
+import com.superpizza.menu.MenuItem;
+
 import java.util.Date;
 import java.util.List;
 
@@ -13,13 +15,13 @@ public class Order
     public OrderOption paymentMethod;
     public String cardNumber;
     public Address address;
-    public List<OrderableItem> orderItems;
+    public List<MenuItem> orderItems;
     public OrderOption orderStatus;
     public double price = 0.0;
 
     public Order(){}
 
-    public Order(String orderId, String userId, Date timestamp, OrderOption type, OrderOption payment, Address address, List<OrderableItem> items, String orderNumber, String cardnumber, OrderOption orderStatus)
+    public Order(String orderId, String userId, Date timestamp, OrderOption type, OrderOption payment, Address address, List<MenuItem> items, String orderNumber, String cardnumber, OrderOption orderStatus)
     {
         this.orderId = orderId;
         this.userId = userId;

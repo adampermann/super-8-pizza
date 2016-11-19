@@ -37,3 +37,5 @@
 .super8pizza/idea_modules/
 ./super8pizza/out/
 super8pizza/out/
+super8pizza/build/
+super8pizza/.idea/workspace.xml
