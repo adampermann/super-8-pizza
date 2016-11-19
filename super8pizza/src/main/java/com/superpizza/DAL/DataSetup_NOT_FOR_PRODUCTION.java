@@ -110,9 +110,8 @@ public class DataSetup_NOT_FOR_PRODUCTION
             int count = ThreadLocalRandom.current().nextInt(10, 100);
             int ordinal = ThreadLocalRandom.current().nextInt(0, 4);
             InventoryItem.ItemType type = InventoryItem.ItemType.values()[ordinal];
-            InventoryItem item = new InventoryItem(id.toString(), "item " + i, count, ThreadLocalRandom.current().nextDouble(1, 3), new InventoryOption(ordinal, type.toString()));
+            InventoryItem item = new InventoryItem(id.toString(), "item " + i, count, ThreadLocalRandom.current().nextDouble(1, 3), new InventoryOption(InventoryItem.ItemType.valueOf(type.toString()).getValue(), type.toString()));
             item.quantity = ThreadLocalRandom.current().nextInt(1, 4);
-
 
             items.add(item);
             id = UUID.randomUUID();

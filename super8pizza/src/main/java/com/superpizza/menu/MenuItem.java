@@ -10,8 +10,8 @@ import java.util.Objects;
 public class MenuItem extends OrderableItem
 {
     public List<InventoryItem> includedItems = new ArrayList<>();
-    public boolean enabled; //todo   //on order, if stock drops below threshhold may need to disable. If backend inventory change happens, may enable/disable
 
+    public MenuItem(){}
     public MenuItem(String id,  String name, double price, String imageURL) {
         super(id, name, price, imageURL);
     }
