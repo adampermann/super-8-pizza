@@ -98,6 +98,7 @@ public class OrderController implements OrderRepository.OrderSubscriber
     {
         String orderId = UUID.randomUUID().toString();
         order.orderId = orderId;
+        order.orderStatus = new OrderOption(Order.OrderStatus.Placed.getValue(), Order.OrderStatus.Placed.toString());
         orderNumber++;
         order.orderNumber = "" + orderNumber;
 
