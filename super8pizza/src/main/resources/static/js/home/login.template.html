@@ -10,7 +10,7 @@
         </div>
     </div>
 
-    <form role="form" class="text-center login-center">
+    <form role="form" ng-submit="$ctrl.login()" class="text-center login-center">
 
         <div class="form-group row">
             <label for="username" class="col-sm-2 col-md-2 control-label">User Name</label>
@@ -36,7 +36,7 @@
         </div>
 
         <div class="form-group row">
-            <button type="button" class="btn btn-primary btn-lg login-button" ng-click="$ctrl.login()">Login</button>
+            <button type="submit" class="btn btn-primary btn-lg login-button">Login</button>
         </div>
     </form>
 
