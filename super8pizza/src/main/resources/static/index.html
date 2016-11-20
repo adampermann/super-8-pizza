@@ -22,7 +22,7 @@
     </head>
     <body>
         <!--Navbar-->
-        <nav class="navbar navbar-inverse navbar-fixed-top" id="sp-navbar-affix" data-spy="affix">
+        <nav ng-controller="NavigationController as navCtrl" class="navbar navbar-inverse navbar-fixed-top" id="sp-navbar-affix" data-spy="affix">
             <div class="container">
 
                 <!-- Navbar header -->
@@ -48,12 +48,13 @@
                             <a href="/ordering">Order Online<span class="sr-only">(current)</span></a>
 
                         </li>
-                        <li><a href="/">Customer Sign In</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a>Employee Sign In</a></li>
+                        <li><a href="/login" ng-hide="authenticated">Sign In</a></li>
+                        <li><a href="/register" ng-hide="authenticated">Register</a></li>
+                        <li ng-show="authenticated"><a href="" ng-click="navCtrl.logout()">Logout</a></li>
 
-                        <li class="dropdown">
+                        <li ng-show="authenticated" class="dropdown">
                             <a class="dropdown-toggle"
                                data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                  Employees <span class="caret"></span>
@@ -93,6 +94,7 @@
         <script src="bower_components/angular-toastr/dist/angular-toastr.tpls.min.js" type="text/javascript"></script>
 
         <!-- All our angular modules -->
+        <!--<script src="dist/js/main.js" type="text/javascript"></script>-->
         <script src="js/app.module.js" type="text/javascript"></script>
         <script src="js/app.config.js" type="text/javascript"></script>
         <script src="js/ordering/ordering.service.js" type="text/javascript"></script>
