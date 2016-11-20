@@ -13,58 +13,42 @@
 
     module.controller('OrderListingController', OrderListingController);
 
-    OrderListingController.$inject = ['$http', '$filter'];
+    OrderListingController.$inject = ['$http', 'toastr'];
 
-    function OrderListingController($http, $filter) {
+    function OrderListingController($http, toastr) {
         var vm = this;
         vm.orders = [];
-        vm.pendingOrders = [];
-        vm.completedOrders = [];
         vm.statuses = [];
         vm.filterBy = "";
 
-        vm.isCompleted = function(order) {
-            return order.orderStatus.id == 4;
-        };
-
-        vm.isPending = function(order) {
-            return order.orderStatus.id != 4;
-        };
-
         vm.setStatus = function(order) {
-            console.log('setting order status' + order.orderStatus.name);
-            order.orderStatus = order.setOrderStatus;
 
             // should be an ajax call to update the status server side
-            // $http.post('/setOrderStatus', order).then(function (response) {
-            //    if (response.data.success) {
-            //
-            //    } else {
-            //        // show error couldn't set order status
-            //    }
-            // });
+            $http.post('/setOrderStatus', order).then(function (response) {
+                if (response.status == 200) {
+                    toastr.success('Updated order ' + order.orderNumber + ' to ' + order.orderStatus.name, 'Success!');
+                    vm.getOpenOrders();
+                } else {
+                    // display an error
+                    toastr.error('Error updating order status', 'Error');
+                }
+            });
+        };
+
+        vm.getOpenOrders = function() {
+
+            $http.get('/getOpenOrders').then(function (response) {
+                vm.orders = response.data;
+            });
         };
 
         activate();
         function activate() {
 
-
-            // $http.get('/getOpenOrders').then(function (response) {
-            //     vm.orders = response.data;
-            //     console.log('orders are');
-            //     console.log(vm.orders);
-            // });
+            vm.getOpenOrders();
 
             $http.get('/getOrderStatusOptions').then(function (response) {
                 vm.statuses = response.data;
-
-                console.log('statuses are');
-                console.log(vm.statuses);
-            });
-
-            $http.get('js/order_management/orders.json').then(function (response) {
-                vm.orders = response.data;
-                console.log(vm.orders);
             });
 
         };

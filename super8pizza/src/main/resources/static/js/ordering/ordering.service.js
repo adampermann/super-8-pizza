@@ -8,9 +8,9 @@
 
     app.service('orderingService', OrderingService);
 
-    OrderingService.$inject = ['$http'];
+    OrderingService.$inject = [];
 
-    function OrderingService($http) {
+    function OrderingService() {
         var self = this;
         var _order = {
             "orderId": "",
@@ -21,7 +21,9 @@
             "paymentMethod": {},
             "cardNumber": "",
             "address": {},
-            "orderItems": []
+            "orderItems": [],
+            "price": 0,
+            "orderStatus": {}
         };
 
         self.setOrder = function(order) {
@@ -42,7 +44,9 @@
                 "paymentMethod": {},
                 "cardNumber": "",
                 "address": {},
-                "orderItems": []
+                "orderItems": [],
+                "price": 0,
+                "orderStatus": {}
             };
         };
 

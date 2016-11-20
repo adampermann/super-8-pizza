@@ -8,6 +8,8 @@
         'ordering',
         'orderSummary',
         'orderListing',
-        'inventoryListing'
+        'orderHistory',
+        'inventoryListing',
+        'toastr'
     ]);
 })();

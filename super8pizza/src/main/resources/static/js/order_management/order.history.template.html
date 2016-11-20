@@ -1,9 +1,10 @@
 <div class="panel panel-primary">
-    <div class="panel-heading">
-        <h2>Pending Orders</h2>
+    <div class="panel-heading text-center">
+        <h2>Completed Orders</h2>
     </div>
 
     <div class="panel-body">
+
         <div class="row" style="padding: 10px;">
             <div class="col-md-2">
                 <label>Filter By:</label>
@@ -19,11 +20,10 @@
                 <tr>
                     <th> Number </th>
                     <th> Contents </th>
-                    <th> Update Status </th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="order in $ctrl.orders | filter: $ctrl.filterBy | orderBy: '-order.orderStatus'">
+                <tr ng-repeat="order in $ctrl.completedOrders | filter: $ctrl.filterBy ">
                     <td>{{order.orderNumber}}</td>
                     <td>
                         <ul>
@@ -32,15 +32,7 @@
                             </li>
                         </ul>
                     </td>
-                    <td>
-                        <select id="statusSelect" class="form-control" name="statusSelect"
-                                ng-options="status.name for status in $ctrl.statuses track by status.id"
-                                ng-model="order.orderStatus" style="padding: 5px"
-                                ng-change="$ctrl.setStatus(order)">
-                        </select>
-                    </td>
                 </tr>
-
                 </tbody>
             </table>
         </div>

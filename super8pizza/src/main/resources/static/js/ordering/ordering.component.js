@@ -15,9 +15,9 @@
     module.controller('OrderingController', OrderingController);
 
     // inject our controller with needed dependencies
-    OrderingController.$inject = ['$http', '$filter', '$location', 'orderingService'];
+    OrderingController.$inject = ['$http', '$filter', '$location', 'orderingService', 'toastr'];
 
-    function OrderingController($http, $filter, $location, orderingService) {
+    function OrderingController($http, $filter, $location, orderingService, toastr) {
         var vm = this;
 
         // cart is empty until they start adding stuff
@@ -44,17 +44,13 @@
                 }
             } else {
                 // option was not in the cart so add it
-                vm.cart.push({
-                    "id": menuOption.id,
-                    "name": menuOption.name,
-                    "price": menuOption.price,
-                    "quantity": menuOption.quantity
-                });
+                vm.cart.push(angular.copy(menuOption));
+                console.log(vm.cart);
             }
 
             // reset the menu option's quantity back to 1
             menuOption.quantity = 1;
-            vm.calculateCartTotal()
+            vm.calculateCartTotal();
         };
 
         vm.isOptionInCart = function(menuOption) {
@@ -125,29 +121,19 @@
             }
         };
 
-        // takes whatever is in the cart and posts it to the server
-        // to process the order
+
+        // validates the order
+        vm.validateOrder = function(order) {
+
+        };
+
         vm.placeOrder = function() {
 
-            // what the server NEEDs to send down
-
-            // private String orderId;
-            // private long orderNumber;
-            // private String userId;
-            // private Date timestamp;
-            // private OrderOption orderType;
-            // private PaymentMethod paymentMethod;
-            // private String cardNumber;
-            // private Address address;
-            // private List<menuItem> orderItems;
-            // private OrderOption orderStatus;
-
-            // this order creation will be replaced by the response from
-            // the place order API call once that is done
+            // create the order to post to the server
             var order = {
                 "orderId": "",
-                "orderNumber": 5,
-                "userId": "guest user",
+                "orderNumber": 0,
+                "userId": "Guest User",
                 "timestamp": Date.now(),
                 "orderType": {
                     "id": vm.deliveryOption,
@@ -157,6 +143,10 @@
                    "id": vm.payOption,
                     "name": vm.getPayMethodName()
                 },
+                "orderStatus": {
+                    "id": 1,
+                    "name": "Placed"
+                },
                 "cardNumber": vm.cardNumber,
                 "address": {
                     "street": vm.street,
@@ -164,33 +154,24 @@
                     "state": vm.state,
                     "zip": vm.zip
                 },
-                "orderItems": vm.cart
+                "orderItems": vm.cart,
+                "price": vm.calculateCartTotal()
             };
 
-            console.log(order);
+            $http.post('/placeOrder', order).then(function (response) {
 
-            // public class OrderSuccessModel {
-            //
-            //     public boolean success;
-            //
-            //     public string message;
-            //
-            //     public string orderId/number /whatever
-            // }
+                if (response.status == 200) {
+                    // set the order on the ordering service to the
+                    // order response from the server
+                    orderingService.setOrder(response.data);
+                    toastr.success('Order Placed', 'Success!');
+                    $location.url('/order/summary');
+                } else {
+                    // display an error
+                    toastr.error('Error Placing Order', 'Error');
+                }
 
-            // $http.post('/placeOrder').then(function (response) {
-            //     if (response.data.success) {
-            //         // we are good and we can pass the order id to the summary page
-            //     } else {
-            //         // the order didn't place display an error
-            //         // or something on the top of the page
-            //     }
-            // });
-
-            // maybe take this out and pass a route param of the order id
-            orderingService.setOrder(order);
-
-            $location.url('/order/summary');
+            });
         };
 
         // initialize our controller
@@ -198,6 +179,7 @@
         function activate() {
             $http.get('/getMenu').then(function (response) {
                 vm.menu = response.data;
+                console.log(vm.menu);
             });
 
             $http.get('/getDeliveryOptions').then(function (response) {
