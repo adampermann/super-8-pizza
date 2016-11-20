@@ -4,6 +4,7 @@
             <div class="panel-heading">
                 <h1 class="panel-title">Thanks for your order, {{$ctrl.order.userId}}!</h1>
                 <h3 class="panel-title">Your order number is {{$ctrl.order.orderNumber}}</h3>
+                <h1>Your order will be ready {{$ctrl.order.readyTime}}</h1>
             </div>
             <ul class="list-group">
                 <li class="list-group-item" ng-repeat="item in $ctrl.order.orderItems | orderBy: 'name'">
@@ -37,7 +38,7 @@
                 <br />
                 <div class="row">
                     <button class="btn btn-success text-right" type="button" ng-click="$ctrl.confirmOrder()">
-                        Confirm Order!
+                        Ok!
                     </button>
                 </div>
             </div>

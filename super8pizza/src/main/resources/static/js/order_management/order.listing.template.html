@@ -1,5 +1,5 @@
 <div class="panel panel-primary">
-    <div class="panel-heading">
+    <div class="panel-heading text-center">
         <h2>Pending Orders</h2>
     </div>
 
@@ -19,64 +19,28 @@
                 <tr>
                     <th> Number </th>
                     <th> Contents </th>
-                    <th> Current Status </th>
-                    <th> Set Status </th>
+                    <th> Update Status </th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="order in ($ctrl.pendingOrders = ($ctrl.orders | filter: $ctrl.filterBy | filter: $ctrl.isPending | orderBy: '-orderStatus.id'))">
-                    <td>{{order.orderId}}</td>
+                <tr ng-repeat="order in $ctrl.orders | filter: $ctrl.filterBy | orderBy: '-order.orderStatus.id'">
+                    <td>{{order.orderNumber}}</td>
                     <td>
                         <ul>
                             <li ng-repeat="item in order.orderItems | orderBy: 'name'">
                                 {{item.name}} x {{item.quantity}}
                             </li>
                         </ul>
-                    </td>
-                    <td>
-                        {{order.orderStatus.name}}
                     </td>
                     <td>
                         <select id="statusSelect" class="form-control" name="statusSelect"
                                 ng-options="status.name for status in $ctrl.statuses track by status.id"
-                                ng-model="order.setOrderStatus" style="padding: 5px">
+                                ng-model="order.orderStatus" style="padding: 5px"
+                                ng-change="$ctrl.setStatus(order)">
                         </select>
-                        <button type="button" class="btn btn-info" ng-click="$ctrl.setStatus(order)">Set Status</button>
                     </td>
                 </tr>
 
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-</div>
-
-<div class="panel panel-primary" ng-show="$ctrl.completedOrders.length > 0">
-    <div class="panel-heading">
-        <h2>Completed Orders</h2>
-    </div>
-
-    <div class="panel-body">
-        <div class="table-responsive table-bordered table-striped">
-            <table class="table">
-                <thead>
-                <tr>
-                    <th> Number </th>
-                    <th> Contents </th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr ng-repeat="order in ($ctrl.completedOrders = ($ctrl.orders | filter: $ctrl.isCompleted ))">
-                    <td>{{order.orderId}}</td>
-                    <td>
-                        <ul>
-                            <li ng-repeat="item in order.orderItems | orderBy: 'name'">
-                                {{item.name}} x {{item.quantity}}
-                            </li>
-                        </ul>
-                    </td>
-                </tr>
                 </tbody>
             </table>
         </div>

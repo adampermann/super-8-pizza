@@ -77,20 +77,25 @@
             }
         };
 
+        Date.prototype.addHours = function(h) {
+            this.setTime(this.getTime() + (h*60*60*1000));
+            return this;
+        };
+
         activate();
         function activate() {
             vm.order = orderingService.getOrder();
             vm.address = vm.order.address;
 
-            console.log(vm.order);
-            console.log(vm.order.orderItems);
+            var orderDate = new Date(vm.order.timestamp);
+            vm.order.readyTime = orderDate.addHours(1).toLocaleTimeString('en-US');
 
+            // calculate the order total
             vm.calculateOrderTotal();
 
             $http.get('/getDeliveryOptions').then(function (response) {
                 vm.deliveryOptions = response.data;
             });
-
 
             $http.get('/getPaymentOptions').then(function (response) {
                 vm.paymentOptions = response.data;

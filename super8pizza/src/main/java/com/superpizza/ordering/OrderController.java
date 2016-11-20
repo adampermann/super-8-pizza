@@ -67,7 +67,7 @@ public class OrderController implements OrderRepository.OrderSubscriber
 
         for (Map.Entry<String, Order> entry : orders.entrySet())
         {
-            if (entry.getValue().equals(Order.OrderStatus.Complete))
+            if (entry.getValue().orderStatus.name.equals(Order.OrderStatus.Complete.toString()))
             {
                 continue;
             }
@@ -84,7 +84,7 @@ public class OrderController implements OrderRepository.OrderSubscriber
 
         for (Map.Entry<String, Order> entry : orders.entrySet())
         {
-            if (entry.getValue().equals(Order.OrderStatus.Complete))
+            if (entry.getValue().orderStatus.name.equals(Order.OrderStatus.Complete.toString()))
             {
                 completeOrders.add(entry.getValue());
             }
@@ -117,7 +117,7 @@ public class OrderController implements OrderRepository.OrderSubscriber
     @RequestMapping("/setOrderStatus")
     public ResponseEntity<?> setOrderStatus(@RequestBody Order updatedOrder)
     {
-        if(!orders.containsKey(updatedOrder))
+        if(!orders.containsKey(updatedOrder.orderId))
         {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
