@@ -3,8 +3,7 @@
         <div class="panel panel-success text-center">
             <div class="panel-heading">
                 <h1 class="panel-title">Thanks for your order, {{$ctrl.order.userId}}!</h1>
-                <h3 class="panel-title">Your order number is {{$ctrl.order.orderNumber}}</h3>
-                <h1>Your order will be ready {{$ctrl.order.readyTime}}</h1>
+                <h2>Your order will be ready {{$ctrl.order.readyTime}} and your number is {{$ctrl.order.orderNumber}}</h2>
             </div>
             <ul class="list-group">
                 <li class="list-group-item" ng-repeat="item in $ctrl.order.orderItems | orderBy: 'name'">

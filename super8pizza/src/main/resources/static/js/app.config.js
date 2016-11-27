@@ -30,6 +30,9 @@
             when('/inventory/listing', {
                 template: '<inventory-listing></inventory-listing>'
             }).
+            when('/order/custom', {
+                template: '<custom-order></custom-order>'
+            }).
             when('/login', {
                 controller: 'NavigationController',
                 templateUrl: 'js/home/login.template.html',

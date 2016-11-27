@@ -1,9 +1,35 @@
 <div class="row">
     <!-- Where all our products are listed-->
     <div id="sp-menu" class="col-md-8" role="main">
-        <div class="panel panel-primary sp-menu" role="main">
+        <div class="panel panel-default sp-menu" role="main">
             <div class="panel-heading">
                 <h2 class="panel-title text-center">Our Menu</h2>
+            </div>
+
+            <!-- Custom Order Slot (must be separate)-->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">Make Your Own Pizza!</h4>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <img src="images/customize-pizza.png" alt="image" style="width: 300px; height: 150px"/>
+                                </div>
+                                <div class="col-md-6 sp-menu-fields">
+                                    <div class="row">
+                                        <button class="btn btn-primary" type="button" ng-click="$ctrl.customizePizza()">
+                                            Customize
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br/>
             </div>
 
             <!-- For every menu option this markup is repeated-->

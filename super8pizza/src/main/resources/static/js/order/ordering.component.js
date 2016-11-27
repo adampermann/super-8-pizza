@@ -36,7 +36,7 @@
 
 
         vm.addToCart = function(menuOption) {
-            if (vm.isOptionInCart(menuOption)) {
+            if (vm.isOptionInCart(menuOption) && menuOption.name != "Custom Pizza") {
                 for (var i = 0; i < vm.cart.length; ++i) {
                     if (vm.cart[i].name == menuOption.name) {
                         vm.cart[i].quantity += menuOption.quantity;
@@ -120,6 +120,15 @@
             }
         };
 
+        // redirect to customize pizza page
+        // save the state of the app
+        vm.customizePizza = function() {
+
+            // just save cart or entire order?
+            // if entire order, something has to change from the
+            orderingService.setCart(vm.cart);
+            $location.url('/order/custom');
+        };
 
         // validates the order
         // vm.validateOrder = function(order) {
@@ -129,33 +138,7 @@
         vm.placeOrder = function() {
 
             // create the order to post to the server
-            var order = {
-                "orderId": "",
-                "orderNumber": 0,
-                "userId": "Guest User",
-                "timestamp": Date.now(),
-                "orderType": {
-                    "id": vm.deliveryOption,
-                    "name": vm.getDeliveryMethodName()
-                },
-                "paymentMethod": {
-                   "id": vm.payOption,
-                    "name": vm.getPayMethodName()
-                },
-                "orderStatus": {
-                    "id": 1,
-                    "name": "Placed"
-                },
-                "cardNumber": vm.cardNumber,
-                "address": {
-                    "street": vm.street,
-                    "city": vm.city,
-                    "state": vm.state,
-                    "zip": vm.zip
-                },
-                "orderItems": vm.cart,
-                "price": vm.calculateCartTotal()
-            };
+            var order = createOrderFromModel();
 
             $http.post('/placeOrder', order).then(function (response) {
 
@@ -179,6 +162,53 @@
             });
         };
 
+        function createOrderFromModel() {
+            var order = {
+                "orderId": "",
+                "orderNumber": 0,
+                "userId": "Guest User",
+                "timestamp": Date.now(),
+                "orderType": {
+                    "id": vm.deliveryOption,
+                    "name": vm.getDeliveryMethodName()
+                },
+                "paymentMethod": {
+                    "id": vm.payOption,
+                    "name": vm.getPayMethodName()
+                },
+                "orderStatus": {
+                    "id": 1,
+                    "name": "Placed"
+                },
+                "cardNumber": vm.cardNumber,
+                "address": {
+                    "street": vm.street,
+                    "city": vm.city,
+                    "state": vm.state,
+                    "zip": vm.zip
+                },
+                "orderItems": vm.cart,
+                "price": vm.calculateCartTotal()
+            };
+
+            return order;
+        }
+
+        // restores an order if the page is navigated back to
+        // and a user had a previous session without placing the order
+        // function restoreOrder() {
+        //     var order = orderingService.getOrder();
+        //     if (order != null) {
+        //         vm.deliveryOption = order.orderType.id;
+        //         vm.payOption = order.paymentMethod.id;
+        //         vm.cardNumber = order.cardNumber;
+        //         vm.street = order.address.street;
+        //         vm.city = order.address.city;
+        //         vm.state = order.address.zip;
+        //         vm.cart = order.orderItems;
+        //     }
+        // }
+
         // initialize our controller
         activate();
         function activate() {
@@ -198,13 +228,24 @@
 
             // initialize the items from the ordering service if possible
             var savedCart = orderingService.getCart();
+            var customPizza = orderingService.getCustomPizza();
+
 
             if (savedCart != null) {
                 vm.cart = savedCart;
-                vm.calculateCartTotal();
             } else {
                 vm.cart = [];
             }
+
+            if (customPizza != null && !vm.isOptionInCart(customPizza)) {
+                vm.cart.push(customPizza);
+
+                // clear the saved custom pizza
+                orderingService.clearCustomPizza();
+            }
+
+            // calculate the total incase we have items in the cart
+            vm.calculateCartTotal();
 
             // initialize the address from the logged in user's addy
             if ($rootScope.authenticated) {
