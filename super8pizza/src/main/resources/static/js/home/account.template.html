@@ -1,0 +1,141 @@
+<div class="row account">
+    <div class="panel-heading">
+        <div class="panel-title text-center">
+            <h1 class="title">Edit Account</h1>
+            <hr />
+        </div>
+    </div>
+
+    <form name="account-form" role="form" ng-submit="$ctrl.updateAccount()" class="text-center account-center" novalidate>
+
+        <div class="form-group row">
+            <label for="username" class="col-sm-2 col-md-2 control-label">User Name</label>
+            <div class="col-sm-10 col-md-10">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                    <input id="username" name="username" type="text" class="form-control" placeholder="New User Name" ng-model="$ctrl.user.username" required/>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="email" class="col-sm-2 control-label">Your Email</label>
+            <div class="col-sm-10">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+                    <input ng-model="$ctrl.user.email" id="email" name="email" type="email" class="form-control" placeholder="New Email" required/>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="password" class="col-sm-2 col-md-2 control-label">New Password</label>
+            <div class="col-sm-10 col-md-10">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-lock fa" aria-hidden="true"></i></span>
+                    <input id="password" name="password" type="password" class="form-control" placeholder="New Password" ng-model="$ctrl.user.password" required/>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="confirm" class="col-sm-2 control-label">Confirm Password</label>
+            <div class="col-sm-10">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-lock fa" aria-hidden="true"></i></span>
+                    <input ng-model="$ctrl.confirmPass" id="confirm" name="confirm" type="password" class="form-control" placeholder="Confirm New Password" required/>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="street" class="col-sm-2 col-md-2 control-label">Street</label>
+            <div class="col-sm-10 col-md-10">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-home fa" aria-hidden="true"></i></span>
+                    <input id="street" name="street" type="text" class="form-control" placeholder="Street"
+                           ng-model="$ctrl.user.address.street" />
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="city" class="col-sm-2 col-md-2 control-label">City</label>
+            <div class="col-sm-10 col-md-10">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-home fa" aria-hidden="true"></i></span>
+                    <input id="city" name="city" type="text" class="form-control" placeholder="City"
+                           ng-model="$ctrl.user.address.city" />
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="state" class="col-sm-2 col-md-2 control-label">State</label>
+            <div class="col-sm-10 col-md-10">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-home fa" aria-hidden="true"></i></span>
+                    <input id="state" name="state" type="text" class="form-control" placeholder="State"
+                           ng-model="$ctrl.user.address.state" />
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="zip" class="col-sm-2 col-md-2 control-label">Zip</label>
+            <div class="col-sm-10 col-md-10">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-home fa" aria-hidden="true"></i></span>
+                    <input id="zip" name="zip" type="text" class="form-control" placeholder="Zip"
+                           ng-model="$ctrl.user.address.zip" />
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <button type="submit" class="btn btn-primary btn-lg login-button">Update</button>
+        </div>
+        <div class="form-group row">
+            <button ng-click="$ctrl.cancelUpdate()" class="btn btn-danger btn-lg login-button">Cancel</button>
+        </div>
+    </form>
+
+</div>
+
+<div class="row order-history">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h2>Your Order History</h2>
+        </div>
+
+        <div class="panel-body">
+            <div class="table-responsive table-bordered table-striped">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th> Order Number </th>
+                        <th> Order Items </th>
+                        <th> Action </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="order in $ctrl.orders | orderBy: 'timestamp'">
+                        <td>{{order.orderNumber}}</td>
+                        <td>
+                            <ul>
+                                <li ng-repeat="item in order.orderItems | orderBy: 'name'">
+                                    {{item.name}} x {{item.quantity}}
+                                </li>
+                            </ul>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-success btn-sm order-again" ng-click="$ctrl.orderAgain(order)">Order Again</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>

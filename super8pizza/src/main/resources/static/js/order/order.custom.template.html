@@ -1,0 +1,61 @@
+<div class="panel panel-default">
+    <div class="panel-heading text-center">
+        <h2>Make Your Own Pizza!</h2>
+    </div>
+
+    <div class="panel-body">
+
+        <div class="row">
+            <!-- Crusts -->
+            <div class="col-md-3" ng-show="$ctrl.crusts.length > 0">
+                <h3>Crusts</h3>
+                <div class="list-group">
+                    <button ng-repeat="item in $ctrl.crusts" ng-click="$ctrl.addItemToCustomInventory(item)" class="list-group-item">{{item.name}}</button>
+                </div>
+            </div>
+
+            <!-- Sauces -->
+            <div class="col-md-3" ng-show="$ctrl.sauces.length > 0">
+                <h3>Sauces</h3>
+                <div class="list-group">
+                    <button ng-repeat="item in $ctrl.sauces" ng-click="$ctrl.addItemToCustomInventory(item)" class="list-group-item">{{item.name}}</button>
+                </div>
+            </div>
+
+            <!-- Cheeses -->
+            <div class="col-md-3" ng-show="$ctrl.cheeses.length > 0">
+                <h3>Cheeses</h3>
+                <div class="list-group">
+                    <button ng-repeat="item in $ctrl.cheeses" ng-click="$ctrl.addItemToCustomInventory(item)" class="list-group-item">{{item.name}}</button>
+                </div>
+            </div>
+
+            <!-- Toppings -->
+            <div class="col-md-3" ng-show="$ctrl.toppings.length > 0">
+                <h3>Toppings</h3>
+                <div class="list-group">
+                    <button ng-repeat="item in $ctrl.toppings" ng-click="$ctrl.addItemToCustomInventory(item)" class="list-group-item">{{item.name}}</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="row" ng-show="$ctrl.customInventory.length > 0">
+            <div class="col-md-offset-3 col-md-6 custom-order-summary">
+                <h3>Custom Pizza Summary</h3>
+                <hr />
+                <ul>
+                    <li ng-repeat="item in $ctrl.customInventory | orderBy: 'name'">{{item.name}} x {{item.quantity}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="panel-footer" ng-show="$ctrl.customInventory.length > 0">
+        <div class="row">
+            <button class="btn btn-success pull-right" type="button" ng-click="$ctrl.addToOrder()" style="margin: 10px;">
+                Add To Order
+            </button>
+        </div>
+    </div>
+
+</div>

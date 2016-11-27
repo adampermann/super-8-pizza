@@ -9,6 +9,9 @@ import com.superpizza.ordering.Address;
 import com.superpizza.ordering.Order;
 import com.superpizza.ordering.OrderOption;
 import com.superpizza.ordering.OrderRepository;
+import com.superpizza.users.User;
+import com.superpizza.users.UserRepository;
+import com.superpizza.users.UserRole;
 
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
@@ -51,6 +54,26 @@ public class DataSetup_NOT_FOR_PRODUCTION
         MenuRepository repo = new MenuRepository();
         repo.saveMenu(menuMap);
     }
+
+    public static void setupUsers() {
+        Map<String, User> userMap = new HashMap<>();
+
+        UUID customerId = UUID.randomUUID();
+        UUID adminId = UUID.randomUUID();
+        UserRole customerRole = new UserRole(User.Role.Customer.getValue(), User.Role.Customer.toString());
+        UserRole adminRole = new UserRole(User.Role.Admin.getValue(), User.Role.Admin.toString());
+        Address address = new Address("street1", "MKE", "WI", 112233);
+
+        User customer = new User(customerId.toString(), "customer", "test@gmail.com", "password", customerRole, address, "");
+        User admin = new User(adminId.toString(), "admin", "test@gmail.com", "password", adminRole, address, "Super8Pizza");
+
+        userMap.put(customer.userId, customer);
+        userMap.put(admin.userId, admin);
+
+        UserRepository repo = new UserRepository();
+        repo.saveUsers(userMap);
+    }
+
 
     public static void setupOrders()
     {

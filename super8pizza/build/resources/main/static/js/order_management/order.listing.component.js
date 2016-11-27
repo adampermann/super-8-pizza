@@ -4,7 +4,7 @@
 (function() {
     'use-strict';
 
-    var module = angular.module('orderListing', []);
+    var module = angular.module('orderManagement');
 
     module.component('orderListing', {
         templateUrl: 'js/order_management/order.listing.template.html',

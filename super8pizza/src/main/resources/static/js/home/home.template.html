@@ -2,7 +2,14 @@
     <h1>Welcome to Super 8 Pizza</h1>
     <p class="lead">We only make our pizzas from the Freshest Ingredients!</p>
     <br />
+    <p ng-show="authenticated">
+        Hello <strong>{{displayName}}</strong>!
+    </p>
     <p>
+        <a ng-hide="authenticated" href="/login" class="btn btn-lg btn-primary" role="button">Log in to your Account</a>
+
+        <span ng-hide="authenticated" style="padding: 10px;"><strong>Or</strong></span>
+
         <a href="/ordering" class="btn btn-lg btn-primary" role="button">Start Your Order Here!</a>
     </p>
 </div>

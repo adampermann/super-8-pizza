@@ -1,5 +1,5 @@
-<div class="panel panel-primary">
-    <div class="panel-heading">
+<div class="panel panel-default">
+    <div class="panel-heading text-center">
         <h2>Pending Orders</h2>
     </div>
 
@@ -23,7 +23,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="order in $ctrl.orders | filter: $ctrl.filterBy | orderBy: '-order.orderStatus'">
+                <tr ng-repeat="order in $ctrl.orders | filter: $ctrl.filterBy | orderBy: '-orderStatus.id'">
                     <td>{{order.orderNumber}}</td>
                     <td>
                         <ul>

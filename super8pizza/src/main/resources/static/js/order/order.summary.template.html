@@ -1,0 +1,46 @@
+<div class="row">
+    <div class="col-md-12" role="main">
+        <div class="panel panel-success text-center">
+            <div class="panel-heading">
+                <h1 class="panel-title">Thanks for your order, {{$ctrl.order.userId}}!</h1>
+                <h2>Your order will be ready {{$ctrl.order.readyTime}} and your number is {{$ctrl.order.orderNumber}}</h2>
+            </div>
+            <ul class="list-group">
+                <li class="list-group-item" ng-repeat="item in $ctrl.order.orderItems | orderBy: 'name'">
+                    <h3 class="list-group-item-heading">
+                        {{item.quantity}} {{ item.name }}{{item.quantity > 1 ? "s" : ""}}
+                    </h3>
+                    <span class="list-group-item-text">
+                        {{item.price | currency : "$" : 2}} Each
+                    </span>
+                    <br>
+                    <span class="list-group-item-text">
+                        Total: {{(item.price*item.quantity) | currency : "$" : 2 }}
+                    </span>
+                </li>
+            </ul>
+
+            <div class="panel-footer">
+                <div class="row">
+                    <label>Subtotal: {{$ctrl.orderTotal}} </label>
+                </div>
+                <div class="row">
+                    <label>Order Type: {{$ctrl.getDeliveryMethodName()}}</label>
+                </div>
+                <div class="row">
+                    <label ng-show="$ctrl.isDelivery()"> Address: </label>
+                    <p ng-show="$ctrl.isDelivery()">{{$ctrl.getFormattedAddress()}}</p>
+                </div>
+                <div class="row">
+                    <label>Payment Method: {{$ctrl.getPayMethodName()}}</label>
+                </div>
+                <br />
+                <div class="row">
+                    <button class="btn btn-success text-right" type="button" ng-click="$ctrl.confirmOrder()">
+                        Ok!
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

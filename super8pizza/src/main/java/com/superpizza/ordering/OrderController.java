@@ -1,4 +1,5 @@
 package com.superpizza.ordering;
+import com.superpizza.ResponseMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -110,7 +111,7 @@ public class OrderController implements OrderRepository.OrderSubscriber
         }
         catch (Exception e)
         {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new ResponseMessage("Error placing order, try again"), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -132,7 +133,7 @@ public class OrderController implements OrderRepository.OrderSubscriber
             return new ResponseEntity<>(HttpStatus.OK);
         }
         catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new ResponseMessage("Error setting order status"), HttpStatus.BAD_REQUEST);
         }
     }
 

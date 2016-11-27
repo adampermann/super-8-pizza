@@ -4,7 +4,7 @@
 (function() {
     'use-strict';
 
-    var module = angular.module('orderHistory', []);
+    var module = angular.module('orderManagement');
 
     module.component('orderHistory', {
         templateUrl: 'js/order_management/order.history.template.html',
@@ -26,7 +26,6 @@
             $http.get('/getCompleteOrders').then(function (response) {
                 vm.completedOrders = response.data;
             });
-
 
         };
 

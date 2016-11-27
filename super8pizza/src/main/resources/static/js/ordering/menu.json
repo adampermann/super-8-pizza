@@ -1,9 +1,0 @@
-[
-  { "id": 1, "name": "Super 8 Special Pizza", "price": 15.0, "quantity": 1, "imageUrl": "images/super 8 special.jpg" },
-  { "id": 2, "name": "Cheese Pizza", "price": 12.0, "quantity": 1, "imageUrl": "images/cheese.jpg" },
-  { "id": 3, "name": "Pepperoni Pizza", "price": 13.0, "quantity": 1, "imageUrl": "images/pepperoni.jpg" },
-  { "id": 4, "name": "Anchovies Pizza", "price": 13.0, "quantity": 1, "imageUrl": "images/anchovies.jpg" },
-  { "id": 5, "name": "Mushrooms Pizza", "price": 13.0, "quantity": 1, "imageUrl": "images/mushrooms.jpg" },
-  { "id": 6, "name": "Sausage Pizza", "price": 13.0, "quantity": 1, "imageUrl": "images/sausage.jpg" },
-  { "id": 7, "name": "Supreme Pizza", "price": 14.0, "quantity": 1, "imageUrl": "images/supreme.jpg" }
-]

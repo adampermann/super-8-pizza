@@ -5,4 +5,11 @@
     <p>
         <a href="/ordering" class="btn btn-lg btn-primary" role="button">Start Your Order Here!</a>
     </p>
+
+    <div ng-show="$rootScope.authenticated">
+        <p>We are authenticated</p>
+    </div>
+    <div  ng-show="!$rootScope.authenticated">
+        <p>Login to see your greeting</p>
+    </div>
 </div>
