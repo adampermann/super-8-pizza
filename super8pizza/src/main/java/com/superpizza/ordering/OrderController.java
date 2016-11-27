@@ -94,6 +94,22 @@ public class OrderController implements OrderRepository.OrderSubscriber
         return completeOrders;
     }
 
+    @RequestMapping("/getOrdersForUser/{userId}/")
+    public List<Order> getOrdersForUser(@PathVariable String userId)
+    {
+        List<Order> userOrders = new ArrayList<>();
+
+        for (Map.Entry<String, Order> entry : orders.entrySet())
+        {
+            if (entry.getValue().userId.equals(userId))
+            {
+                userOrders.add(entry.getValue());
+            }
+        }
+
+        return userOrders;
+    }
+
     @RequestMapping("/placeOrder")
     public ResponseEntity<?> placeOrder(@RequestBody Order order)
     {
