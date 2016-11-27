@@ -76,7 +76,7 @@ h6.panel-title {
 }
 
 
-/* styles for login pages */
+/* styles for login and account pages */
 
 .login {
     margin: auto;
@@ -88,26 +88,48 @@ h6.panel-title {
     -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
     -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-    max-width: 60%;
+    max-width: 70%;
 }
 
-hr.login{
+
+.account {
+    margin: auto;
+    background-color: #FFFFFF;
+    /* shadows and rounded borders */
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    max-width: 85%;
+}
+
+hr.login, hr.account{
     width: 10%;
     color: #000000;
 }
 
-.login.form-group{
+.login.form-group, .account.form-group {
     margin-bottom: 15px;
 }
 
-.login-center {
+.login-center, .account-center {
     margin-top: 30px;
     margin: auto;
     padding: 40px 40px;
 }
 
-.login-button {
+.login-center input.ng-invalid.ng-touched, .account-center input.ng-invalid.ng-touched, .ng-submitted .ng-invalid-required {
+    border: 1px solid #b92c28;
+    border-radius: 1px;
+}
+
+.login-button, .account-button {
     text-align: center;
 }
 
+.order-history {
+    margin-top: 20px;
+}
 

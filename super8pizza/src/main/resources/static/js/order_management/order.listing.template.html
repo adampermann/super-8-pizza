@@ -23,7 +23,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="order in $ctrl.orders | filter: $ctrl.filterBy | orderBy: '-order.orderStatus.id'">
+                <tr ng-repeat="order in $ctrl.orders | filter: $ctrl.filterBy | orderBy: '-orderStatus.id'">
                     <td>{{order.orderNumber}}</td>
                     <td>
                         <ul>

@@ -3,6 +3,7 @@
  */
 (function() {
     'use-strict';
+
     var app = angular.module('Super8PizzaApp');
 
     app.config(['$locationProvider', '$routeProvider', '$httpProvider',
@@ -39,73 +40,61 @@
                 templateUrl: 'js/home/register.template.html',
                 controllerAs: '$ctrl'
             }).
+            when('/account', {
+                template: '<account></account>'
+            }).
             otherwise('/');
 
             // need this so spring security will play nice with the browser
             // and not constantly prompt for browser login
-            $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
+            // $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
+            // FUCK SPRING SECURITY IT SUCKS!
+            // that doesn't work and still prompts browser login
         }
-    ]);
-
-
-    app.controller('NavigationController', NavigationController);
-
-    NavigationController.$inject = ['$rootScope', '$http', '$location'];
-
-    function NavigationController($rootScope, $http, $location) {
+    ]).config(function (toastrConfig) {
+        angular.extend(toastrConfig, {
+            autoDismiss: false,
+            containerId: 'toast-container',
+            maxOpened: 0,
+            newestOnTop: true,
+            positionClass: 'toast-top-center',
+            preventDuplicates: false,
+            preventOpenDuplicates: false,
+            target: 'body'
+        });
+    }).service('Session', ['$cookies', function($cookies) {
+        // create and destroy stored user information
         var vm = this;
-        $rootScope.credentials = {};
-        vm.error = false;
-        $rootScope.authenticated = false;
-        $rootScope.username = "";
 
-        function authenticate(credentials, callback) {
-
-            var headers = credentials ? { autorization : "Basic" + btoa(credentials.username + ":" + credentials.password) }
-                : {};
-
-            $http.get('/user', {headers : headers}).then(function(response) {
-
-                var data = response.data;
-
-                console.log(response);
-
-                if (data.authenticated) {
-                    $rootScope.authenticated = true;
-                    $rootScope.username = data.principal.username;
-                } else {
-                    $rootScope.authenticated = false;
-                }
-
-                callback && callback();
-            }, function() {
-                $rootScope.authenticated = false;
-                callback && callback();
-            });
-
-
-        }
-
-        // authenticate();
-        vm.login = function() {
-            authenticate(self.credentials, function() {
-                if ($rootScope.authenticated) {
-                    $location.url('/');
-                    vm.error = false;
-                } else {
-                    $location.url('/login');
-                }
-
-            });
+        vm.create = function(user) {
+            var userCookie = {
+                user: user
+            };
+            $cookies.putObject('user', userCookie);
         };
 
-        vm.logout = function() {
-            $http.post('/logout', {}).then(function() {
-                $rootScope.authenticated = false;
-                $location.url('/');
-            });
+        vm.destroy = function() {
+            $cookies.putObject('user', null);
         };
 
-    };
+        vm.getCurrentUser = function() {
+            var userCookie = $cookies.getObject('user');
+
+            if (userCookie == null || userCookie === undefined) {
+                return null;
+            }
+
+            return userCookie.user;
+        };
+
+    }]);
+
+    // since for some reason the server won't allow manual navigation of routes
+    // because the way it is configured blows
+    // app.run(['$rootScope', '$location', function ($rootScope, $location) {
+    //     $rootScope.$on('$routeChangeStart', function(event, next, current) {
+    //
+    //     });
+    // }]);
 
 })();

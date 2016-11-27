@@ -10,19 +10,18 @@ import java.util.List;
  */
 public class User {
     public String userId;
-    public String userName;
+    public String username;
     public String email;
     public String password;
     public String joinKey;
     public UserRole role;
     public Address address;
-    //public List<Order> orderHistory;
 
     public User(){}
 
-    public User(String userId, String userName, String email, String password, UserRole role, Address address, String joinKey) {
+    public User(String userId, String username, String email, String password, UserRole role, Address address, String joinKey) {
         this.userId = userId;
-        this.userName = userName;
+        this.username = username;
         this.email = email;
         this.password = password;
         this.role = role;

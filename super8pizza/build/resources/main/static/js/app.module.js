@@ -1,15 +1,16 @@
 /**
  * Created by adampermann on 10/14/16.
  */
-// our main app
 (function() {
+
+    // our main app
     angular.module('Super8PizzaApp', [
         'ngRoute',
-        'ordering',
-        'orderSummary',
-        'orderListing',
-        'orderHistory',
+        'order',
+        'orderManagement',
         'inventoryListing',
-        'toastr'
+        'account',
+        'toastr',
+        'ngCookies'
     ]);
 })();

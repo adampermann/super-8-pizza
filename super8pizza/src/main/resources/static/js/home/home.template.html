@@ -3,10 +3,10 @@
     <p class="lead">We only make our pizzas from the Freshest Ingredients!</p>
     <br />
     <p ng-show="authenticated">
-        Welcome {{username}}
+        Hello <strong>{{displayName}}</strong>!
     </p>
     <p>
-        <a ng-hide="authenticated" href="/login" class="btn btn-lg btn-primary" role="button">Login to your Account</a>
+        <a ng-hide="authenticated" href="/login" class="btn btn-lg btn-primary" role="button">Log in to your Account</a>
 
         <span ng-hide="authenticated" style="padding: 10px;"><strong>Or</strong></span>
 
