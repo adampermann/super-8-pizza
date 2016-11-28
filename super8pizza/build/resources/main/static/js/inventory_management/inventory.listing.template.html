@@ -29,7 +29,7 @@
                 <tr ng-repeat="inventory in $ctrl.inventory | filter: $ctrl.filterBy ">
                     <td>{{inventory.name}}</td>
                     <td><div contenteditable>{{inventory.numberInStock}}</div></td>
-                    <td><div contenteditable>{{inventory.price}}</div></td>
+                    <td><div contenteditable>{{inventory.price | currency : $ : 2}}</div></td>
                     <td>{{inventory.type.name}}</td>
 
                 </tbody>
