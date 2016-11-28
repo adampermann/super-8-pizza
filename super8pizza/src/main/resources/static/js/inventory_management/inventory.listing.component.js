@@ -28,6 +28,23 @@
 
         vm.updateInventory = function() {
 
+            var TableData = new Array();
+
+            $('#tableInventory tr').each(function(row, tr){
+                TableData[row]={
+                    "name" : $(tr).find('td:eq(0)').text()
+                    , "numberInStock" :$(tr).find('td:eq(1)').text()
+                    , "price" : $(tr).find('td:eq(2)').text()
+                }
+            });
+            TableData.shift();  // first row is the table header - so remove
+
+            for (i = 0; i < TableData.length; i++) {
+                inventory[i].name = TableData[i].name;
+                inventory[i].numberInStock = TableData[i].numberInStock;
+                inventory[i].price = TableData[i].price;
+            }
+
             $http.post('/updateInventory', inventory).then(function (response) {
                 if (response.status == 200) {
                     vm.getInventory();
