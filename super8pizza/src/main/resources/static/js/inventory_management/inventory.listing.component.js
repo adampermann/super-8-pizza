@@ -1,6 +1,4 @@
-/**
- * Created by adampermann on 10/26/16.
- */
+
 (function() {
     'use-strict';
 
@@ -17,15 +15,39 @@
 
     function InventoryListingController($http, $filter) {
         var vm = this;
+        vm.inventory = [];
+        vm.filterBy = "";
+
+        vm.getInventory = function() {
+
+            $http.get('/getInventory').then(function (response) {
+                vm.inventory = response.data;
+            });
+
+        };
+
+        vm.updateInventory = function() {
+
+            $http.post('/updateInventory', inventory).then(function (response) {
+                if (response.status == 200) {
+                    vm.getInventory();
+                } else {
+                    // display an error
+                    toastr.error('Error updating inventory', 'Error');
+                }
+            });
+        };
+
+        vm.addInventoryItem = function() {
+
+            //post new inventory item
+        };
+
 
         activate();
         function activate() {
 
-
-            // $http.get('/getInventory').then(function (response) {
-
-            // });
-
+            vm.getInventory();
 
         };
 
