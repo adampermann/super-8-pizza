@@ -27,10 +27,14 @@
 
                 <tbody>
                 <tr ng-repeat="inventory in $ctrl.inventory | filter: $ctrl.filterBy ">
-                    <td><div contenteditable>{{inventory.name}}</div></td>
+                    <td> <input ng-model="inventory.name"/></td>
+                    <td> <input ng-model="inventory.numberInStock"/></td>
+                    <td> <input ng-model="inventory.price | currency : $ : 2"/></td>
+                    <td> <input ng-model="inventory.type.name"/></td>
+                    <!--<td><div contenteditable>{{inventory.name}}</div></td>
                     <td><div contenteditable>{{inventory.numberInStock}}</div></td>
                     <td><div contenteditable>{{inventory.price | currency : $ : 2}}</div></td>
-                    <td>{{inventory.type.name}}</td>
+                    <td>{{inventory.type.name}}</td>-->
 
                 </tbody>
 

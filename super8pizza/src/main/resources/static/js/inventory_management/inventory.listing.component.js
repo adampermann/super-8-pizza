@@ -28,7 +28,7 @@
 
         vm.updateInventory = function() {
 
-            var TableData = new Array();
+            /*var TableData = new Array();
 
             $('#tableInventory tr').each(function(row, tr){
                 TableData[row]={
@@ -44,8 +44,8 @@
                 inventory[i].numberInStock = TableData[i].numberInStock;
                 inventory[i].price = TableData[i].price;
             }
-
-            $http.post('/updateInventory', inventory).then(function (response) {
+*/
+            $http.post('/updateInventory', vm.inventory).then(function (response) {
                 if (response.status == 200) {
                     vm.getInventory();
                 } else {
