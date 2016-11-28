@@ -127,7 +127,7 @@
             if ($rootScope.isAdmin) {
                 $location.url('/order/listing')
             } else {
-                $location.url('/');
+                $location.url('/account');
             }
         }
 
