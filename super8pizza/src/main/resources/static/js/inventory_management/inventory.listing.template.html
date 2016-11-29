@@ -1,4 +1,4 @@
-<div class="panel panel-primary">
+<div class="panel panel-default">
     <div class="panel-heading">
         <h2>Manage Inventory</h2>
     </div>
@@ -9,6 +9,11 @@
             </div>
             <div class="col-md-4">
                 <input type="text" ng-model="$ctrl.filterBy">
+            </div>
+            <div>
+                <button class="btn btn-primary" type="button" ng-click="$ctrl.updateInventory()">
+                    Update Inventory Changes
+                </button>
             </div>
 
         </div>
@@ -42,9 +47,7 @@
         </div>
 
     </div>
-    <button class="btn btn-primary" type="button" ng-click="$ctrl.updateInventory()">
-        Update Inventory Changes
-    </button>
+
     <!--<button class="btn btn-primary" type="button" ng-click="$ctrl.addInventoryItem()">
         Add New Item
     </button>-->
