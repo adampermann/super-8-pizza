@@ -11,11 +11,12 @@
 
     module.controller('InventoryListingController', InventoryListingController);
 
-    InventoryListingController.$inject = ['$http', '$filter'];
+    InventoryListingController.$inject = ['$http', '$filter', "toastr"];
 
-    function InventoryListingController($http, $filter) {
+    function InventoryListingController($http, $filter, toastr) {
         var vm = this;
         vm.inventory = [];
+        vm.types = [];
         vm.filterBy = "";
 
         vm.getInventory = function() {
@@ -28,25 +29,9 @@
 
         vm.updateInventory = function() {
 
-            /*var TableData = new Array();
-
-            $('#tableInventory tr').each(function(row, tr){
-                TableData[row]={
-                    "name" : $(tr).find('td:eq(0)').text()
-                    , "numberInStock" :$(tr).find('td:eq(1)').text()
-                    , "price" : $(tr).find('td:eq(2)').text()
-                }
-            });
-            TableData.shift();  // first row is the table header - so remove
-
-            for (i = 0; i < TableData.length; i++) {
-                inventory[i].name = TableData[i].name;
-                inventory[i].numberInStock = TableData[i].numberInStock;
-                inventory[i].price = TableData[i].price;
-            }
-*/
             $http.post('/updateInventory', vm.inventory).then(function (response) {
                 if (response.status == 200) {
+                    toastr.success('Inventory updated successfully', "Success");
                     vm.getInventory();
                 } else {
                     // display an error
@@ -56,8 +41,35 @@
         };
 
         vm.addInventoryItem = function() {
+            // public InventoryOption type;
+            // public String name;
+            // public Double price;
+            // public String id;
+            // public boolean enabled = true;
+            // private static int disableItemThreshold = 10;
+            // private int numberInStock;
+            // public int quantity = 1;
 
-            //post new inventory item
+            var newItem = {
+                quantity: 1,
+                numberInStock: 0,
+                enabled: true,
+                price: 0,
+                name: "New Item",
+                type: { id: 1,
+                        name: "Crust" }
+            };
+
+            $http.post('/addInventoryItem', newItem ).then(function (response) {
+                if (response.status == 200) {
+                    toastr.success('New Item Added to Inventory', "Success");
+                    vm.inventory.push(response.data);
+                } else {
+                    // display an error
+                    toastr.error('Error adding new inventory item', 'Error');
+                }
+            });
+
         };
 
 
@@ -65,6 +77,10 @@
         function activate() {
 
             vm.getInventory();
+
+            $http.get('/getInventoryTypes').then(function (response) {
+                vm.types = response.data;
+            });
 
         };
 

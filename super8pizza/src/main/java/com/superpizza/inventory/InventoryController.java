@@ -1,5 +1,7 @@
 package com.superpizza.inventory;
 
+import com.superpizza.ordering.Order;
+import com.superpizza.ordering.OrderOption;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -63,6 +65,17 @@ public class InventoryController implements InventoryRepository.InventorySubscri
 		catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
+	}
+	@RequestMapping("/getInventoryTypes")
+	public List<InventoryOption> getOrderStatusMappings()
+	{
+		List<InventoryOption> optionsList = new ArrayList<>();
+		optionsList.add(new InventoryOption(InventoryItem.ItemType.Crust.getValue(), InventoryItem.ItemType.Crust.toString()));
+		optionsList.add(new InventoryOption(InventoryItem.ItemType.Cheese.getValue(), InventoryItem.ItemType.Cheese.toString()));
+		optionsList.add(new InventoryOption(InventoryItem.ItemType.Topping.getValue(), InventoryItem.ItemType.Topping.toString()));
+		optionsList.add(new InventoryOption(InventoryItem.ItemType.Sauce.getValue(), InventoryItem.ItemType.Sauce.toString()));
+
+		return optionsList;
 	}
 
 	@RequestMapping("/getInventory")

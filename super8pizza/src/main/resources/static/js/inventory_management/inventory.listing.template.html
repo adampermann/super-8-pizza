@@ -12,9 +12,13 @@
             </div>
             <div>
                 <button class="btn btn-primary" type="button" ng-click="$ctrl.updateInventory()">
-                    Update Inventory Changes
+                    Save Inventory Updates
+                </button>
+                <button class="btn btn-primary" type="button" ng-click="$ctrl.addInventoryItem()">
+                    Add New Inventory Item
                 </button>
             </div>
+
 
         </div>
 
@@ -32,14 +36,16 @@
 
                 <tbody>
                 <tr ng-repeat="inventory in $ctrl.inventory | filter: $ctrl.filterBy ">
-                    <td> <input ng-model="inventory.name"/></td>
-                    <td> <input ng-model="inventory.numberInStock"/></td>
-                    <td> <input ng-model="inventory.price | currency : $ : 2"/></td>
-                    <td> <input ng-model="inventory.type.name"/></td>
-                    <!--<td><div contenteditable>{{inventory.name}}</div></td>
-                    <td><div contenteditable>{{inventory.numberInStock}}</div></td>
-                    <td><div contenteditable>{{inventory.price | currency : $ : 2}}</div></td>
-                    <td>{{inventory.type.name}}</td>-->
+                    <td> <input type="text" ng-model="inventory.name"/></td>
+                    <td> <input type="number" ng-model="inventory.numberInStock"/></td>
+                    <td> <input ng-model="inventory.price "/></td>
+                    <td>
+                        <select id="typeSelect" class="form-control" name="typeSelect"
+                                ng-options="type.name for type in $ctrl.types track by type.id"
+                                ng-model="inventory.type" style="padding: 5px"
+                                >
+                        </select>
+                    </td>
 
                 </tbody>
 
@@ -48,8 +54,5 @@
 
     </div>
 
-    <!--<button class="btn btn-primary" type="button" ng-click="$ctrl.addInventoryItem()">
-        Add New Item
-    </button>-->
 
 </div>
