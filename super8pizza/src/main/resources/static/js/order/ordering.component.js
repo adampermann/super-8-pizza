@@ -166,7 +166,7 @@
             var order = {
                 "orderId": "",
                 "orderNumber": 0,
-                "userId": "Guest User",
+                "userId": angular.equals($rootScope.user, {}) ? "Guest User" : $rootScope.user.userId,
                 "timestamp": Date.now(),
                 "orderType": {
                     "id": vm.deliveryOption,

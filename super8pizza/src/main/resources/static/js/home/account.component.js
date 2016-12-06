@@ -50,7 +50,7 @@
 
                         // store the user session
                         Session.create($rootScope.user);
-                        toastr.success('Account updated successfully!', 'Error');
+                        toastr.success('Account updated successfully!', 'Success');
                     } else {
                         toastr.error('Error updating account', 'Error');
                     }
