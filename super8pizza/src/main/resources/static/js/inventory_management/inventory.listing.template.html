@@ -14,12 +14,13 @@
                 <button class="btn btn-primary" type="button" ng-click="$ctrl.updateInventory()">
                     Save Inventory Updates
                 </button>
-                <button class="btn btn-primary" type="button" ng-click="$ctrl.addInventoryItem()">
+              <!--  <button class="btn btn-primary" type="button" ng-click="$ctrl.addInventoryItem()">
                     Add New Inventory Item
-                </button>
+                </button>-->
                 <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-                    Launch demo modal
+                <button type="button" class="btn btn-primary" ng-click="$ctrl.newInventoryItemCreate()"
+                        data-toggle="modal" data-target="#myModal">
+                    Add New Inventory Item
                 </button>
 
             </div>
@@ -64,18 +65,44 @@
 
     <!-- Modal -->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                    <h4 class="modal-title" id="myModalLabel">Add New Inventory</h4>
                 </div>
                 <div class="modal-body">
-                    ...
+                    <div class="table-responsive table-bordered table-striped">
+                        <table class="table" id="tableInventoryNew">
+                            <thead>
+                            <tr>
+                                <th> Name </th>
+                                <th> Stock Amount </th>
+                                <th> Price </th>
+                                <th> Type </th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                                <td> <input type="text" ng-model="$ctrl.newInventoryItem.name"/></td>
+                                <td> <input type="number" ng-model="$ctrl.newInventoryItem.numberInStock"/></td>
+                                <td> <input ng-model="$ctrl.newInventoryItem.price "/></td>
+                                <td>
+                                    <select id="typeSelectNew" class="form-control" name="typeSelect"
+                                            ng-options="type.name for type in $ctrl.types track by type.id"
+                                            ng-model="$ctrl.newInventoryItem.type" style="padding: 5px"
+                                    >
+                                    </select>
+                                </td>
+                            </tbody>
+
+                        </table>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary"
+                            ng-click="$ctrl.addCreatedItem()" data-dismiss="modal">Save new item</button>
                 </div>
             </div>
         </div>

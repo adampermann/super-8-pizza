@@ -1,5 +1,4 @@
-
-(function() {
+(function () {
     'use-strict';
 
     var module = angular.module('inventoryListing', []);
@@ -18,17 +17,16 @@
         vm.inventory = [];
         vm.types = [];
         vm.filterBy = "";
+        vm.newInventoryItem = [];
 
-        vm.getInventory = function() {
-
+        vm.getInventory = function () {
             $http.get('/getInventory').then(function (response) {
                 vm.inventory = response.data;
             });
 
         };
 
-        vm.updateInventory = function() {
-
+        vm.updateInventory = function () {
             $http.post('/updateInventory', vm.inventory).then(function (response) {
                 if (response.status == 200) {
                     toastr.success('Inventory updated successfully', "Success");
@@ -40,15 +38,43 @@
             });
         };
 
-        vm.addInventoryItem = function() {
-            // public InventoryOption type;
-            // public String name;
-            // public Double price;
-            // public String id;
-            // public boolean enabled = true;
-            // private static int disableItemThreshold = 10;
-            // private int numberInStock;
-            // public int quantity = 1;
+        //Initialize newInventoryItem on front-end
+        vm.newInventoryItemCreate = function () {
+            var newItem = {
+                quantity: 1,
+                numberInStock: 0,
+                enabled: true,
+                price: 0,
+                name: "New Item",
+                type: {
+                    id: 1,
+                    name: "Crust"
+                }
+            };
+
+            vm.newInventoryItem = newItem;
+
+        }
+
+        //Push front-end inventory item to database
+        vm.addCreatedItem = function () {
+            $http.post('/addInventoryItem', vm.newInventoryItem).then(function (response) {
+                if (response.status == 200) {
+                    toastr.success('New Item Added to Inventory', "Success");
+                    vm.inventory.push(response.data);
+                    vm.getInventory();
+                } else {
+                    // display an error
+                    toastr.error('Error adding new inventory item', 'Error');
+                }
+            });
+
+        }
+
+
+        //create and push new inventory item to database
+
+       /* vm.addInventoryItem = function () {
 
             var newItem = {
                 quantity: 1,
@@ -56,21 +82,24 @@
                 enabled: true,
                 price: 0,
                 name: "New Item",
-                type: { id: 1,
-                        name: "Crust" }
+                type: {
+                    id: 1,
+                    name: "Crust"
+                }
             };
 
-            $http.post('/addInventoryItem', newItem ).then(function (response) {
+            $http.post('/addInventoryItem', newItem).then(function (response) {
                 if (response.status == 200) {
                     toastr.success('New Item Added to Inventory', "Success");
                     vm.inventory.push(response.data);
+                    vm.getInventory();
                 } else {
                     // display an error
                     toastr.error('Error adding new inventory item', 'Error');
                 }
             });
 
-        };
+        };*/
 
 
         activate();
@@ -83,7 +112,6 @@
             });
 
         };
-
-    };
+    }
 
 })();
