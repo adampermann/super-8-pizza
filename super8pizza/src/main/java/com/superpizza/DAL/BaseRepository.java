@@ -58,7 +58,7 @@ public abstract class BaseRepository <K, V>
         database = FirebaseDatabase.getInstance();
     }
 
-    protected final void saveData(Map<K, V> data) throws InterruptedException
+    protected void saveData(Map<K, V> data) throws InterruptedException
     {
         //make sure thread lasts long enough to complete firebase call
         final Semaphore semaphore = new Semaphore(0);
