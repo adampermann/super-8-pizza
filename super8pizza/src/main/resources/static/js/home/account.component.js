@@ -25,6 +25,7 @@
         vm.updateAccount = function() {
 
             // check to see if confirm pass equals the user password / validate
+
             if (vm.user.email === undefined || vm.user.password === undefined || vm.user.username === undefined || vm.confirmPass ===  undefined) {
                 toastr.error("Please enter all required fields!", "Error");
 

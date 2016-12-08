@@ -1,5 +1,6 @@
 package com.superpizza.inventory;
 
+import com.superpizza.ResponseMessage;
 import com.superpizza.ordering.Order;
 import com.superpizza.ordering.OrderOption;
 import org.springframework.http.HttpStatus;
@@ -49,7 +50,7 @@ public class InventoryController implements InventoryRepository.InventorySubscri
 		{
 			if (entry.getValue().name.equalsIgnoreCase(item.name))
 			{
-				return new ResponseEntity<>(HttpStatus.CONFLICT);
+				return new ResponseEntity<>(new ResponseMessage("Duplicate item name, please try again!"), HttpStatus.CONFLICT);
 			}
 		}
 

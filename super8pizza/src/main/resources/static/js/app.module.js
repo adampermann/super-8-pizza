@@ -11,6 +11,7 @@
         'inventoryListing',
         'account',
         'toastr',
-        'ngCookies'
+        'ngCookies',
+        'angularUtils.directives.dirPagination'
     ]);
 })();
