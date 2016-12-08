@@ -158,6 +158,17 @@ public class OrderController implements OrderRepository.OrderSubscriber
     {
         try {
             orders = repo.getOrders(this);
+
+            for (Map.Entry orderEntry : orders.entrySet())
+            {
+                Order order = (Order)orderEntry.getValue();
+                Long orderNumber = Long.parseLong(order.orderNumber);
+                if (orderNumber > this.orderNumber)
+                {
+                    this.orderNumber = orderNumber;
+                }
+            }
+
         } catch (InterruptedException e) {
             //todo
             e.printStackTrace();
