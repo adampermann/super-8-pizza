@@ -74,6 +74,8 @@
 
         vm.clearCart = function() {
             vm.cart = [];
+            orderingService.clearCart();
+            orderingService.clearCustomPizza();
             vm.calculateCartTotal();
         };
 
