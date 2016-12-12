@@ -73,7 +73,10 @@
         activate();
         function activate() {
             // change this to get the user's order history
-            $http.get('/getCompleteOrders').then(function(response){
+            var url = '/getOrdersForUser/' + $rootScope.user.userId + '/';
+
+            $http.get(url).then(
+            function(response) {
                 vm.orders = response.data;
             }, function(response){
                 toastr.error(response.data.message, 'Error');
