@@ -18,9 +18,9 @@
 
     function AccountController($rootScope, $http, $location, Session, orderingService, toastr) {
         var vm = this;
-        vm.user = $rootScope.user;  // should only be able to access this page when logged in so this should be ok
+        vm.user = angular.copy($rootScope.user);  // should only be able to access this page when logged in so this should be ok
         vm.orders = [];
-        vm.confirmPass = $rootScope.user.password;
+        vm.confirmPass = angular.copy($rootScope.user.password);
 
         vm.updateAccount = function() {
 
