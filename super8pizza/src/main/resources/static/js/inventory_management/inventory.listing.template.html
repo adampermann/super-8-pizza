@@ -41,7 +41,7 @@
                 </thead>
 
                 <tbody>
-                <tr ng-repeat="inventory in $ctrl.inventory | filter: $ctrl.filterBy ">
+                <tr ng-repeat="inventory in $ctrl.inventory | filter: $ctrl.filterBy | orderBy:'-type.id'">
                     <td> <input type="text" ng-model="inventory.name"/></td>
                     <td> <input type="number" ng-model="inventory.numberInStock"/></td>
                     <td> <input ng-model="inventory.price "/></td>

@@ -35,6 +35,9 @@ public class InventoryItem
         {
             enabled = false;
         }
+        else {
+            enabled = true;
+        }
     }
 
     @Override
