@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row fa">
     <!-- Where all our products are listed-->
     <div id="sp-menu" class="col-md-8" role="main">
         <div class="panel panel-default sp-menu" role="main">
@@ -8,17 +8,17 @@
 
             <!-- Custom Order Slot (must be separate)-->
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-12 col-sm-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h4 class="panel-title">Make Your Own Pizza!</h4>
                         </div>
                         <div class="panel-body">
                             <div class="row">
-                                <div class="col-md-6">
-                                    <img src="images/customize-pizza.png" alt="image" style="width: 300px; height: 150px"/>
+                                <div class="col-md-6 col-sm-6">
+                                    <img class="order-image" src="images/customize-pizza.png" alt="image" />
                                 </div>
-                                <div class="col-md-6 sp-menu-fields">
+                                <div class="col-md-6 col-sm-6 sp-menu-fields">
                                     <div class="row">
                                         <button class="btn btn-primary" type="button" ng-click="$ctrl.customizePizza()">
                                             Customize
@@ -34,35 +34,35 @@
 
             <!-- For every menu option this markup is repeated-->
             <div class="row" ng-repeat="menuOption in $ctrl.menu">
-                <div class="col-md-12">
+                <div class="col-md-12 col-sm-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h4 class="panel-title">{{menuOption.name}}</h4>
+                            <h4 class="panel-title"> <strong>{{menuOption.name}}</strong></h4>
                         </div>
                         <div class="panel-body">
                             <div class="row">
-                                <div class="col-md-6">
-                                    <img ng-src="{{menuOption.imageURL}}" alt="image" style="width: 300px; height: 150px"/>
+                                <div class="col-md-6 col-sm-6">
+                                    <img class="order-image" ng-src="{{menuOption.imageURL}}" alt="image" />
                                 </div>
-                                <div class="col-md-6 sp-menu-fields">
+                                <div class="col-md-6 col-sm-6 sp-menu-fields">
                                     <div class="row">
-                                        <div class="col-md-4">
+                                        <div class="col-md-4 col-sm-4">
                                             <label>Price</label>
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col-md-2 col-sm-2">
                                             <label>{{menuOption.price | currency}}</label>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-4">
+                                        <div class="col-md-4 col-sm-4">
                                             <label>Quantity</label>
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col-md-2 col-sm-2">
                                             <input type="number" min="1" ng-model="menuOption.quantity" style="width: 50px" />
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <button class="btn btn-primary" type="button" ng-click="$ctrl.addToCart(menuOption)">
+                                        <button class="btn btn-primary" type="button" ng-click="$ctrl.addToCart(menuOption)" style="margin: 5px;">
                                             Add to Cart
                                         </button>
                                     </div>
@@ -85,10 +85,14 @@
             <h2>Cart Summary</h2>
         </div>
         <div class="row sp-cart-body" ng-show="$ctrl.cart.length > 0">
-            <!--<span>{{cartItem.name}} x {{cartItem.quantity}}: {{(cartItem.quantity * cartItem.price) | currency}}</span>-->
             <ul>
                 <li ng-repeat="cartItem in $ctrl.cart | orderBy: 'name'">
                     {{cartItem.name}} x {{cartItem.quantity}} = {{(cartItem.quantity * cartItem.price) | currency}}
+                    <ul ng-show="cartItem.name == 'Custom Pizza'">
+                        <li ng-repeat="item in cartItem.includedItems">
+                            {{item.name}}
+                        </li>
+                    </ul>
                 </li>
             </ul>
         </div>

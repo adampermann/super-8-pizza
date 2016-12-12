@@ -31,7 +31,6 @@
             var valid = true;
 
             for (var i = 0; i < vm.inventory.length; i++){
-                console.log(vm.inventory[i]);
                 if (vm.inventory[i].numberInStock < 0 || vm.inventory[i].price < 0) {
                     valid = false;
                     toastr.error('Price and Stock Ammount of all items cannot be negative', 'Error');
@@ -97,37 +96,6 @@
 
         };
 
-
-        //create and push new inventory item to database
-
-       /* vm.addInventoryItem = function () {
-
-            var newItem = {
-                quantity: 1,
-                numberInStock: 0,
-                enabled: true,
-                price: 0,
-                name: "New Item",
-                type: {
-                    id: 1,
-                    name: "Crust"
-                }
-            };
-
-            $http.post('/addInventoryItem', newItem).then(function (response) {
-                if (response.status == 200) {
-                    toastr.success('New Item Added to Inventory', "Success");
-                    vm.inventory.push(response.data);
-                    vm.getInventory();
-                } else {
-                    // display an error
-                    toastr.error('Error adding new inventory item', 'Error');
-                }
-            });
-
-        };*/
-
-
         activate();
         function activate() {
 
@@ -137,7 +105,7 @@
                 vm.types = response.data;
             });
 
-        };
+        }
     }
 
 })();

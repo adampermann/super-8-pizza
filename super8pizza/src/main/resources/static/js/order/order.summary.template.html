@@ -1,9 +1,9 @@
 <div class="row">
-    <div class="col-md-12" role="main">
+    <div class="col-md-12 fa" role="main">
         <div class="panel panel-success text-center">
             <div class="panel-heading">
                 <h1 class="panel-title">Thanks for your order!</h1>
-                <h2>Your order will be ready {{$ctrl.order.readyTime}} and your number is {{$ctrl.order.orderNumber}}</h2>
+                <h2>Your order will be ready <strong>{{$ctrl.order.readyTime}}</strong> and your number is <strong>{{$ctrl.order.orderNumber}}</strong></h2>
             </div>
             <ul class="list-group">
                 <li class="list-group-item" ng-repeat="item in $ctrl.order.orderItems | orderBy: 'name'">

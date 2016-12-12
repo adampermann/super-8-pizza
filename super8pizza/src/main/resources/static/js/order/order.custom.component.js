@@ -52,6 +52,11 @@
             $location.url('/ordering');
         };
 
+        vm.cancelCustomize = function() {
+            orderingService.clearCustomPizza();
+            $location.url('/ordering');
+        };
+
         vm.addItemToCustomInventory = function (item) {
             var currentItem = vm.itemInCustomInventory(item);
 
@@ -65,6 +70,11 @@
             }
         };
 
+        vm.removeSelection = function (item) {
+            var index = vm.customInventory.indexOf(item);
+            vm.customInventory.splice(index, 1);
+        };
+
         vm.itemInCustomInventory = function (item) {
             for (var i = 0; i < vm.customInventory.length; ++i) {
                 if (vm.customInventory[i].name == item.name) {
@@ -73,6 +83,26 @@
             }
 
             return null;
+        };
+
+        vm.customInventoryHasCrust = function() {
+            for (var i = 0; i < vm.customInventory.length; ++i) {
+                if (vm.isCrust(vm.customInventory[i])) {
+                    return true;
+                }
+            }
+
+            return false;
+        };
+
+        vm.customInventoryHasSauce = function() {
+            for (var i = 0; i < vm.customInventory.length; ++i) {
+                if (vm.isSauce(vm.customInventory[i])) {
+                    return true;
+                }
+            }
+
+            return false;
         };
 
         vm.isCrust = function (item) {

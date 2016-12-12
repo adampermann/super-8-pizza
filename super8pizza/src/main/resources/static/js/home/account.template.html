@@ -6,7 +6,7 @@
         </div>
     </div>
 
-    <form name="account-form" role="form" ng-submit="$ctrl.updateAccount()" class="text-center account-center" novalidate>
+    <form name="account-form" role="form" ng-submit="$ctrl.updateAccount()" class="text-center account-center fa" novalidate>
 
         <div class="form-group row">
             <label for="username" class="col-sm-2 col-md-2 control-label">User Name</label>
@@ -115,19 +115,26 @@
                     <tr>
                         <th> Order Number </th>
                         <th> Order Items </th>
+                        <th> Order Status </th>
                         <th> Action </th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="order in $ctrl.orders | orderBy: 'timestamp'">
+                    <tr ng-repeat="order in $ctrl.orders | orderBy: '-timestamp'">
                         <td>{{order.orderNumber}}</td>
                         <td>
                             <ul>
                                 <li ng-repeat="item in order.orderItems | orderBy: 'name'">
                                     {{item.name}} x {{item.quantity}}
+                                    <ul ng-show="item.includedItems.length > 0 && item.name == 'Custom Pizza'">
+                                        <li ng-repeat="inv in item.includedItems">
+                                            {{inv.name}} x {{inv.quantity}}
+                                        </li>
+                                    </ul>
                                 </li>
                             </ul>
                         </td>
+                        <td>{{order.orderStatus.name}}</td>
                         <td>
                             <button type="button" class="btn btn-success btn-sm order-again" ng-click="$ctrl.orderAgain(order)">Order Again</button>
                         </td>

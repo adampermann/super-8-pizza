@@ -123,17 +123,10 @@
         // redirect to customize pizza page
         // save the state of the app
         vm.customizePizza = function() {
-
-            // just save cart or entire order?
-            // if entire order, something has to change from the
             orderingService.setCart(vm.cart);
             $location.url('/order/custom');
         };
 
-        // validates the order
-        // vm.validateOrder = function(order) {
-        //
-        // };
 
         vm.placeOrder = function() {
 
@@ -194,27 +187,11 @@
             return order;
         }
 
-        // restores an order if the page is navigated back to
-        // and a user had a previous session without placing the order
-        // function restoreOrder() {
-        //     var order = orderingService.getOrder();
-        //     if (order != null) {
-        //         vm.deliveryOption = order.orderType.id;
-        //         vm.payOption = order.paymentMethod.id;
-        //         vm.cardNumber = order.cardNumber;
-        //         vm.street = order.address.street;
-        //         vm.city = order.address.city;
-        //         vm.state = order.address.zip;
-        //         vm.cart = order.orderItems;
-        //     }
-        // }
-
         // initialize our controller
         activate();
         function activate() {
             $http.get('/getMenu').then(function (response) {
                 vm.menu = response.data;
-                console.log(vm.menu);
             });
 
             $http.get('/getDeliveryOptions').then(function (response) {

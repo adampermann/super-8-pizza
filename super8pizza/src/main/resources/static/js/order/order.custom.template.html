@@ -1,4 +1,4 @@
-<div class="panel panel-default">
+<div class="panel panel-default fa">
     <div class="panel-heading text-center">
         <h2>Make Your Own Pizza!</h2>
     </div>
@@ -8,37 +8,50 @@
         <div class="row">
             <!-- Crusts -->
             <div class="col-md-3" ng-show="$ctrl.crusts.length > 0">
-                <h3>Crusts</h3>
-                <img src="images/crust.jpg" alt="image" style="width: 250px; height: 100px; padding: 5px;"/>
+                <h3 class="text-center">Crusts</h3>
+                <img src="images/crust.jpg" alt="image" class="inventory-image"/>
                 <div class="list-group">
-                    <button ng-repeat="item in $ctrl.crusts" ng-click="$ctrl.addItemToCustomInventory(item)" class="list-group-item">{{item.name}}</button>
+                    <button ng-repeat="item in $ctrl.crusts" ng-click="$ctrl.addItemToCustomInventory(item)" ng-disabled="$ctrl.customInventoryHasCrust() || !item.enabled"
+                            ng-class="$ctrl.customInventoryHasCrust() || !item.enabled ? 'disabled' : 'fa-plus-square'" class="list-group-item fa">
+                        {{item.name}}
+                    </button>
                 </div>
             </div>
 
             <!-- Sauces -->
             <div class="col-md-3" ng-show="$ctrl.sauces.length > 0">
-                <h3>Sauces</h3>
-                <img src="images/sauce.jpg" alt="image" style="width: 250px; height: 100px; padding: 5px;"/>
+                <h3 class="text-center">Sauces</h3>
+                <img src="images/sauce.jpg" alt="image" class="inventory-image"/>
                 <div class="list-group">
-                    <button ng-repeat="item in $ctrl.sauces" ng-click="$ctrl.addItemToCustomInventory(item)" class="list-group-item">{{item.name}}</button>
+                    <button ng-repeat="item in $ctrl.sauces" ng-click="$ctrl.addItemToCustomInventory(item)" ng-disabled="$ctrl.customInventoryHasSauce() || !item.enabled"
+                            ng-class="$ctrl.customInventoryHasSauce() || !item.enabled ? 'disabled' : 'fa-plus-square'" class="list-group-item fa">
+                        {{item.name}}
+                    </button>
+
                 </div>
             </div>
 
             <!-- Cheeses -->
             <div class="col-md-3" ng-show="$ctrl.cheeses.length > 0">
-                <h3>Cheeses</h3>
-                <img src="images/cheese top.jpg" alt="image" style="width: 250px; height: 100px; padding: 5px;"/>
+                <h3 class="text-center">Cheeses</h3>
+                <img src="images/cheese top.jpg" alt="image" class="inventory-image"/>
                 <div class="list-group">
-                    <button ng-repeat="item in $ctrl.cheeses" ng-click="$ctrl.addItemToCustomInventory(item)" class="list-group-item">{{item.name}}</button>
+                    <button ng-repeat="item in $ctrl.cheeses" ng-click="$ctrl.addItemToCustomInventory(item)" ng-disabled="!item.enabled"
+                            ng-class="item.enabled ? 'fa-plus-square' : 'disabled'"  class="fa list-group-item">
+                        {{item.name}}
+                    </button>
                 </div>
             </div>
 
             <!-- Toppings -->
             <div class="col-md-3" ng-show="$ctrl.toppings.length > 0">
-                <h3>Toppings</h3>
-                <img src="images/pepperoni top.jpg" alt="image" style="width: 250px; height: 100px; padding: 5px;"/>
+                <h3 class="text-center">Toppings</h3>
+                <img src="images/pepperoni top.jpg" alt="image" class="inventory-image"/>
                 <div class="list-group">
-                    <button ng-repeat="item in $ctrl.toppings" ng-click="$ctrl.addItemToCustomInventory(item)" class="list-group-item">{{item.name}}</button>
+                    <button ng-repeat="item in $ctrl.toppings" ng-click="$ctrl.addItemToCustomInventory(item)" ng-disabled="!item.enabled"
+                            ng-class="item.enabled ? 'fa-plus-square' : 'disabled'"  class="list-group-item fa">
+                        {{item.name}}
+                    </button>
                 </div>
             </div>
         </div>
@@ -48,16 +61,22 @@
             <div class="col-md-offset-3 col-md-6 custom-order-summary">
                 <h3>Custom Pizza Summary</h3>
                 <hr />
-                <ul>
-                    <li ng-repeat="item in $ctrl.customInventory | orderBy: 'name'">{{item.name}} x {{item.quantity}}</li>
+                <ul class="row">
+                    <li class="col-md-12 inventory-sum-item fa" ng-repeat="item in $ctrl.customInventory | orderBy: 'type.id'">
+                        <span class="col-md-9" >{{item.name}} x {{item.quantity}}</span>
+                        <button class="btn btn-warning btn-xs pull-right col-md-3" ng-click="$ctrl.removeSelection(item)">Remove Selection</button>
+                    </li>
                 </ul>
             </div>
         </div>
     </div>
-    <div class="panel-footer" ng-show="$ctrl.customInventory.length > 0">
+    <div class="panel-footer">
         <div class="row">
-            <button class="btn btn-success pull-right" type="button" ng-click="$ctrl.addToOrder()" style="margin: 10px;">
+            <button ng-show="$ctrl.customInventoryHasCrust() && $ctrl.customInventoryHasSauce()" class="btn btn-success pull-right" type="button" ng-click="$ctrl.addToOrder()" style="margin: 10px;">
                 Add To Order
+            </button>
+            <button class="btn btn-danger pull-right" type="button" ng-click="$ctrl.cancelCustomize()" style="margin: 10px;">
+                Cancel
             </button>
         </div>
     </div>

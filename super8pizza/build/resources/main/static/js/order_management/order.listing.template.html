@@ -29,6 +29,11 @@
                         <ul>
                             <li ng-repeat="item in order.orderItems | orderBy: 'name'">
                                 {{item.name}} x {{item.quantity}}
+                                <ul ng-show="item.includedItems.length > 0">
+                                    <li ng-repeat="inv in item.includedItems">
+                                        {{inv.name}} x {{inv.quantity}}
+                                    </li>
+                                </ul>
                             </li>
                         </ul>
                     </td>

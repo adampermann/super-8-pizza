@@ -70,6 +70,26 @@ h6.panel-title {
     padding: 10px;
 }
 
+img.order-image {
+    padding: 5px;
+    width: 100%;
+    height: 100%;
+}
+
+img.inventory-image {
+    margin: 5px;
+    width: 100%;
+    height: 100%;
+    max-height: 125px;
+    border: solid lightgray;
+    border-width: 1px;
+}
+
+.inventory-sum-item {
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+
 /* only want a border on the right and left*/
 .sp-cart-body {
     border-width: 0px 1px 0px 1px;
