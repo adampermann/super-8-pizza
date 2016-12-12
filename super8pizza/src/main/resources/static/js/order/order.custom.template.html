@@ -13,7 +13,7 @@
                 <div class="list-group">
                     <button ng-repeat="item in $ctrl.crusts" ng-click="$ctrl.addItemToCustomInventory(item)" ng-disabled="$ctrl.customInventoryHasCrust() || !item.enabled"
                             ng-class="$ctrl.customInventoryHasCrust() || !item.enabled ? 'disabled' : 'fa-plus-square'" class="list-group-item fa">
-                        {{item.name}}
+                        {{item.name}} ${{item.price}}
                     </button>
                 </div>
             </div>
@@ -25,7 +25,7 @@
                 <div class="list-group">
                     <button ng-repeat="item in $ctrl.sauces" ng-click="$ctrl.addItemToCustomInventory(item)" ng-disabled="$ctrl.customInventoryHasSauce() || !item.enabled"
                             ng-class="$ctrl.customInventoryHasSauce() || !item.enabled ? 'disabled' : 'fa-plus-square'" class="list-group-item fa">
-                        {{item.name}}
+                        {{item.name}} ${{item.price}}
                     </button>
 
                 </div>
@@ -38,7 +38,7 @@
                 <div class="list-group">
                     <button ng-repeat="item in $ctrl.cheeses" ng-click="$ctrl.addItemToCustomInventory(item)" ng-disabled="!item.enabled"
                             ng-class="item.enabled ? 'fa-plus-square' : 'disabled'"  class="fa list-group-item">
-                        {{item.name}}
+                        {{item.name}} ${{item.price}}
                     </button>
                 </div>
             </div>
@@ -50,7 +50,7 @@
                 <div class="list-group">
                     <button ng-repeat="item in $ctrl.toppings" ng-click="$ctrl.addItemToCustomInventory(item)" ng-disabled="!item.enabled"
                             ng-class="item.enabled ? 'fa-plus-square' : 'disabled'"  class="list-group-item fa">
-                        {{item.name}}
+                        {{item.name}} ${{item.price}}
                     </button>
                 </div>
             </div>

@@ -27,10 +27,10 @@
         vm.sauces = [];
 
         vm.calculatePrice = function () {
-            var calulatedPrice = 10;
+            var calulatedPrice = 0;
             for (var i = 0; i < vm.customInventory.length; ++i) {
-                // add dollar for everything in the custom inventory
-                calulatedPrice += 1 * vm.customInventory[i].quantity;
+                // add pricing for everything in the custom inventory
+                calulatedPrice += vm.customInventory[i].price * vm.customInventory[i].quantity;
             }
 
             return calulatedPrice;
