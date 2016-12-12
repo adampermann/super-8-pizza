@@ -237,7 +237,7 @@
                 vm.cart = [];
             }
 
-            if (customPizza != null && !vm.isOptionInCart(customPizza)) {
+            if (customPizza != null) {
                 vm.cart.push(customPizza);
 
                 // clear the saved custom pizza
